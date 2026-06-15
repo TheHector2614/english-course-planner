@@ -1,0 +1,31 @@
+# OS
+Thumbs.db
+.DS_Store
+Desktop.ini
+
+# Environment & dependencies
+node_modules/
+.venv/
+venv/
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Temp / downloads
+temp_descargas/
+
+# PDF resources (not tracked — download separately)
+ENGLISH/
+*.pdf
+
+# Installed skills (user-specific)
+.agents/skills/
+Skill Claude/
+skillspector/

@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📘 Plan de Estudios B1 – Inglés Intermedio</title>
+<style>
+  :root {
+    --primary: #2c3e50;
+    --secondary: #3498db;
+    --accent: #e74c3c;
+    --success: #27ae60;
+    --warning: #f39c12;
+    --bg: #f8f9fa;
+    --card: #ffffff;
+    --text: #2d3436;
+    --text-light: #636e72;
+    --border: #dfe6e9;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --radius: 16px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 0;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #1a2a6c, #2c3e50, #3498db);
+    color: #fff;
+    padding: 60px 24px 50px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: var(--bg);
+    border-radius: 50% 50% 0 0;
+  }
+  .hero h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .hero .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(4px);
+    padding: 6px 20px;
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  .hero p {
+    font-size: 1.15rem;
+    opacity: 0.9;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* NAV TABS */
+  .nav-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    padding: 24px 16px 0;
+    position: relative;
+    z-index: 2;
+    margin-top: -10px;
+  }
+  .nav-tabs button {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 10px 22px;
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    color: var(--text-light);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .nav-tabs button:hover {
+    border-color: var(--secondary);
+    color: var(--secondary);
+    transform: translateY(-1px);
+  }
+  .nav-tabs button.active {
+    background: var(--secondary);
+    color: #fff;
+    border-color: var(--secondary);
+    box-shadow: 0 4px 14px rgba(52,152,219,0.3);
+  }
+
+  /* MAIN CONTAINER */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 16px 60px;
+  }
+
+  /* SECTIONS */
+  .section {
+    display: none;
+    animation: fadeUp 0.4s ease;
+  }
+  .section.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(18px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+  }
+  .card h2 {
+    font-size: 1.5rem;
+    color: var(--primary);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card h2 .icon { font-size: 1.6rem; }
+  .card h3 {
+    font-size: 1.15rem;
+    color: var(--secondary);
+    margin: 18px 0 8px;
+    padding-left: 0;
+  }
+  .card h4 {
+    font-size: 1rem;
+    color: var(--primary);
+    margin: 14px 0 6px;
+  }
+  .card p, .card li { color: var(--text); }
+  .card ul, .card ol { padding-left: 22px; }
+  .card li { margin-bottom: 4px; }
+
+  /* GRID */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width:768px) {
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.9rem; }
+    .card { padding: 20px 18px; }
+    .nav-tabs button { font-size: 0.8rem; padding: 8px 16px; }
+  }
+
+  /* BADGES */
+  .tag {
+    display: inline-block;
+    background: #e8f4fd;
+    color: var(--secondary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 2px 12px;
+    border-radius: 100px;
+    margin: 2px 3px;
+  }
+  .tag.green { background: #e6f9ee; color: var(--success); }
+  .tag.orange { background: #fef5e7; color: var(--warning); }
+  .tag.red { background: #fde8e8; color: var(--accent); }
+  .tag.purple { background: #e8e0f0; color: #6c3483; }
+
+  /* PROGRESS BAR */
+  .progress-hdr {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 4px;
+  }
+  .progress-bar {
+    height: 8px;
+    background: #eee;
+    border-radius: 100px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .progress-bar .fill {
+    height: 100%;
+    border-radius: 100px;
+    background: linear-gradient(90deg, var(--secondary), var(--success));
+    transition: width 0.6s ease;
+  }
+
+  /* CHECKLIST */
+  .checklist li {
+    list-style: none;
+    padding-left: 28px;
+    position: relative;
+    margin-bottom: 6px;
+  }
+  .checklist li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--success);
+    font-weight: 700;
+  }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--secondary), var(--success));
+    border-radius: 100px;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 28px;
+    padding-left: 0;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -26px;
+    top: 4px;
+    width: 14px;
+    height: 14px;
+    background: var(--secondary);
+    border-radius: 50%;
+    border: 3px solid var(--card);
+    box-shadow: 0 0 0 3px var(--secondary);
+  }
+  .timeline-item .week-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .timeline-item h4 { margin: 2px 0 4px; }
+  .timeline-item p { font-size: 0.95rem; color: var(--text-light); }
+
+  /* ACCORDION */
+  .accordion { margin-bottom: 8px; }
+  .accordion-header {
+    background: #f1f3f5;
+    padding: 12px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+    border: 1px solid var(--border);
+  }
+  .accordion-header:hover { background: #e9ecef; }
+  .accordion-header .arrow {
+    transition: transform 0.3s;
+    font-size: 0.8rem;
+  }
+  .accordion-header.open .arrow { transform: rotate(180deg); }
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.35s ease;
+    padding: 0 18px;
+    background: #fafbfc;
+    border-radius: 0 0 10px 10px;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .accordion-body.open {
+    max-height: 800px;
+    padding: 14px 18px;
+  }
+  .accordion-body ul { padding-left: 20px; }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+  th {
+    background: var(--primary);
+    color: #fff;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  tr:nth-child(even) td { background: #f8f9fa; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 32px 16px;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+    margin-top: 20px;
+  }
+  footer a { color: var(--secondary); text-decoration: none; }
+
+  /* TABS dentro de secciones */
+  .mini-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .mini-tabs button {
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--text-light);
+    transition: all 0.2s;
+  }
+  .mini-tabs button.active-mini {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+  }
+  .mini-tab-content { display: none; }
+  .mini-tab-content.active-mini { display: block; }
+
+  /* highlight */
+  .highlight {
+    background: #fff3cd;
+    padding: 14px 20px;
+    border-radius: 12px;
+    border-left: 4px solid var(--warning);
+    margin: 14px 0;
+    font-size: 0.95rem;
+  }
+  .highlight.green {
+    background: #d4edda;
+    border-left-color: var(--success);
+  }
+  .highlight.blue {
+    background: #d6ecfb;
+    border-left-color: var(--secondary);
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 100px;
+    background: var(--secondary);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(52,152,219,0.3); }
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--secondary);
+    color: var(--secondary);
+  }
+  .btn-outline:hover { background: var(--secondary); color: #fff; }
+  .btn-sm { padding: 5px 14px; font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<!-- ======================== HERO ======================== -->
+<header class="hero">
+  <div class="badge">📖 MCER / CEFR · NIVEL B1 · INTERMEDIO</div>
+  <h1>Plan de Estudios B1</h1>
+  <p>Una hoja de ruta completa para dominar el inglés intermedio.<br>
+  Gramática, vocabulario, speaking, writing, listening y reading.</p>
+</header>
+
+<!-- ======================== NAV ======================== -->
+<nav class="nav-tabs" id="mainNav">
+  <button class="active" data-tab="vision">📍 Visión General</button>
+  <button data-tab="grammar">📚 Gramática</button>
+  <button data-tab="vocab">🗣️ Vocabulario</button>
+  <button data-tab="skills">🎯 Habilidades</button>
+  <button data-tab="phonology">🔊 Fonología</button>
+  <button data-tab="plan">📅 Plan Semanal</button>
+  <button data-tab="resources">📌 Recursos</button>
+</nav>
+
+<div class="container">
+
+<!-- ==================== SECCIÓN 1: VISIÓN GENERAL ==================== -->
+<section id="vision" class="section active">
+
+  <div class="card">
+    <h2><span class="icon">📍</span> ¿Qué es el nivel B1?</h2>
+    <p>Según el <strong>Marco Común Europeo de Referencia (MCER / CEFR)</strong>, el nivel B1 (Intermedio) es el tercer escalón en el aprendizaje del inglés. Un alumno B1 es capaz de:</p>
+    <ul class="checklist" style="margin-top:12px;">
+      <li>Comprender los puntos principales de textos claros sobre temas cotidianos (trabajo, estudio, ocio).</li>
+      <li>Desenvolverse en la mayoría de situaciones que surgen al viajar.</li>
+      <li>Producir textos sencillos y cohesionados sobre temas familiares o de interés personal.</li>
+      <li>Describir experiencias, eventos, sueños, esperanzas y ambiciones, y dar razones breves para opiniones y planes.</li>
+    </ul>
+    <div class="highlight blue" style="margin-top:16px;">
+      <strong>⏱ Duración estimada:</strong> 180–240 horas de estudio guiado (aprox. 6–9 meses con 6–8 h/semana).<br>
+      <strong>Vocabulario activo:</strong> 1.500 – 2.500 palabras.
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>🎯 Objetivos Generales</h3>
+      <ul>
+        <li>Mantener conversaciones con cierta fluidez sobre temas cotidianos.</li>
+        <li>Escribir correos, ensayos breves y narraciones coherentes.</li>
+        <li>Comprender podcasts, noticias y conversaciones a velocidad media.</li>
+        <li>Usar estructuras gramaticales complejas con razonable precisión.</li>
+        <li>Pronunciar con claridad y entonación adecuada.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📋 Prerrequisitos (desde A2)</h3>
+      <ul>
+        <li>Present simple &amp; continuous, past simple.</li>
+        <li>Futuro con <em>going to</em> y <em>will</em> (básico).</li>
+        <li>Vocabulario cotidiano: familia, comida, casa, rutinas.</li>
+        <li>Preguntas básicas (wh- questions).</li>
+        <li>Comprensión de textos cortos y sencillos.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="icon">📊</span> Progresión A2 → B1 → B2</h2>
+    <div style="margin-bottom:6px;"><strong>A2</strong> — Frases hechas, necesidades inmediatas</div>
+    <div class="progress-bar"><div class="fill" style="width:100%"></div></div>
+    <div style="margin-bottom:6px;margin-top:6px;"><strong style="color:var(--secondary);">⬇︎ B1 — ESTAMOS AQUÍ</strong> — Independencia controlada, temas cotidianos</div>
+    <div class="progress-bar"><div class="fill" style="width:60%;background:linear-gradient(90deg,var(--secondary),var(--secondary))"></div></div>
+    <div style="margin-bottom:6px;margin-top:6px;"><strong>B2</strong> — Fluidez, abstracción, argumentación compleja</div>
+    <div class="progress-bar"><div class="fill" style="width:25%;background:linear-gradient(90deg,var(--text-light),var(--text-light))"></div></div>
+  </div>
+
+  <!-- Can-do statements -->
+  <div class="card">
+    <h2><span class="icon">✅</span> «Can-Do Statements» — Lo que podrás hacer</h2>
+    <div class="mini-tabs" id="candoTabs">
+      <button class="active-mini" data-mini="cando-speaking">🗣️ Speaking</button>
+      <button data-mini="cando-writing">✍️ Writing</button>
+      <button data-mini="cando-listening">🎧 Listening</button>
+      <button data-mini="cando-reading">📖 Reading</button>
+    </div>
+
+    <div class="mini-tab-content active-mini" id="cando-speaking">
+      <ul class="checklist">
+        <li>Iniciar, mantener y cerrar conversaciones cara a cara.</li>
+        <li>Dar opiniones y explicar por qué se piensa algo.</li>
+        <li>Hablar de experiencias pasadas, planes futuros y deseos.</li>
+        <li>Desenvolverse en situaciones cotidianas (restaurante, hotel, tienda).</li>
+        <li>Hacer peticiones educadas y reaccionar a noticias.</li>
+      </ul>
+    </div>
+    <div class="mini-tab-content" id="cando-writing">
+      <ul class="checklist">
+        <li>Escribir correos electrónicos formales e informales.</li>
+        <li>Redactar un ensayo breve con introducción, desarrollo y conclusión.</li>
+        <li>Narrar una historia o anécdota personal por escrito.</li>
+        <li>Completar formularios y solicitudes con datos personales y profesionales.</li>
+        <li>Expresar opinión en foros, cartas al director o blogs.</li>
+      </ul>
+    </div>
+    <div class="mini-tab-content" id="cando-listening">
+      <ul class="checklist">
+        <li>Comprender las ideas principales de podcasts y noticias.</li>
+        <li>Seguir una conversación entre hablantes nativos a velocidad media.</li>
+        <li>Extraer información específica de anuncios y avisos.</li>
+        <li>Entender instrucciones y direcciones detalladas.</li>
+      </ul>
+    </div>
+    <div class="mini-tab-content" id="cando-reading">
+      <ul class="checklist">
+        <li>Leer artículos de revistas y periódicos sobre temas conocidos.</li>
+        <li>Comprender la trama de una lectura graduada (B1).</li>
+        <li>Extraer información clave de páginas web, menús, horarios.</li>
+        <li>Identificar la idea principal y detalles de apoyo en un texto.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECCIÓN 2: GRAMÁTICA ==================== -->
+<section id="grammar" class="section">
+  <div class="card">
+    <h2><span class="icon">📚</span> Gramática B1 — Programa Completo</h2>
+    <p style="margin-bottom:16px;">La gramática B1 supone un salto cualitativo: se consolidan los tiempos básicos y se introducen estructuras más complejas. Organizamos el contenido en <strong>7 bloques</strong>.</p>
+
+    <div class="grid-2" id="grammarBlocks">
+      <!-- Bloque 1 -->
+      <div class="card" style="box-shadow:none;border:1px solid var(--border);margin:0;">
+        <h4 style="color:var(--accent);margin-top:0;">❶ Tiempos Presente y Pasado</h4>
+        <ul>
+          <li>Present simple vs. present continuous (acción vs. estado)</li>
+          <li>Stative verbs (know, believe, belong…)</li>
+          <li>Past simple vs. past continuous</li>
+          <li>Present perfect simple (experiencias, resultados)</li>
+          <li>Present perfect continuous (duración hasta ahora)</li>
+          <li>Present perfect vs. past simple</li>
+          <li>Past perfect simple (orden narrativo)</li>
+          <li><em>Used to</em> / <em>would</em> para hábitos pasados</li>
+        </ul>
+      </div>
+      <!-- Bloque 2 -->
+      <div class="card" style="box-shadow:none;border:1px solid var(--border);margin:0;">
+        <h4 style="color:var(--accent);margin-top:0;">❷ Futuro</h4>
+        <ul>
+          <li><em>Will</em> para predicciones y decisiones espontáneas</li>
+          <li><em>Going to</em> para planes e intenciones</li>
+          <li>Present continuous para arreglos futuros</li>
+          <li>Present simple con horarios</li>
+          <li>Future continuous (<em>will be doing</em>)</li>
+          <li>Cláusulas temporales con <em>when, until, as soon as, before</em></li>
+        </ul>
+      </div>
+      <!-- Bloque 3 -->
+      <div class="card" style="box-shadow:none;border:1px solid var(--border);margin:0;">
+        <h4 style="color:var(--accent);margin-top:0;">❸ Condicionales y Deseos</h4>
+        <ul>
+          <li>Zero conditional (hechos generales)</li>
+          <li>First conditional (situaciones reales futuras)</li>
+          <li>Second conditional (situaciones irreales) + <em>If I were you…</em></li>
+          <li>Third conditional (experiencias hipotéticas pasadas)</li>
+          <li><em>Unless, as long as, provided that</em></li>
+          <li><em>I wish / If only</em> (deseos presentes y pasados)</li>
+        </ul>
+      </div>
+      <!-- Bloque 4 -->
+      <div class="card" style="box-shadow:none;border:1px solid var(--border);margin:0;">
+        <h4 style="color:var(--accent);margin-top:0;">❹ Verbos Modales</h4>
+        <ul>
+          <li>Obligación: <em>must, have to, should, ought to</em></li>
+          <li>Prohibición: <em>mustn't, can't</em></li>
+          <li>Ausencia de obligación: <em>don't have to, needn't</em></li>
+          <li>Deducción presente: <em>must, might, could, can't</em></li>
+          <li>Habilidad: <em>can, could, be able to</em> (todos los tiempos)</li>
+          <li>Permiso y peticiones: <em>can, could, may</em></li>
+          <li>Consejos: <em>should, ought to, had better</em></li>
+        </ul>
+      </div>
+      <!-- Bloque 5 -->
+      <div class="card" style="box-shadow:none;border:1px solid var(--border);margin:0;">
+        <h4 style="color:var(--accent);margin-top:0;">❺ Voz Pasiva</h4>
+        <ul>
+          <li>Pasiva en presente simple y pasado simple</li>
+          <li>Pasiva con <em>will</em> y presente perfecto</li>
+          <li>Pasiva con modales (<em>can be done, should be done</em>)</li>
+          <li><em>Have / get something done</em> (servicios)</li>
+        </ul>
+      </div>
+      <!-- Bloque 6 -->
+      <div class="card" style="box-shadow:none;border:1px solid var(--border);margin:0;">
+        <h4 style="color:var(--accent);margin-top:0;">❻ Estilo Indirecto</h4>
+        <ul>
+          <li>Reported speech: afirmaciones (<em>said that…</em>)</li>
+          <li>Preguntas indirectas (<em>asked if / what…</em>)</li>
+          <li>Órdenes y peticiones indirectas</li>
+          <li>Cambios de tiempo verbal (backshift)</li>
+          <li><em>Say</em> vs. <em>tell</em></li>
+        </ul>
+      </div>
+      <!-- Bloque 7 -->
+      <div class="card" style="box-shadow:none;border:1px solid var(--border);margin:0;">
+        <h4 style="color:var(--accent);margin-top:0;">❼ Otras Estructuras Clave</h4>
+        <ul>
+          <li>Comparativos y superlativos (incl. <em>as…as, the more…the more</em>)</li>
+          <li>Artículos: <em>a/an, the, zero article</em></li>
+          <li>Cuantificadores: <em>some, any, much, many, a lot of, few, little, enough, too</em></li>
+          <li>Oraciones de relativo (defining y non-defining)</li>
+          <li>Question tags (<em>You're tired, aren't you?</em>)</li>
+          <li>Verbos + gerundio / infinitivo (verb patterns)</li>
+          <li>Phrasal verbs separables e inseparables</li>
+          <li>Conectores: <em>although, despite, however, moreover, therefore</em></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECCIÓN 3: VOCABULARIO ==================== -->
+<section id="vocab" class="section">
+  <div class="card">
+    <h2><span class="icon">🗣️</span> Vocabulario B1 por Áreas Temáticas</h2>
+    <p style="margin-bottom:16px;">El vocabulario B1 abarca <strong>~20 áreas temáticas</strong> fundamentales. Cada área incluye entre 50 y 100 términos activos (verbos, sustantivos, adjetivos, colocaciones).</p>
+
+    <div class="grid-3">
+      <div><span class="tag">Familia y personalidad</span> <span class="tag green">Trabajo y profesiones</span> <span class="tag orange">Dinero y compras</span> <span class="tag red">Comida y cocina</span> <span class="tag purple">Viajes y transporte</span></div>
+      <div><span class="tag">Deporte y fitness</span> <span class="tag green">Tecnología y dispositivos</span> <span class="tag orange">Medio ambiente</span> <span class="tag red">Educación y estudio</span> <span class="tag purple">Ocio y entretenimiento</span></div>
+      <div><span class="tag">Medios y noticias</span> <span class="tag green">Salud y el cuerpo</span> <span class="tag orange">Relaciones y sentimientos</span> <span class="tag red">Crimen y justicia</span> <span class="tag purple">Vivienda y hogar</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📖 Vocabulario detallado por tema</h3>
+    <div class="grid-2">
+      <div>
+        <h4>🏠 Casa y Hogar</h4>
+        <ul>
+          <li>Tipos de vivienda: <em>detached house, flat, studio flat, terraced house</em></li>
+          <li>Muebles y electrodomésticos: <em>wardrobe, chest of drawers, dishwasher</em></li>
+          <li>Tareas domésticas: <em>do the washing-up, make the bed, tidy up</em></li>
+          <li>Alquilar/comprar: <em>landlord, tenant, deposit, rent, mortgage</em></li>
+        </ul>
+        <h4>🍽️ Comida y Cocina</h4>
+        <ul>
+          <li>Ingredientes: <em>dairy, wholegrain, lean meat, seafood, herbs, spices</em></li>
+          <li>Métodos de cocción: <em>boil, roast, steam, fry, grill, bake</em></li>
+          <li>En el restaurante: <em>book a table, order, main course, dessert, tip, bill</em></li>
+          <li>Dietas: <em>vegetarian, vegan, gluten-free, balanced diet</em></li>
+        </ul>
+        <h4>💼 Trabajo</h4>
+        <ul>
+          <li>Empleo: <em>full-time, part-time, freelance, permanent contract, apply for a job</em></li>
+          <li>CV y entrevista: <em>cover letter, work experience, qualifications, strengths, weaknesses</em></li>
+          <li>Oficina: <em>meeting, deadline, boss, colleague, salary, wage</em></li>
+        </ul>
+      </div>
+      <div>
+        <h4>✈️ Viajes y Transporte</h4>
+        <ul>
+          <li>Aeropuerto: <em>check-in, boarding pass, departure lounge, gate, luggage</em></li>
+          <li>Alojamiento: <em>B&amp;B, hostel, double room, check-in/out, reception</em></li>
+          <li>Transporte público: <em>single/return ticket, platform, delay, get on/off</em></li>
+          <li>Direcciones: <em>go straight on, turn left/right, roundabout, pedestrian crossing</em></li>
+        </ul>
+        <h4>🩺 Salud</h4>
+        <ul>
+          <li>Síntomas: <em>headache, sore throat, runny nose, fever, cough</em></li>
+          <li>En el médico: <em>surgery, appointment, prescription, pharmacist, diagnosis</em></li>
+          <li>Estilo de vida: <em>exercise, diet, get enough sleep, stress, mental health</em></li>
+        </ul>
+        <h4>🌍 Medio Ambiente</h4>
+        <ul>
+          <li>Clima: <em>climate change, global warming, flood, drought, greenhouse gases</em></li>
+          <li>Reciclaje: <em>recycle, reuse, reduce, compost, rubbish, waste</em></li>
+          <li>Energía: <em>renewable energy, solar power, wind farm, fossil fuels</em></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4>📌 Colocaciones y verbos compuestos esenciales en B1</h4>
+    <div class="grid-2">
+      <div>
+        <strong>Colocaciones frecuentes:</strong>
+        <ul>
+          <li><em>make</em> a decision / a mistake / a difference / an effort</li>
+          <li><em>do</em> homework / business / research / a favour</li>
+          <li><em>have</em> fun / an argument / a break / an experience</li>
+          <li><em>take</em> part in / care of / advantage of / place</li>
+        </ul>
+      </div>
+      <div>
+        <strong>Phrasal Verbs clave:</strong>
+        <ul>
+          <li><em>break down, bring up, carry on, come across</em></li>
+          <li><em>find out, get along, give up, grow up</em></li>
+          <li><em>look after, look for, put off, run out of</em></li>
+          <li><em>take off, turn on/off, work out, show up</em></li>
+        </ul>
+      </div>
+    </div>
+    <div class="highlight" style="margin-top:12px;">
+      💡 <strong>Meta B1:</strong> Aprender y usar correctamente al menos <strong>40 phrasal verbs</strong> y <strong>30 colocaciones</strong> en contexto.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECCIÓN 4: HABILIDADES ==================== -->
+<section id="skills" class="section">
+  <div class="card">
+    <h2><span class="icon">🎯</span> Las 4 Habilidades + Uso de la Lengua</h2>
+    <p>En B1, el equilibrio entre las cuatro habilidades es fundamental. Cada una requiere práctica específica y estrategias concretas.</p>
+  </div>
+
+  <!-- mini tabs para skills -->
+  <div class="card">
+    <div class="mini-tabs" id="skillsTabs">
+      <button class="active-mini" data-mini="skill-speaking">🗣️ Speaking</button>
+      <button data-mini="skill-writing">✍️ Writing</button>
+      <button data-mini="skill-reading">📖 Reading</button>
+      <button data-mini="skill-listening">🎧 Listening</button>
+      <button data-mini="skill-use">🧩 Use of English</button>
+    </div>
+
+    <div class="mini-tab-content active-mini" id="skill-speaking">
+      <h3>🗣️ Expresión Oral — Speaking</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Tipos de Tareas</h4>
+          <ul>
+            <li>Conversaciones informales (small talk)</li>
+            <li>Role plays: restaurante, hotel, médico, tienda</li>
+            <li>Descripción de fotos e imágenes</li>
+            <li>Comparar y contrastar opciones</li>
+            <li>Dar y pedir opiniones en grupo</li>
+            <li>Presentación breve sobre un tema conocido</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Estrategias Clave</h4>
+          <ul>
+            <li>Usar <em>fillers</em>: <em>well, you know, actually, I mean, let me think</em></li>
+            <li>Negociar significado: <em>What do you mean by…? In other words…</em></li>
+            <li>Mostrar acuerdo/desacuerdo: <em>I agree up to a point, I see your point but…</em></li>
+            <li>Invitar a otros: <em>What do you think? How about you?</em></li>
+            <li>Fluidez: practicar speaking 15–20 min/día</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mini-tab-content" id="skill-writing">
+      <h3>✍️ Expresión Escrita — Writing</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Tipos de Texto</h4>
+          <ul>
+            <li>Email informal y formal</li>
+            <li>Carta de presentación (cover letter)</li>
+            <li>Ensayo de opinión (for &amp; against)</li>
+            <li>Narración personal (story / anecdote)</li>
+            <li>Reseña de película, libro o restaurante</li>
+            <li>Mensaje en foro o blog</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Estructura y Estilo</h4>
+          <ul>
+            <li>Párrafos: introducción, desarrollo (2–3 párrafos), conclusión</li>
+            <li>Conectores: <em>First of all, Moreover, However, In addition, On the other hand, Finally</em></li>
+            <li>Registro: formal vs. informal (contracciones, vocabulario)</li>
+            <li>Puntuación y ortografía correctas</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mini-tab-content" id="skill-reading">
+      <h3>📖 Comprensión Lectora — Reading</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Textos Recomendados</h4>
+          <ul>
+            <li>Lecturas graduadas: Oxford Bookworms Stage 4, Penguin Readers Level 4</li>
+            <li>BBC News – artículos simples</li>
+            <li>Blogs de viajes, estilo de vida, tecnología</li>
+            <li>Foros: Reddit (r/languagelearning), Quora</li>
+            <li>Revistas: Speak Up, Learn Hot English</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Estrategias</h4>
+          <ul>
+            <li><em>Skimming:</em> leer por encima para idea general</li>
+            <li><em>Scanning:</em> buscar información específica</li>
+            <li>Deducir significado por contexto</li>
+            <li>Identificar cognados (palabras similares al español)</li>
+            <li>Leer al menos 20 minutos diarios en inglés</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mini-tab-content" id="skill-listening">
+      <h3>🎧 Comprensión Auditiva — Listening</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Recursos Ideales</h4>
+          <ul>
+            <li>Podcasts: <em>6 Minute English (BBC), The English We Speak</em></li>
+            <li>Audiolibros nivelados</li>
+            <li>YouTube: English with Lucy, BBC Learning English</li>
+            <li>Netflix con subtítulos en inglés</li>
+            <li>Noticias: VOA Learning English, News Review</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Estrategias</h4>
+          <ul>
+            <li>Escucha global → después busca detalles</li>
+            <li>Transcripciones: leer mientras escuchas</li>
+            <li>Tomar notas de palabras clave</li>
+            <li>Repetir segmentos difíciles</li>
+            <li>Exponerse a distintos acentos (UK, US, AU)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="mini-tab-content" id="skill-use">
+      <h3>🧩 Uso de la Lengua — Use of English</h3>
+      <div class="grid-2">
+        <div>
+          <h4>Tipos de Ejercicio</h4>
+          <ul>
+            <li>Open cloze (completar huecos sin opciones)</li>
+            <li>Multiple choice (gramática y vocabulario)</li>
+            <li>Transformación de oraciones (key word transformations)</li>
+            <li>Formación de palabras (word formation)</li>
+            <li>Error correction</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Práctica Diaria</h4>
+          <ul>
+            <li>App: <em>Cambridge English, British Council</em></li>
+            <li>Libros: <em>Destination B1, English Grammar in Use (3ª ed.)</em></li>
+            <li>Ejercicios online: <em>examenglish.com, englishgrammar.org</em></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECCIÓN 5: FONOLOGÍA ==================== -->
+<section id="phonology" class="section">
+  <div class="card">
+    <h2><span class="icon">🔊</span> Fonología y Pronunciación B1</h2>
+    <p>Una pronunciación clara y una entonación natural son esenciales en B1. Trabajamos estos aspectos de forma sistemática.</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>🔤 Sonidos y Fonemas</h3>
+      <ul>
+        <li><strong>Vocales largas vs. cortas:</strong> <em>ship / sheep, full / fool, cot / caught</em></li>
+        <li><strong>Diptongos:</strong> <em>/eɪ/ (say), /aɪ/ (time), /ɔɪ/ (boy), /əʊ/ (home), /aʊ/ (now)</em></li>
+        <li><strong>Consonantes problemáticas para hispanohablantes:</strong>
+          <ul>
+            <li><em>/θ/</em> (think) y <em>/ð/</em> (the)</li>
+            <li><em>/h/</em> inicial (hotel, house) — sin aspirar en español</li>
+            <li><em>/v/</em> vs. <em>/b/</em></li>
+            <li><em>/dʒ/</em> (job) vs. <em>/j/</em> (yes)</li>
+            <li><em>/ʃ/</em> (shop) y <em>/tʃ/</em> (chip)</li>
+          </ul>
+        </li>
+        <li><strong>Consonantes silenciosas:</strong> <em>climb, listen, write, know, doubt</em></li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>📝 Acento y Entonación</h3>
+      <ul>
+        <li><strong>Acento léxico (word stress):</strong>
+          <ul>
+            <li><em>pho<u>to</u>graph</em> vs. <em>pho<u>to</u>grapher</em> vs. <em>pho<u>to</u>graphic</em></li>
+            <li>Patrones: palabras terminadas en <em>-tion, -sion, -ic, -ical</em> → acento en la penúltima</li>
+          </ul>
+        </li>
+        <li><strong>Acento oracional (sentence stress):</strong> palabras de contenido (verbs, nouns) se acentúan; palabras gramaticales se reducen.</li>
+        <li><strong>Entonación:</strong>
+          <ul>
+            <li>Preguntas <em>wh-</em> → tono descendente</li>
+            <li>Yes/No questions → tono ascendente</li>
+            <li>Question tags: certeza descendente, duda ascendente</li>
+          </ul>
+        </li>
+        <li><strong>Linking (conexión):</strong> <em>not_at_all, an_hour, turn_off</em></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🎯 Ejercicios de Pronunciación Recomendados</h3>
+    <div class="grid-3">
+      <div>
+        <span class="tag green">🔊 Minimal pairs</span>
+        <p style="font-size:0.9rem;margin-top:6px;">Practicar pares mínimos: <em>bit/beat, live/leave, tin/thin</em></p>
+      </div>
+      <div>
+        <span class="tag orange">🗣️ Shadowing</span>
+        <p style="font-size:0.9rem;margin-top:6px;">Repetir inmediatamente después de un hablante nativo imitando entonación y ritmo.</p>
+      </div>
+      <div>
+        <span class="tag red">📱 Apps</span>
+        <p style="font-size:0.9rem;margin-top:6px;">Elsa Speak, BoldVoice, Sounds: Pronunciation (BBC).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECCIÓN 6: PLAN SEMANAL ==================== -->
+<section id="plan" class="section">
+  <div class="card">
+    <h2><span class="icon">📅</span> Plan de Estudio Semanal Recomendado</h2>
+    <p>Este plan está diseñado para <strong>8 horas por semana</strong> durante <strong>24 semanas</strong> (~6 meses). Cada semana combina gramática, vocabulario y práctica de habilidades.</p>
+  </div>
+
+  <div class="card">
+    <div class="timeline">
+      <!-- Semanas 1-4 -->
+      <div class="timeline-item">
+        <span class="week-label">Semanas 1–4 · Fundamentos</span>
+        <h4>Revisión A2 + Present Perfect</h4>
+        <p><strong>Gramática:</strong> Present simple vs. continuous, past simple, present perfect (+ for/since), present perfect continuous.<br>
+        <strong>Vocabulario:</strong> Rutinas diarias, familia, personalidad, comida.<br>
+        <strong>Speaking:</strong> Describir tu rutina y experiencias.<br>
+        <strong>Writing:</strong> Email informal contando noticias.<br>
+        <strong>Lectura:</strong> Artículo sobre hábitos saludables.</p>
+      </div>
+
+      <div class="timeline-item">
+        <span class="week-label">Semanas 5–8 · Pasado y Futuro</span>
+        <h4>Past perfect, used to, futuro</h4>
+        <p><strong>Gramática:</strong> Past perfect, <em>used to/would</em>, will vs. going to, present continuous for future, future continuous.<br>
+        <strong>Vocabulario:</strong> Viajes, transporte, vacaciones.<br>
+        <strong>Speaking:</strong> Hablar de recuerdos y planes de viaje.<br>
+        <strong>Writing:</strong> Narración de una anécdota pasada.<br>
+        <strong>Listening:</strong> Conversación sobre planes de fin de semana.</p>
+      </div>
+
+      <div class="timeline-item">
+        <span class="week-label">Semanas 9–12 · Modales y Condicionales</span>
+        <h4>Modal verbs, 1st &amp; 2nd conditional</h4>
+        <p><strong>Gramática:</strong> Modales (obligación, deducción, habilidad), first &amp; second conditional, <em>unless, as long as</em>.<br>
+        <strong>Vocabulario:</strong> Trabajo, dinero, salud, el cuerpo.<br>
+        <strong>Speaking:</strong> Role play: médico-paciente / entrevista de trabajo.<br>
+        <strong>Writing:</strong> Carta de presentación o email formal.<br>
+        <strong>Reading:</strong> Artículo sobre carreras profesionales.</p>
+      </div>
+
+      <div class="timeline-item">
+        <span class="week-label">Semanas 13–16 · Voz Pasiva y Relativos</span>
+        <h4>Passive, relative clauses, comparatives</h4>
+        <p><strong>Gramática:</strong> Passive (present, past, future, modals), defining &amp; non-defining relative clauses, comparatives &amp; superlatives avanzados.<br>
+        <strong>Vocabulario:</strong> Tecnología, medios, noticias, medio ambiente.<br>
+        <strong>Speaking:</strong> Debate sobre tecnología / cambio climático.<br>
+        <strong>Writing:</strong> Ensayo for &amp; against (opinión).<br>
+        <strong>Listening:</strong> Podcast de noticias (BBC 6 Minute English).</p>
+      </div>
+
+      <div class="timeline-item">
+        <span class="week-label">Semanas 17–20 · Reported Speech + Verb Patterns</span>
+        <h4>Reported speech, gerunds &amp; infinitives</h4>
+        <p><strong>Gramática:</strong> Reported speech (afirmaciones, preguntas, órdenes), verb patterns (verb + gerund/infinitive), quantifiers.<br>
+        <strong>Vocabulario:</strong> Relaciones, sentimientos, cine, entretenimiento.<br>
+        <strong>Speaking:</strong> Reportar lo que alguien dijo; contar una película.<br>
+        <strong>Writing:</strong> Reseña de película o libro.<br>
+        <strong>Lectura:</strong> Biografía corta de una persona famosa.</p>
+      </div>
+
+      <div class="timeline-item">
+        <span class="week-label">Semanas 21–24 · Consolidación + Repaso</span>
+        <h4>Third conditional, wish, repaso general</h4>
+        <p><strong>Gramática:</strong> Third conditional, <em>wish/if only</em>, question tags, all tenses review.<br>
+        <strong>Vocabulario:</strong> Crimen, justicia, phrasal verbs avanzados, collocations.<br>
+        <strong>Speaking:</strong> Situaciones hipotéticas, deseos, planes futuros.<br>
+        <strong>Writing:</strong> Ensayo completo: problema y solución.<br>
+        <strong>Evaluación:</strong> Simulación de examen B1 (Reading, Use of English, Writing, Listening, Speaking).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📊 Distribución Semanal Recomendada (8 h)</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Día</th><th>Actividad</th><th>Tiempo</th></tr></thead>
+        <tbody>
+          <tr><td>Lunes</td><td>Gramática — estudio + ejercicios</td><td>1.5 h</td></tr>
+          <tr><td>Martes</td><td>Vocabulario temático + phrasal verbs</td><td>1 h</td></tr>
+          <tr><td>Miércoles</td><td>Reading + Listening</td><td>1.5 h</td></tr>
+          <tr><td>Jueves</td><td>Speaking practice (solo o con compañero)</td><td>1 h</td></tr>
+          <tr><td>Viernes</td><td>Writing task + corrección / reescritura</td><td>1.5 h</td></tr>
+          <tr><td>Sábado</td><td>Use of English + ejercicios online</td><td>1 h</td></tr>
+          <tr><td>Domingo</td><td>📖 Lectura extensiva (30 min) + 🎧 Listening libre (30 min)</td><td>1 h</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== SECCIÓN 7: RECURSOS ==================== -->
+<section id="resources" class="section">
+  <div class="card">
+    <h2><span class="icon">📌</span> Recursos Recomendados para B1</h2>
+    <p>Selección de los mejores materiales gratuitos y de pago para nivel B1.</p>
+  </div>
+
+  <div class="card">
+    <h3>📕 Libros de Texto</h3>
+    <div class="grid-3">
+      <div>
+        <span class="tag green">Gramática</span>
+        <ul style="margin-top:6px;">
+          <li><em>English Grammar in Use</em> (Raymond Murphy) — 3ª/4ª ed.</li>
+          <li><em>Destination B1</em> (Malcolm Mann)</li>
+          <li><em>Grammar for PET</em> (Cambridge)</li>
+        </ul>
+      </div>
+      <div>
+        <span class="tag orange">Curso General</span>
+        <ul style="margin-top:6px;">
+          <li><em>English File Intermediate</em> (OUP)</li>
+          <li><em>Speakout Intermediate</em> (Pearson)</li>
+          <li><em>Roadmap B1</em> (Pearson)</li>
+        </ul>
+      </div>
+      <div>
+        <span class="tag red">Preparación Examen</span>
+        <ul style="margin-top:6px;">
+          <li><em>Cambridge B1 Preliminary (PET) Trainer</em></li>
+          <li><em>Ready for B1 Preliminary</em></li>
+          <li><em>Objective PET</em></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>🌐 Recursos Online Gratuitos</h3>
+      <table>
+        <thead><tr><th>Recurso</th><th>Uso</th></tr></thead>
+        <tbody>
+          <tr><td>BBC Learning English</td><td>Grammar, vocabulary, news</td></tr>
+          <tr><td>British Council (LearnEnglish)</td><td>Ejercicios, podcasts, videos</td></tr>
+          <tr><td>ExamEnglish.com</td><td>Pruebas B1 PET gratuitas</td></tr>
+          <tr><td>EnglishRadar.com</td><td>Study targets B1</td></tr>
+          <tr><td>Linguapress.com</td><td>Lecturas graduadas</td></tr>
+          <tr><td>Quizlet / Anki</td><td>Flashcards de vocabulario</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card">
+      <h3>📱 Apps Móviles</h3>
+      <ul>
+        <li><strong>Duolingo / Busuu</strong> — práctica diaria gamificada</li>
+        <li><strong>Elsa Speak</strong> — pronunciación con IA</li>
+        <li><strong>BBC Sounds</strong> — podcasts en inglés</li>
+        <li><strong>Beelinguapp</strong> — lectura con audio paralelo</li>
+        <li><strong>Clozemaster</strong> — vocabulario en contexto</li>
+        <li><strong>Grammarly Keyboard</strong> — corrección al escribir</li>
+      </ul>
+      <h3 style="margin-top:16px;">🎧 Canales de YouTube</h3>
+      <ul>
+        <li>BBC Learning English</li>
+        <li>English with Lucy</li>
+        <li>Learn English with TV Series</li>
+        <li>Arnel's Everyday English</li>
+        <li>English with Jennifer (B1 playlist)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📖 Lecturas Graduadas Recomendadas (B1)</h3>
+    <div class="grid-2">
+      <div>
+        <strong>Oxford Bookworms Stage 4 (1.400–1.800 palabras clave)</strong>
+        <ul>
+          <li><em>The Hound of the Baskervilles</em> — Sir Arthur Conan Doyle</li>
+          <li><em>Dr Jekyll and Mr Hyde</em> — R. L. Stevenson</li>
+          <li><em>Silas Marner</em> — George Eliot</li>
+          <li><em>Little Women</em> — Louisa May Alcott</li>
+        </ul>
+      </div>
+      <div>
+        <strong>Penguin Readers Level 4</strong>
+        <ul>
+          <li><em>The Invisible Man</em> — H.G. Wells</li>
+          <li><em>Alexander the Great</em> — Fiona Beddall</li>
+          <li><em>1984</em> — George Orwell (simplified)</li>
+          <li><em>Women in Business</em> — David Evans</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📝 Modelo de Evaluación — Simulación B1</h3>
+    <p>Para medir tu progreso, cada 6 semanas realiza una simulación con estas partes:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Sección</th><th>Formato</th><th>Tiempo</th></tr></thead>
+        <tbody>
+          <tr><td>Reading</td><td>3 textos + 15 preguntas (multiple choice, T/F, matching)</td><td>30 min</td></tr>
+          <tr><td>Use of English</td><td>20 ítems (open cloze, word formation, key word transformations)</td><td>25 min</td></tr>
+          <tr><td>Writing</td><td>Email + ensayo corto (140–180 palabras cada uno)</td><td>40 min</td></tr>
+          <tr><td>Listening</td><td>4 grabaciones + 20 preguntas</td><td>25 min</td></tr>
+          <tr><td>Speaking</td><td>3 partes: entrevista, descripción de foto, discusión</td><td>12–15 min</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="highlight green" style="margin-top:14px;">
+      ✅ <strong>Criterio de aprobación B1:</strong> 60–70% del puntaje total, con al menos 50% en cada habilidad.
+    </div>
+  </div>
+</section>
+
+</div> <!-- /container -->
+
+<footer>
+  <p>📘 Plan de Estudios B1 — Creado con base en el Marco Común Europeo de Referencia (MCER/CEFR)</p>
+  <p>© 2026 · Diseñado para acompañar tu viaje hacia la fluidez en inglés</p>
+</footer>
+
+<!-- ======================== JAVASCRIPT ======================== -->
+<script>
+  (function() {
+    // --- Navegación principal ---
+    const navBtns = document.querySelectorAll('#mainNav button');
+    const sections = document.querySelectorAll('.section');
+
+    navBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        navBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        const target = this.dataset.tab;
+        sections.forEach(s => {
+          s.classList.toggle('active', s.id === target);
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    // --- Mini-tabs (Can-Do y Skills) ---
+    document.querySelectorAll('.mini-tabs').forEach(tabGroup => {
+      const buttons = tabGroup.querySelectorAll('button');
+      const container = tabGroup.parentElement;
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', function() {
+          // Desactivar todos en este grupo
+          buttons.forEach(b => b.classList.remove('active-mini'));
+          this.classList.add('active-mini');
+
+          const targetId = this.dataset.mini;
+          // Buscar contenidos dentro del mismo contenedor
+          const contents = container.querySelectorAll('.mini-tab-content');
+          contents.forEach(c => {
+            c.classList.toggle('active-mini', c.id === targetId);
+          });
+        });
+      });
+    });
+
+    // --- Acordeones (reserva) ---
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', function() {
+        this.classList.toggle('open');
+        const body = this.nextElementSibling;
+        if (body) body.classList.toggle('open');
+      });
+    });
+
+    console.log('📘 Plan B1 cargado correctamente.');
+  })();
+</script>
+
+</body>
+</html>
