@@ -25,7 +25,8 @@ temp_descargas/
 ENGLISH/
 *.pdf
 
-# Installed skills (user-specific)
+# Installed skills (user-specific — not tracked in project)
 .agents/skills/
 Skill Claude/
 skillspector/
+skills/

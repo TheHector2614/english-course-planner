@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 1,
   "skills": {
     "12-principles-of-animation": {
       "source": "raphaelsalaja/skill",
@@ -61,25 +61,5 @@
       "skillPath": "skills/web-quality-audit/SKILL.md",
       "computedHash": "10db799d6bff4fc98a4067aa04fdee2e9f34eaca1c42fd4207a89aafe644a6f0"
     }
-  },
-  "claude": {
-    "angular-dev": { "source": "local", "skillPath": "skills/claude/angular-dev/SKILL.md" },
-    "aws-cloud": { "source": "local", "skillPath": "skills/claude/aws-cloud/SKILL.md" },
-    "cybersecurity-defense": { "source": "local", "skillPath": "skills/claude/cybersecurity-defense/SKILL.md" },
-    "databases": { "source": "local", "skillPath": "skills/claude/databases/SKILL.md" },
-    "devops": { "source": "local", "skillPath": "skills/claude/devops/SKILL.md" },
-    "entrevistador-procesos": { "source": "local", "skillPath": "skills/claude/entrevistador-procesos/SKILL.md" },
-    "figma-workflow": { "source": "local", "skillPath": "skills/claude/figma-workflow/SKILL.md" },
-    "git-workflows": { "source": "local", "skillPath": "skills/claude/git-workflows/SKILL.md" },
-    "humanizador": { "source": "local", "skillPath": "skills/claude/humanizador/SKILL.md" },
-    "java-backend": { "source": "local", "skillPath": "skills/claude/java-backend/SKILL.md" },
-    "landing-pages-astro": { "source": "local", "skillPath": "skills/claude/landing-pages-astro/SKILL.md" },
-    "optimizador-prompts": { "source": "local", "skillPath": "skills/claude/optimizador-prompts/SKILL.md" },
-    "presentaciones-visuales": { "source": "local", "skillPath": "skills/claude/presentaciones-visuales/SKILL.md" },
-    "requirements-engineering": { "source": "local", "skillPath": "skills/claude/requirements-engineering/SKILL.md" },
-    "superpowers": { "source": "local", "skillPath": "skills/claude/superpowers/SKILL.md" },
-    "technical-docs": { "source": "local", "skillPath": "skills/claude/technical-docs/SKILL.md" },
-    "verificador-datos": { "source": "local", "skillPath": "skills/claude/verificador-datos/SKILL.md" },
-    "web-backend-security": { "source": "local", "skillPath": "skills/claude/web-backend-security/SKILL.md" }
   }
 }

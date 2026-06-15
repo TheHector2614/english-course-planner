@@ -50,7 +50,7 @@ proyecto-ensenanza/
 └── ENGLISH-TEACHER-SETUP.md            ← Esta guía
 ```
 
-Las skills del proyecto están disponibles localmente en `skills/ui-design/` (10 diseño UI) y `skills/claude/` (18 de Skill Claude). También se pueden instalar globalmente con `npx skills add` (quedan en `~/.agents/skills/`).
+Las skills se instalan globalmente con `npx skills add` (quedan en `~/.agents/skills/`).
 
 ---
 
