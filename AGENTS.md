@@ -5,13 +5,26 @@
 - **`english-teacher`** (primary/default) — CLT/TBLT/gamification. Crea HTML activities, lesson plans, writing evaluation.
 - **`@english-teacher-designer`** (subagent) — Mismo enfoque pedagógico + carga skills de diseño UI via `skill()` tool para materiales HTML más pulidos.
 
-## 10 design skills (global, ~/.agents/skills/)
+## Skills del proyecto
+
+### Diseño UI (10 skills, `skills/ui-design/`)
 
 ```
 frontend-design          emil-design-eng          make-interfaces-feel-better
 baseline-ui              design-taste-frontend    web-quality-audit
 wcag-audit-patterns      12-principles-of-animation oklch-skill
 interaction-design
+```
+
+### Claude Skills (18 skills, `skills/claude/`)
+
+```
+angular-dev              aws-cloud                cybersecurity-defense
+databases                devops                   entrevistador-procesos
+figma-workflow           git-workflows            humanizador
+java-backend             landing-pages-astro      optimizador-prompts
+presentaciones-visuales  requirements-engineering  superpowers
+technical-docs           verificador-datos         web-backend-security
 ```
 
 Cargar con `skill({ name: "..." })`. Ver `ENGLISH-TEACHER-SETUP.md` para tabla de cuándo usar cada una.
@@ -46,3 +59,5 @@ cd skillspector
 | `ENGLISH-TEACHER-SETUP.md` | Guía detallada de skills y uso |
 | `INSTALACION-DESDE-CERO.md` | Setup desde cero para no-programadores |
 | `plan-B1-interactivo.html` | Ejemplo de output esperado (actividad B1 interactiva) |
+| `skills/ui-design/` | 10 skills de diseño UI |
+| `skills/claude/` | 18 skills extraídas de Skill Claude |
