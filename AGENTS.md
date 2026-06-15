@@ -45,4 +45,3 @@ cd skillspector
 | `.opencode/agents/english-teacher.md` | Agente primario (sin skills de diseño) |
 | `ENGLISH-TEACHER-SETUP.md` | Guía detallada de skills y uso |
 | `INSTALACION-DESDE-CERO.md` | Setup desde cero para no-programadores |
-| `plan-B1-interactivo.html` | Ejemplo de output esperado (actividad B1 interactiva) |
