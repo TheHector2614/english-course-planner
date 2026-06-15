@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProgressOverview from "../components/dynamics/ProgressOverview";
+
+const levels = [
+  { id: "a1", name: "A1", label: "Beginner", hours: 8, units: 4, color: "a1", hue: 150, desc: "Fundamentos: saludos, familia, rutina diaria, direcciones" },
+  { id: "a2", name: "A2", label: "Elementary", hours: 10, units: 4, color: "a2", hue: 220, desc: "Pasado, presente continuo, comparativos, compras" },
+  { id: "b1", name: "B1", label: "Intermediate", hours: 12, units: 4, color: "b1", hue: 275, desc: "Present perfect, condicionales, pasiva, phrasal verbs" },
+  { id: "b1+", name: "B1+", label: "Upper Intermediate", hours: 12, units: 4, color: "b1p", hue: 15, desc: "Perfect continuous, 2nd conditional, reported speech" },
+  { id: "b2", name: "B2", label: "Advanced", hours: 14, units: 4, color: "b2", hue: 250, desc: "Mixed conditionals, inversión, modal perfects" },
+  { id: "b2+", name: "B2+", label: "Pre-Advanced", hours: 14, units: 4, color: "b2p", hue: 185, desc: "Participle clauses, wish, business English" },
+];
+---
+
+<BaseLayout title="English Course Planner">
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <div class="text-center">
+      <span class="inline-block rounded-full bg-a1-bg px-4 py-1 text-sm font-semibold text-a1">CEFR 2026 · A1 → B2+</span>
+      <h1 class="mt-4 text-4xl font-extrabold font-display md:text-5xl">
+        English Course Planner
+      </h1>
+      <p class="mx-auto mt-3 max-w-2xl text-lg text-text-secondary">
+        Interactive learning path from beginner to pre-advanced. 6 levels, 24 units, ~70 hours of content.
+      </p>
+    </div>
+
+    <ProgressOverview client:load />
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 pb-16">
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {levels.map((l) => (
+        <a
+          href={`/level/${l.id}`}
+          class="group block rounded-xl border border-border bg-surface p-6 no-underline shadow-sm transition-all hover-translate-up hover:shadow-md"
+          style={`--level-h: ${l.hue};`}
+        >
+          <div class="flex items-center justify-between">
+            <span class="text-3xl font-black font-display tracking-tight" style={`color: var(--${l.color});`}>
+              {l.name}
+            </span>
+            <span class="rounded-full px-2p5 py-0p5 text-xs font-medium" style={`background: var(--${l.color}-bg); color: var(--${l.color});`}>
+              {l.hours}h
+            </span>
+          </div>
+          <p class="mt-1 text-sm font-medium text-text-secondary">{l.label}</p>
+          <p class="mt-2 text-sm text-text-muted">{l.desc}</p>
+          <div class="mt-3 flex gap-1">
+            {Array.from({ length: l.units }, (_, i) => (
+              <span class="h-1p5 flex-1 rounded-full" style={`background: var(--${l.color}-light);`} />
+            ))}
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

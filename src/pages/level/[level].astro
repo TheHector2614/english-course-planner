@@ -1,0 +1,248 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Quiz from "../../components/interactive/Quiz";
+import FlashcardDeck from "../../components/interactive/FlashcardDeck";
+import WritingExercise from "../../components/interactive/WritingExercise";
+
+const { level, name, label, color, units, quiz, flashcards } = Astro.props;
+
+export function getStaticPaths() {
+  return [
+    { params: { level: "a1" }, props: { 
+      level: "a1", name: "A1", label: "Beginner", color: "a1", hue: 150,
+      units: [
+        { id: "a1-01", title: "Greetings & Introductions", desc: "Verb to be, questions, alphabet, numbers 1-100", tags: ["grammar", "vocabulary"] },
+        { id: "a1-02", title: "Family & Everyday Objects", desc: "Possessive 's, colors, plurals", tags: ["grammar", "vocabulary"] },
+        { id: "a1-03", title: "Daily Life & Time", desc: "Present simple, time expressions, adverbs", tags: ["grammar"] },
+        { id: "a1-04", title: "Places & Directions", desc: "There is/are, prepositions, basic directions", tags: ["grammar", "speaking"] },
+      ],
+      quiz: {
+        questions: [
+          { id: 1, question: "She ___ a teacher.", options: ["am", "is", "are", "be"], correct: 1, explanation: "'She' takes 'is' in present simple." },
+          { id: 2, question: "What ___ your name?", options: ["is", "am", "are", "be"], correct: 0, explanation: "'Your name' is singular, use 'is'." },
+          { id: 3, question: "They ___ from Spain.", options: ["is", "am", "are", "be"], correct: 2, explanation: "'They' takes 'are'." },
+          { id: 4, question: "I ___ twenty years old.", options: ["is", "am", "are", "be"], correct: 1, explanation: "'I' takes 'am'." },
+          { id: 5, question: "___ you like coffee?", options: ["Does", "Do", "Is", "Are"], correct: 1, explanation: "'You' takes 'do' in questions." },
+          { id: 6, question: "He ___ in London.", options: ["live", "lives", "living", "lived"], correct: 1, explanation: "Third person singular adds 's'." },
+          { id: 7, question: "We ___ two cats.", options: ["has", "have", "having", "had"], correct: 1, explanation: "'We' takes 'have'." },
+          { id: 8, question: "___ is your birthday?", options: ["What", "When", "Where", "Who"], correct: 1, explanation: "'When' asks about time." },
+        ]
+      },
+      flashcards: [
+        { front: "Hello", back: "Hola", example: "Hello, how are you?" },
+        { front: "Goodbye", back: "Adiós", example: "Goodbye, see you later." },
+        { front: "Please", back: "Por favor", example: "Please help me." },
+        { front: "Thank you", back: "Gracias", example: "Thank you very much." },
+        { front: "Yes", back: "Sí", example: "Yes, I understand." },
+        { front: "No", back: "No", example: "No, I don't know." },
+        { front: "My name is", back: "Me llamo", example: "My name is John." },
+        { front: "How are you?", back: "¿Cómo estás?", example: "How are you today?" },
+      ]
+    }},
+    { params: { level: "a2" }, props: { 
+      level: "a2", name: "A2", label: "Elementary", color: "a2", hue: 220,
+      units: [
+        { id: "a2-01", title: "Past Events", desc: "Past simple, irregular verbs, time expressions", tags: ["grammar"] },
+        { id: "a2-02", title: "Present Continuous", desc: "Actions in progress, going to future", tags: ["grammar"] },
+        { id: "a2-03", title: "Comparatives & Superlatives", desc: "Adjectives, comparisons", tags: ["grammar"] },
+        { id: "a2-04", title: "Shopping & Food", desc: "Count/uncount nouns, some/any, food vocab", tags: ["vocabulary", "speaking"] },
+      ],
+      quiz: {
+        questions: [
+          { id: 1, question: "Yesterday I ___ to the park.", options: ["go", "went", "gone", "going"], correct: 1, explanation: "Past simple of 'go' is 'went'." },
+          { id: 2, question: "She ___ a book right now.", options: ["read", "reads", "is reading", "readed"], correct: 2, explanation: "Present continuous: is + verb-ing." },
+          { id: 3, question: "A car is ___ than a bicycle.", options: ["fast", "faster", "fastest", "more fast"], correct: 1, explanation: "One-syllable adjective: add -er." },
+          { id: 4, question: "There ___ some milk in the fridge.", options: ["is", "are", "have", "has"], correct: 0, explanation: "'Milk' is uncountable, use 'is'." },
+          { id: 5, question: "They ___ at home last night.", options: ["was", "were", "are", "is"], correct: 1, explanation: "'They' takes 'were' in past." },
+          { id: 6, question: "I ___ like spicy food.", options: ["doesn't", "don't", "isn't", "aren't"], correct: 1, explanation: "'I' takes 'don't'." },
+          { id: 7, question: "She is ___ than her brother.", options: ["tall", "taller", "tallest", "more tall"], correct: 1, explanation: "Comparative of 'tall' is 'taller'." },
+          { id: 8, question: "___ you like some tea?", options: ["Would", "Do", "Are", "Have"], correct: 0, explanation: "'Would you like' is a polite offer." },
+        ]
+      },
+      flashcards: [
+        { front: "Yesterday", back: "Ayer", example: "Yesterday I went to school." },
+        { front: "Today", back: "Hoy", example: "Today is sunny." },
+        { front: "Tomorrow", back: "Mañana", example: "Tomorrow I will travel." },
+        { front: "Always", back: "Siempre", example: "I always drink coffee." },
+        { front: "Sometimes", back: "A veces", example: "Sometimes I read books." },
+        { front: "Never", back: "Nunca", example: "I never smoke." },
+        { front: "Big", back: "Grande", example: "That is a big house." },
+        { front: "Small", back: "Pequeño", example: "The cat is small." },
+      ]
+    }},
+    { params: { level: "b1" }, props: { 
+      level: "b1", name: "B1", label: "Intermediate", color: "b1", hue: 275,
+      units: [
+        { id: "b1-01", title: "Present Perfect", desc: "Ever/never, just/already/yet", tags: ["grammar"] },
+        { id: "b1-02", title: "First Conditional & Modals", desc: "Should, might, could, must/have to", tags: ["grammar"] },
+        { id: "b1-03", title: "Passive Voice Basic", desc: "Present/past passive, agent", tags: ["grammar"] },
+        { id: "b1-04", title: "Travel & Work", desc: "Phrasal verbs, opinions", tags: ["vocabulary", "speaking"] },
+      ],
+      quiz: {
+        questions: [
+          { id: 1, question: "I have ___ been to Japan.", options: ["ever", "never", "yet", "just"], correct: 1, explanation: "'Never' means at no time." },
+          { id: 2, question: "You ___ see a doctor.", options: ["must", "should", "can", "might"], correct: 1, explanation: "'Should' gives advice." },
+          { id: 3, question: "The book ___ by a famous author.", options: ["wrote", "was written", "is writing", "has written"], correct: 1, explanation: "Passive: was + past participle." },
+          { id: 4, question: "If it rains, I ___ stay home.", options: ["will", "would", "won't", "wouldn't"], correct: 0, explanation: "First conditional: if + present, will + base." },
+          { id: 5, question: "I have ___ finished my homework.", options: ["ever", "never", "just", "yet"], correct: 2, explanation: "'Just' means a moment ago." },
+          { id: 6, question: "You ___ be late for class.", options: ["mustn't", "don't have to", "shouldn't", "can't"], correct: 0, explanation: "'Mustn't' is a strong prohibition." },
+          { id: 7, question: "She can ___ Spanish fluently.", options: ["speak", "speaks", "speaking", "spoke"], correct: 0, explanation: "After 'can' use base verb." },
+          { id: 8, question: "I ___ like to visit Paris someday.", options: ["will", "would", "can", "shall"], correct: 1, explanation: "'Would like' expresses desire." },
+        ]
+      },
+      flashcards: [
+        { front: "Already", back: "Ya", example: "I have already eaten." },
+        { front: "Yet", back: "Todavía", example: "Have you finished yet?" },
+        { front: "Just", back: "Acabo de", example: "I have just arrived." },
+        { front: "Should", back: "Deberías", example: "You should study more." },
+        { front: "Must", back: "Debes", example: "You must wear a seatbelt." },
+        { front: "Might", back: "Podría", example: "It might rain later." },
+        { front: "Passive", back: "Voz pasiva", example: "The letter was sent yesterday." },
+        { front: "Phrasal verb", back: "Verbo frasal", example: "I need to look up this word." },
+      ]
+    }},
+    { params: { level: "b1+" }, props: { 
+      level: "b1+", name: "B1+", label: "Upper Intermediate", color: "b1p", hue: 15,
+      units: [
+        { id: "b1p-01", title: "Present Perfect Continuous", desc: "Duration, for/since", tags: ["grammar"] },
+        { id: "b1p-02", title: "Second Conditional", desc: "Hypothetical, would/could", tags: ["grammar"] },
+        { id: "b1p-03", title: "Passive All Tenses", desc: "Causative, formal register", tags: ["grammar"] },
+        { id: "b1p-04", title: "Reported Speech", desc: "Say/tell, backshift", tags: ["grammar"] },
+      ],
+      quiz: {
+        questions: [
+          { id: 1, question: "I have been ___ here since 9 AM.", options: ["wait", "waited", "waiting", "waits"], correct: 2, explanation: "Present perfect continuous: have been + verb-ing." },
+          { id: 2, question: "If I ___ rich, I would travel the world.", options: ["am", "was", "were", "will be"], correct: 2, explanation: "Second conditional uses 'were' for all subjects." },
+          { id: 3, question: "She said she ___ coming.", options: ["is", "was", "will be", "has been"], correct: 1, explanation: "Backshift: present → past in reported speech." },
+          { id: 4, question: "I have been ___ English for 3 years.", options: ["learn", "learned", "learning", "learns"], correct: 2, explanation: "Duration action: have been + verb-ing." },
+          { id: 5, question: "He told me ___ wait.", options: ["to", "that", "for", "and"], correct: 0, explanation: "'Tell' + object + infinitive." },
+          { id: 6, question: "I would buy a house if I ___ enough money.", options: ["have", "had", "will have", "would have"], correct: 1, explanation: "Second conditional: if + past simple." },
+          { id: 7, question: "The house needs ___ painted.", options: ["to be", "being", "having", "had"], correct: 0, explanation: "Passive infinitive after 'needs'." },
+          { id: 8, question: "He asked me where I ___.", options: ["live", "lived", "living", "am living"], correct: 1, explanation: "Backshift in reported questions." },
+        ]
+      },
+      flashcards: [
+        { front: "For", back: "Durante (tiempo)", example: "I have lived here for 5 years." },
+        { front: "Since", back: "Desde", example: "I have worked here since 2021." },
+        { front: "Would", back: "Haría", example: "I would help if I could." },
+        { front: "Could", back: "Podría", example: "Could you open the door?" },
+        { front: "Said", back: "Dijo", example: "He said he was tired." },
+        { front: "Told", back: "Dijo a", example: "She told me to wait." },
+        { front: "Hypothetical", back: "Hipotético", example: "If I were you, I'd study." },
+        { front: "Causative", back: "Causativo", example: "I had my car repaired." },
+      ]
+    }},
+    { params: { level: "b2" }, props: { 
+      level: "b2", name: "B2", label: "Advanced", color: "b2", hue: 250,
+      units: [
+        { id: "b2-01", title: "Third & Mixed Conditionals", desc: "Regret, hypothetical past", tags: ["grammar"] },
+        { id: "b2-02", title: "Inversion & Emphasis", desc: "Cleft structures", tags: ["grammar"] },
+        { id: "b2-03", title: "Modal Perfects & Speculation", desc: "Deduction", tags: ["grammar"] },
+        { id: "b2-04", title: "Argumentation & Essays", desc: "Discourse markers, hedging", tags: ["writing"] },
+      ],
+      quiz: {
+        questions: [
+          { id: 1, question: "If I had studied, I ___ the exam.", options: ["would pass", "would have passed", "will pass", "pass"], correct: 1, explanation: "Third conditional: would have + past participle." },
+          { id: 2, question: "___ had I left when it started raining.", options: ["No sooner", "Not only", "Hardly", "Rarely"], correct: 0, explanation: "'No sooner...than' for immediate sequence." },
+          { id: 3, question: "He must ___ the train. He's not here.", options: ["miss", "missed", "have missed", "be missing"], correct: 2, explanation: "Modal perfect for past deduction." },
+          { id: 4, question: "Not only ___ late, but he also forgot the documents.", options: ["he was", "was he", "he is", "is he"], correct: 1, explanation: "Inversion after 'not only' at start of sentence." },
+          { id: 5, question: "She might ___ lost. Let's call her.", options: ["get", "have gotten", "be getting", "gets"], correct: 1, explanation: "'Might have' for past possibility." },
+          { id: 6, question: "___ is that he never gives up.", options: ["What impresses me", "It impresses me", "The thing", "That"], correct: 0, explanation: "Cleft: 'What...is...' for emphasis." },
+          { id: 7, question: "If he had left earlier, he ___ missed the flight.", options: ["wouldn't have", "would have", "hadn't", "didn't"], correct: 0, explanation: "Third conditional negative result." },
+          { id: 8, question: "Under no circumstances ___ the door.", options: ["you should open", "should you open", "you open", "do you open"], correct: 1, explanation: "Negative adverbial triggers inversion." },
+        ]
+      },
+      flashcards: [
+        { front: "Regret", back: "Arrepentimiento", example: "I regret not studying harder." },
+        { front: "Inversion", back: "Inversión", example: "Never have I seen such beauty." },
+        { front: "Speculation", back: "Especulación", example: "She must have forgotten." },
+        { front: "Deduction", back: "Deducción", example: "He can't be at home; the lights are off." },
+        { front: "Cleft", back: "Oración hendida", example: "What I need is a break." },
+        { front: "Discourse marker", back: "Marcador discursivo", example: "Nevertheless, we continued." },
+        { front: "Hedging", back: "Atenuación", example: "It seems that the results are valid." },
+        { front: "Emphasis", back: "Énfasis", example: "It was John who called." },
+      ]
+    }},
+    { params: { level: "b2+" }, props: { 
+      level: "b2+", name: "B2+", label: "Pre-Advanced", color: "b2p", hue: 185,
+      units: [
+        { id: "b2p-01", title: "Participle Clauses & Fronting", desc: "Formal/literary structures", tags: ["grammar", "writing"] },
+        { id: "b2p-02", title: "Wish, If Only & Hypotheticals", desc: "Would rather, it's time", tags: ["grammar"] },
+        { id: "b2p-03", title: "Business English Essentials", desc: "Meetings, negotiations, emails", tags: ["vocabulary", "speaking"] },
+        { id: "b2p-04", title: "Debate, Persuasion & Register", desc: "Idioms, formal register", tags: ["speaking", "writing"] },
+      ],
+      quiz: {
+        questions: [
+          { id: 1, question: "___ by the view, she stopped walking.", options: ["Stunned", "Stunning", "Being stunned", "To stun"], correct: 0, explanation: "Participle clause: past participle for passive meaning." },
+          { id: 2, question: "I wish I ___ harder when I was younger.", options: ["studied", "had studied", "study", "would study"], correct: 1, explanation: "Wish + past perfect for past regret." },
+          { id: 3, question: "I'd rather you ___ smoke in here.", options: ["don't", "didn't", "not", "won't"], correct: 1, explanation: "'Would rather' + subject + past" },
+          { id: 4, question: "___ the budget, we cannot proceed.", options: ["Given", "Giving", "Having given", "To give"], correct: 0, explanation: "Participle clause with 'given' = considering." },
+          { id: 5, question: "If only I ___ more time.", options: ["have", "had", "would have", "having"], correct: 1, explanation: "If only + past for present wishes." },
+          { id: 6, question: "It's high time you ___ a decision.", options: ["make", "made", "making", "to make"], correct: 1, explanation: "It's (high) time + past subjunctive." },
+          { id: 7, question: "___ the opportunity, I would travel more.", options: ["Given", "Giving", "Had given", "Having given"], correct: 0, explanation: "Participle clause: 'given' = if I had." },
+          { id: 8, question: "I wish you ___ so loud.", options: ["aren't", "weren't", "won't be", "hadn't been"], correct: 1, explanation: "Wish + were for present annoyance." },
+        ]
+      },
+      flashcards: [
+        { front: "Participle clause", back: "Cláusula de participio", example: "Exhausted, he went to bed." },
+        { front: "Wish", back: "Ojalá/Desear", example: "I wish I knew the answer." },
+        { front: "If only", back: "Si tan solo", example: "If only I could fly." },
+        { front: "Would rather", back: "Preferiría", example: "I'd rather stay home." },
+        { front: "It's high time", back: "Ya es hora de", example: "It's high time we left." },
+        { front: "Fronting", back: "Anteposición", example: "Never had I felt so alive." },
+        { front: "Register", back: "Registro", example: "Formal vs informal language." },
+        { front: "Persuasion", back: "Persuasión", example: "I firmly believe that..." },
+      ]
+    }},
+  ];
+}
+---
+
+<BaseLayout title={`Level ${level} — ${label}`}>
+  <section class="mx-auto max-w-6xl px-4 py-12">
+    <div class="mb-8">
+      <div class="flex items-center gap-3">
+        <span class="text-4xl font-black font-display tracking-tight" style={`color: var(--${color});`}>
+          {name}
+        </span>
+        <span class="rounded-full px-3 py-1 text-sm font-medium" style={`background: var(--${color}-bg); color: var(--${color});`}>
+          {label}
+        </span>
+      </div>
+      <p class="mt-2 text-text-secondary">{units.length} units · ~{(units.length * 3)}h</p>
+    </div>
+
+    <div class="mb-12 grid gap-4 md:grid-cols-2">
+      {units.map((u) => (
+        <div class="rounded-xl border border-border bg-surface p-5 shadow-sm">
+          <h3 class="text-lg font-semibold">{u.title}</h3>
+          <p class="mt-1 text-sm text-text-secondary">{u.desc}</p>
+          <div class="mt-3 flex gap-2">
+            {u.tags.map((t) => (
+              <span class="rounded-full px-2p5 py-0p5 text-xs font-medium" style={`background: var(--${color}-bg); color: var(--${color});`}>
+                {t}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="mb-12">
+      <h2 class="mb-4 text-2xl font-bold font-display">Quiz</h2>
+      <Quiz level={level} questions={quiz.questions} client:load />
+    </div>
+
+    <div class="mb-12">
+      <h2 class="mb-4 text-2xl font-bold font-display">Vocabulary Flashcards</h2>
+      <FlashcardDeck cards={flashcards} client:load />
+    </div>
+
+    {level === "b1" && (
+      <div class="mb-12">
+        <h2 class="mb-4 text-2xl font-bold font-display">Writing Exercise</h2>
+        <WritingExercise prompt="Describe your last vacation. Include where you went, what you did, and how you felt." minWords={80} maxWords={120} client:load />
+      </div>
+    )}
+  </section>
+</BaseLayout>

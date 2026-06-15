@@ -30,3 +30,7 @@ ENGLISH/
 Skill Claude/
 skillspector/
 skills/
+
+# Build output
+dist/
+.astro/

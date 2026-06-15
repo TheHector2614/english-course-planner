@@ -1,0 +1,40 @@
+---
+import ThemeToggle from "./ThemeToggle";
+
+const levels = [
+  { id: "a1", label: "A1", color: "a1" },
+  { id: "a2", label: "A2", color: "a2" },
+  { id: "b1", label: "B1", color: "b1" },
+  { id: "b1+", label: "B1+", color: "b1p" },
+  { id: "b2", label: "B2", color: "b2" },
+  { id: "b2+", label: "B2+", color: "b2p" },
+];
+---
+
+<header class="border-b border-border">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+    <a href="/" class="flex items-center gap-2 text-lg font-bold font-display no-underline">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        <path d="M8 7h8" /><path d="M8 11h6" /><path d="M8 15h4" />
+      </svg>
+      <span>English Course</span>
+    </a>
+    <nav class="flex items-center gap-1">
+      {levels.map((l) => (
+        <a
+          href={`/level/${l.id}`}
+          class="rounded-full px-3 py-1 text-sm font-medium transition-colors"
+          style={`color: var(--${l.color});`}
+        >
+          {l.label}
+        </a>
+      ))}
+      <a href="/dashboard" class="ml-2 rounded-full bg-surface-alt px-3 py-1 text-sm text-text-secondary transition-colors">
+        Dashboard
+      </a>
+      <ThemeToggle client:load />
+    </nav>
+  </div>
+</header>
