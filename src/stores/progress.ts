@@ -1,4 +1,6 @@
 import { atom, map } from "nanostores";
+import { db, initSettings } from "./db";
+import { unlockAchievement } from "./achievements";
 
 export type QuizResult = {
   score: number;
@@ -13,8 +15,17 @@ export const completedLevels = map<Record<string, boolean>>({});
 export const quizResults = map<Record<string, QuizResult>>({});
 export const streak = atom<number>(0);
 export const lastStudyDate = atom<string>("");
+export const xp = atom<number>(0);
+export const xpAnimating = atom<number>(0); // XP gained this session to animate
 
-export function loadFromStorage() {
+const XP_PER_QUIZ = 50;
+const XP_PER_WORD = 10;
+const XP_PER_STORY = 30;
+const XP_PER_EXERCISE = 15;
+const XP_PER_STREAK_DAY = 20;
+const XP_BONUS_PERFECT = 25;
+
+export async function loadFromStorage() {
   if (typeof localStorage === "undefined") return;
   try {
     const saved = localStorage.getItem("course-progress");
@@ -27,6 +38,16 @@ export function loadFromStorage() {
     }
     const level = localStorage.getItem("course-level");
     if (level) currentLevel.set(level);
+  } catch {}
+
+  // Load XP from IndexedDB
+  try {
+    const settings = await db.settings.get("default");
+    if (settings) {
+      xp.set(settings.xp);
+      streak.set(settings.streak);
+      lastStudyDate.set(settings.lastStudyDate);
+    }
   } catch {}
 }
 
@@ -42,17 +63,53 @@ export function saveToStorage() {
   } catch {}
 }
 
-export function markLevelComplete(level: string) {
+export async function addXP(amount: number, source: string) {
+  const current = xp.get();
+  const total = current + amount;
+  xp.set(total);
+  xpAnimating.set(amount);
+
+  // Persist to IndexedDB
+  try {
+    await db.settings.update("default", { xp: total });
+  } catch {}
+
+  // Animate XP, then clear animation value
+  setTimeout(() => xpAnimating.set(0), 1500);
+
+  // Check achievement thresholds
+  if (total >= 500) await unlockAchievement("xp_500");
+  if (total >= 2000) await unlockAchievement("xp_2000");
+  if (total >= 5000) await unlockAchievement("xp_5000");
+}
+
+export async function markLevelComplete(level: string) {
   const current = completedLevels.get();
   completedLevels.set({ ...current, [level]: true });
   saveToStorage();
+  await addXP(100, "level_complete");
+
+  // Check if all levels are complete
+  const allDone = ["a1", "a2", "b1", "b1+", "b2", "b2+"].every(l => completedLevels.get()[l]);
+  if (allDone) {
+    await unlockAchievement("all_levels");
+  }
 }
 
-export function saveQuizResult(level: string, result: QuizResult) {
+export async function saveQuizResult(level: string, result: QuizResult) {
   const current = quizResults.get();
   quizResults.set({ ...current, [level]: result });
-  if (result.passed) markLevelComplete(level);
+  if (result.passed) await markLevelComplete(level);
   saveToStorage();
+
+  // XP for quiz
+  await addXP(XP_PER_QUIZ, "quiz");
+  if (result.score === result.total) {
+    await addXP(XP_BONUS_PERFECT, "perfect_quiz");
+    await unlockAchievement("perfect_quiz");
+  }
+
+  await unlockAchievement("first_quiz");
 }
 
 export function getProgressPercent(): number {
@@ -60,16 +117,48 @@ export function getProgressPercent(): number {
   return Math.round((completed / 6) * 100);
 }
 
-export function updateStreak() {
+export async function updateStreak() {
   const today = new Date().toISOString().split("T")[0];
   const last = lastStudyDate.get();
   if (last === today) return;
   const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
+  let newStreak: number;
   if (last === yesterday) {
-    streak.set(streak.get() + 1);
+    newStreak = streak.get() + 1;
   } else {
-    streak.set(1);
+    newStreak = 1;
   }
+  streak.set(newStreak);
   lastStudyDate.set(today);
   saveToStorage();
+
+  // Persist to IndexedDB
+  try {
+    await db.settings.update("default", { streak: newStreak, lastStudyDate: today });
+  } catch {}
+  await addXP(XP_PER_STREAK_DAY, "streak");
+
+  // Streak achievements
+  if (newStreak >= 3) await unlockAchievement("streak_3");
+  if (newStreak >= 7) await unlockAchievement("streak_7");
+  if (newStreak >= 30) await unlockAchievement("streak_30");
 }
+
+export function getXpForNextLevel(): number {
+  const currentXp = xp.get();
+  if (currentXp < 500) return 500;
+  if (currentXp < 2000) return 2000;
+  if (currentXp < 5000) return 5000;
+  return 10000;
+}
+
+export function getLevelFromXp(): number {
+  const currentXp = xp.get();
+  if (currentXp < 500) return 1;
+  if (currentXp < 2000) return 2;
+  if (currentXp < 5000) return 3;
+  if (currentXp < 10000) return 4;
+  return 5;
+}
+
+export { XP_PER_QUIZ, XP_PER_WORD, XP_PER_STORY, XP_PER_EXERCISE, XP_PER_STREAK_DAY, XP_BONUS_PERFECT };

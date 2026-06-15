@@ -1,14 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ProgressOverview from "../components/dynamics/ProgressOverview";
+import AchievementModal from "../components/interactive/AchievementModal";
 
 const levels = [
-  { id: "a1", name: "A1", label: "Beginner", hours: 8, units: 4, color: "a1", hue: 150, desc: "Fundamentos: saludos, familia, rutina diaria, direcciones" },
-  { id: "a2", name: "A2", label: "Elementary", hours: 10, units: 4, color: "a2", hue: 220, desc: "Pasado, presente continuo, comparativos, compras" },
-  { id: "b1", name: "B1", label: "Intermediate", hours: 12, units: 4, color: "b1", hue: 275, desc: "Present perfect, condicionales, pasiva, phrasal verbs" },
+  { id: "a1", name: "A1", label: "Beginner", hours: 8, units: 4, color: "a1", hue: 150, desc: "Fundamentals: greetings, family, daily routine, directions" },
+  { id: "a2", name: "A2", label: "Elementary", hours: 10, units: 4, color: "a2", hue: 220, desc: "Past tense, present continuous, comparatives, shopping" },
+  { id: "b1", name: "B1", label: "Intermediate", hours: 12, units: 4, color: "b1", hue: 275, desc: "Present perfect, conditionals, passive, phrasal verbs" },
   { id: "b1+", name: "B1+", label: "Upper Intermediate", hours: 12, units: 4, color: "b1p", hue: 15, desc: "Perfect continuous, 2nd conditional, reported speech" },
-  { id: "b2", name: "B2", label: "Advanced", hours: 14, units: 4, color: "b2", hue: 250, desc: "Mixed conditionals, inversión, modal perfects" },
+  { id: "b2", name: "B2", label: "Advanced", hours: 14, units: 4, color: "b2", hue: 250, desc: "Mixed conditionals, inversion, modal perfects" },
   { id: "b2+", name: "B2+", label: "Pre-Advanced", hours: 14, units: 4, color: "b2p", hue: 185, desc: "Participle clauses, wish, business English" },
+];
+
+const features = [
+  { icon: "search", label: "Dictionary", href: "/dictionary", desc: "Look up words with definitions, examples, and phonetics. Save to your vocabulary.", color: "a2" },
+  { icon: "book", label: "Vocabulary", href: "/vocabulary", desc: "Review saved words with spaced repetition. Track mastered and due words.", color: "a1" },
+  { icon: "file-text", label: "Reading", href: "/reading", desc: "Leveled stories with comprehension questions and vocabulary support.", color: "b1" },
+  { icon: "external-link", label: "Resources", href: "/resources", desc: "Curated YouTube channels, podcasts, tools, and grammar references.", color: "b1p" },
 ];
 ---
 
@@ -16,7 +24,7 @@ const levels = [
   <section class="mx-auto max-w-6xl px-4 py-16">
     <div class="text-center">
       <span class="inline-block rounded-full bg-a1-bg px-4 py-1 text-sm font-semibold text-a1">CEFR 2026 · A1 → B2+</span>
-      <h1 class="mt-4 text-4xl font-extrabold font-display md:text-5xl">
+      <h1 class="mt-4 text-4xl font-extrabold font-display md:text-5xl tracking-tight">
         English Course Planner
       </h1>
       <p class="mx-auto mt-3 max-w-2xl text-lg text-text-secondary">
@@ -25,14 +33,56 @@ const levels = [
     </div>
 
     <ProgressOverview client:load />
+
+    <!-- Feature Quick Links -->
+    <div class="mb-12 grid gap-4 md:grid-cols-2">
+      {features.map((f) => (
+        <a
+          href={f.href}
+          class="group flex items-start gap-4 rounded-xl shadow-border bg-surface p-5 transition-shadow transition-transform hover:shadow-border-hover hover:-translate-y-0.5"
+        >
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg" style={{ background: `var(--${f.color}-bg)` }}>
+            {f.icon === "search" && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={`var(--${f.color})`} stroke-width="2" stroke-linecap="round">
+                <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            )}
+            {f.icon === "book" && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={`var(--${f.color})`} stroke-width="2">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+              </svg>
+            )}
+            {f.icon === "file-text" && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={`var(--${f.color})`} stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" />
+              </svg>
+            )}
+            {f.icon === "external-link" && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={`var(--${f.color})`} stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            )}
+          </div>
+          <div class="flex-1">
+            <h3 class="font-semibold">{f.label}</h3>
+            <p class="mt-0.5 text-sm text-text-secondary">{f.desc}</p>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2" class="mt-1 shrink-0 transition-transform group-hover:translate-x-0.5">
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
+        </a>
+      ))}
+    </div>
   </section>
 
+  <!-- Level Cards -->
   <section class="mx-auto max-w-6xl px-4 pb-16">
+    <h2 class="mb-6 text-2xl font-bold font-display">Learning Path</h2>
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {levels.map((l) => (
         <a
           href={`/level/${l.id}`}
-          class="group block rounded-xl border border-border bg-surface p-6 no-underline shadow-sm transition-all hover-translate-up hover:shadow-md"
+          class="group block rounded-xl shadow-border bg-surface p-6 no-underline transition-shadow transition-transform hover:shadow-border-hover hover:-translate-y-0.5"
           style={`--level-h: ${l.hue};`}
         >
           <div class="flex items-center justify-between">
@@ -47,11 +97,12 @@ const levels = [
           <p class="mt-2 text-sm text-text-muted">{l.desc}</p>
           <div class="mt-3 flex gap-1">
             {Array.from({ length: l.units }, (_, i) => (
-              <span class="h-1p5 flex-1 rounded-full" style={`background: var(--${l.color}-light);`} />
+              <span class="h-1.5 flex-1 rounded-full" style={`background: var(--${l.color}-light);`} key={i} />
             ))}
           </div>
         </a>
       ))}
     </div>
   </section>
+  <AchievementModal client:load />
 </BaseLayout>

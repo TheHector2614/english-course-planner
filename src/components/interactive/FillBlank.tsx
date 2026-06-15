@@ -1,0 +1,140 @@
+import { useState } from "react";
+import { addXP, XP_PER_EXERCISE } from "../../stores/progress";
+
+interface FillBlankQuestion {
+  sentence: string;   // Use ___ for the blank
+  answer: string;
+  options?: string[];  // If provided, show as multiple choice
+  explanation?: string;
+}
+
+interface Props {
+  title?: string;
+  questions: FillBlankQuestion[];
+  level?: string;
+}
+
+export default function FillBlank({ title, questions, level }: Props) {
+  const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [submitted, setSubmitted] = useState(false);
+  const [showResults, setShowResults] = useState(false);
+
+  const handleChange = (idx: number, value: string) => {
+    if (submitted) return;
+    setAnswers((prev) => ({ ...prev, [idx]: value }));
+  };
+
+  const handleSubmit = () => {
+    setSubmitted(true);
+    setShowResults(true);
+    const score = questions.reduce((acc, q, i) => acc + (answers[i]?.toLowerCase().trim() === q.answer.toLowerCase() ? 1 : 0), 0);
+    const passed = score / questions.length >= 0.7;
+    if (level) {
+      addXP(XP_PER_EXERCISE, "fill_blank");
+    }
+  };
+
+  const score = showResults ? questions.reduce((acc, q, i) => acc + (answers[i]?.toLowerCase().trim() === q.answer.toLowerCase() ? 1 : 0), 0) : 0;
+  const allAnswered = questions.every((_, i) => answers[i]?.trim());
+
+  return (
+    <div class="rounded-xl border border-border bg-surface p-6 shadow-sm">
+      {title && <h3 class="mb-4 text-lg font-semibold font-display">{title}</h3>}
+
+      <div class="space-y-5">
+        {questions.map((q, i) => {
+          const userAnswer = answers[i] || "";
+          const isCorrect = submitted && userAnswer.toLowerCase().trim() === q.answer.toLowerCase();
+          const isWrong = submitted && userAnswer.trim() !== "" && !isCorrect;
+
+          // Render sentence with ___ replaced by input
+          const parts = q.sentence.split("___");
+
+          return (
+            <div
+              key={i}
+              class="rounded-lg border p-4 transition-all"
+              style={{
+                borderColor: isCorrect ? "var(--correct)" : isWrong ? "var(--incorrect)" : "var(--border)",
+                background: isCorrect ? "oklch(0.95 0.05 150 / 0.3)" : isWrong ? "oklch(0.95 0.05 30 / 0.3)" : "transparent",
+              }}
+            >
+              <p class="mb-3 text-sm font-medium">Question {i + 1}</p>
+
+              <div class="flex flex-wrap items-center gap-2 text-base leading-relaxed">
+                {parts.map((part, pIdx) => (
+                  <span key={pIdx}>
+                    {part}
+                    {pIdx < parts.length - 1 && (
+                      q.options ? (
+                        <select
+                          value={userAnswer}
+                          onChange={(e) => handleChange(i, e.target.value)}
+                          disabled={submitted}
+                          class="mx-1 inline-block rounded-lg border px-3 py-1 text-sm outline-none disabled:opacity-60"
+                          style={{
+                            borderColor: isCorrect ? "var(--correct)" : isWrong ? "var(--incorrect)" : "var(--a1)",
+                            background: isCorrect ? "oklch(0.95 0.05 150 / 0.3)" : isWrong ? "oklch(0.95 0.05 30 / 0.3)" : "var(--surface-alt)",
+                          }}
+                        >
+                          <option value="">Choose...</option>
+                          {q.options.map((opt) => (
+                            <option key={opt} value={opt}>{opt}</option>
+                          ))}
+                        </select>
+                      ) : (
+                        <input
+                          type="text"
+                          value={userAnswer}
+                          onChange={(e) => handleChange(i, e.target.value)}
+                          disabled={submitted}
+                          placeholder="type answer..."
+                          class="mx-1 inline-block rounded-lg border px-3 py-1 text-sm outline-none transition-colors disabled:opacity-60"
+                          style={{
+                            borderColor: isCorrect ? "var(--correct)" : isWrong ? "var(--incorrect)" : "var(--border)",
+                            background: isCorrect ? "oklch(0.95 0.05 150 / 0.3)" : isWrong ? "oklch(0.95 0.05 30 / 0.3)" : "transparent",
+                          }}
+                        />
+                      )
+                    )}
+                  </span>
+                ))}
+              </div>
+
+              {submitted && (
+                <div class="mt-2 space-y-1">
+                  <p class="text-sm" style={{ color: isCorrect ? "var(--correct)" : "var(--incorrect)" }}>
+                    {isCorrect ? "Correct!" : `Answer: ${q.answer}`}
+                  </p>
+                  {q.explanation && !isCorrect && (
+                    <p class="text-xs text-text-secondary">{q.explanation}</p>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {!submitted ? (
+        <button
+          onClick={handleSubmit}
+          disabled={!allAnswered}
+          class="mt-6 w-full rounded-full px-6 py-3 font-semibold text-white transition-all disabled:opacity-40"
+          style={{ background: allAnswered ? "var(--a1)" : "var(--border)" }}
+        >
+          Check Answers
+        </button>
+      ) : (
+        <div class="mt-6 rounded-lg p-4 text-center" style={{ background: score >= questions.length * 0.7 ? "oklch(0.95 0.05 150 / 0.3)" : "oklch(0.95 0.05 30 / 0.3)" }}>
+          <p class="text-xl font-bold">
+            {score}/{questions.length} correct ({Math.round((score / questions.length) * 100)}%)
+          </p>
+          <p class="text-sm text-text-secondary">
+            {score / questions.length >= 0.7 ? "Great job!" : "Keep practicing."}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}

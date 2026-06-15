@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import VocabularyBuilder from "../components/interactive/VocabularyBuilder";
+import AchievementModal from "../components/interactive/AchievementModal";
+---
+
+<BaseLayout title="Vocabulary" description="Your personal vocabulary list with spaced-repetition review. Track mastered words and due reviews.">
+  <section class="mx-auto max-w-4xl px-4 py-12">
+    <div class="mb-8">
+      <span class="inline-block rounded-full bg-a1-bg px-4 py-1 text-sm font-semibold text-a1">Vocabulary</span>
+      <h1 class="mt-3 text-4xl font-bold font-display">Your Words</h1>
+      <p class="mt-2 text-text-secondary">
+        Words you've saved from the dictionary and readings. Review them with spaced repetition to build long-term memory.
+      </p>
+    </div>
+    <VocabularyBuilder client:load />
+  </section>
+  <AchievementModal client:load />
+</BaseLayout>

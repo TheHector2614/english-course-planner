@@ -1,0 +1,192 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AchievementModal from "../components/interactive/AchievementModal";
+
+const levelIds = ["a1", "a2", "b1", "b1+", "b2", "b2+"];
+const levelColors: Record<string, string> = { a1: "a1", a2: "a2", b1: "b1", "b1+": "b1p", b2: "b2", "b2+": "b2p" };
+---
+
+<BaseLayout title="Dashboard" description="View your learning progress, XP, streak, vocabulary stats, and achievements.">
+  <section class="mx-auto max-w-5xl px-4 py-12">
+    <div class="mb-8">
+      <span class="inline-block rounded-full bg-b2-bg px-4 py-1 text-sm font-semibold text-b2">Dashboard</span>
+      <h1 class="mt-3 text-4xl font-bold font-display">Your Progress</h1>
+      <p class="mt-2 text-text-secondary">Track your learning journey across all activities.</p>
+    </div>
+
+    <div class="space-y-6" id="dashboard-root">
+      <!-- Stats Grid: populated by client JS -->
+      <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
+        <div class="rounded-xl shadow-border bg-surface p-5">
+          <div class="flex items-center gap-2 text-sm text-text-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Study Streak
+          </div>
+          <p class="mt-1 text-2xl font-bold font-display tabular-nums" id="streak-value">0 days</p>
+        </div>
+        <div class="rounded-xl shadow-border bg-surface p-5">
+          <div class="flex items-center gap-2 text-sm text-text-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Total XP
+          </div>
+          <p class="mt-1 text-2xl font-bold font-display tabular-nums" id="xp-value">0</p>
+        </div>
+        <div class="rounded-xl shadow-border bg-surface p-5">
+          <div class="flex items-center gap-2 text-sm text-text-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            Vocabulary
+          </div>
+          <p class="mt-1 text-2xl font-bold font-display tabular-nums" id="vocab-value">0 words</p>
+        </div>
+        <div class="rounded-xl shadow-border bg-surface p-5">
+          <div class="flex items-center gap-2 text-sm text-text-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="22" y1="12" x2="2" y2="12"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+            Levels Progress
+          </div>
+          <p class="mt-1 text-2xl font-bold font-display tabular-nums" id="levels-value">0/6</p>
+        </div>
+      </div>
+
+      <!-- XP Bar -->
+      <div class="rounded-xl shadow-border bg-surface p-5">
+        <div class="flex items-center justify-between text-sm">
+          <span class="font-medium">Experience Level <span id="user-level">1</span></span>
+          <span class="text-text-muted tabular-nums" id="xp-progress-text">0 / 500 XP</span>
+        </div>
+        <div class="mt-3 h-2 overflow-hidden rounded-full bg-surface-alt">
+          <div id="xp-bar" class="h-full rounded-full transition-all duration-500 ease-out" style="width: 0%; background: linear-gradient(90deg, var(--a1), var(--a2), var(--b1))"></div>
+        </div>
+      </div>
+
+      <!-- Level Completion -->
+      <div class="rounded-xl shadow-border bg-surface p-5">
+        <h3 class="mb-4 text-sm font-semibold">Level Completion</h3>
+        <div class="space-y-3">
+          {levelIds.map((l) => {
+            const c = levelColors[l];
+            return (
+              <div class="flex items-center gap-3" key={l}>
+                <span class="w-8 text-xs font-bold" style={{ color: `var(--${c})` }}>{l.toUpperCase()}</span>
+                <div class="flex-1 h-2 rounded-full bg-surface-alt overflow-hidden">
+                  <div class="h-full rounded-full transition-all duration-500" id={`bar-${l}`} style={{ width: "0%", background: `var(--${c})` }} />
+                </div>
+                <span class="w-6 text-right text-xs text-text-muted tabular-nums" id={`pct-${l}`}>0%</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="rounded-xl shadow-border bg-surface p-5">
+        <h3 class="mb-4 text-sm font-semibold">Recent Activity</h3>
+        <div id="recent-activity" class="space-y-3">
+          <p class="text-sm text-text-muted">No activity yet. Complete a quiz or read a story to get started!</p>
+        </div>
+      </div>
+
+      <!-- Achievements -->
+      <div class="rounded-xl shadow-border bg-surface p-5">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-semibold">Achievements</h3>
+          <span class="text-xs text-text-muted tabular-nums" id="achv-count">0 / 0</span>
+        </div>
+        <div id="achievement-grid" class="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6" />
+      </div>
+    </div>
+
+    <div class="mt-8 flex flex-wrap justify-center gap-3">
+      <a href="/dictionary" class="rounded-full bg-a1-bg px-5 py-2 text-sm font-medium text-a1 transition-all hover:brightness-95">Dictionary</a>
+      <a href="/vocabulary" class="rounded-full bg-a2-bg px-5 py-2 text-sm font-medium text-a2 transition-all hover:brightness-95">Vocabulary</a>
+      <a href="/reading" class="rounded-full bg-b1-bg px-5 py-2 text-sm font-medium text-b1 transition-all hover:brightness-95">Reading</a>
+      <a href="/resources" class="rounded-full bg-b1p-bg px-5 py-2 text-sm font-medium text-b1p transition-all hover:brightness-95">Resources</a>
+    </div>
+  </section>
+
+  <script>
+    import { xp, streak, quizResults, completedLevels, getProgressPercent, getXpForNextLevel, getLevelFromXp } from "../stores/progress";
+    import { vocabularyList } from "../stores/vocabulary";
+    import { unlockedAchievements, getAchievementDefs } from "../stores/achievements";
+
+    function updateDashboard() {
+      const currentXp = xp.get();
+      const currentStreak = streak.get();
+      const vocabCount = Object.keys(vocabularyList.get()).length;
+      const completed = completedLevels.get();
+      const completedCount = Object.values(completed).filter(Boolean).length;
+      const xpNext = getXpForNextLevel();
+      const level = getLevelFromXp();
+
+      // Stats
+      const el = (id) => document.getElementById(id);
+      el("streak-value").textContent = currentStreak + " day" + (currentStreak !== 1 ? "s" : "");
+      el("xp-value").textContent = currentXp.toLocaleString();
+      el("vocab-value").textContent = vocabCount + " word" + (vocabCount !== 1 ? "s" : "");
+      el("levels-value").textContent = completedCount + "/6";
+      el("user-level").textContent = String(level);
+      el("xp-progress-text").textContent = currentXp + " / " + xpNext + " XP";
+      el("xp-bar").style.width = Math.min(100, (currentXp / xpNext) * 100) + "%";
+
+      // Level bars
+      var levelIds = ["a1", "a2", "b1", "b1+", "b2", "b2+"];
+      levelIds.forEach(function(l) {
+        var bar = el("bar-" + l);
+        var pct = el("pct-" + l);
+        if (bar && pct) {
+          var done = completed[l] || false;
+          bar.style.width = done ? "100%" : "0%";
+          pct.textContent = done ? "100%" : "0%";
+        }
+      });
+
+      // Achievements
+      var defs = getAchievementDefs();
+      var unlocked = unlockedAchievements.get();
+      var unlockedCount = Object.keys(unlocked).length;
+      var totalCount = Object.keys(defs).length;
+      el("achv-count").textContent = unlockedCount + " / " + totalCount;
+
+      var grid = el("achievement-grid");
+      grid.innerHTML = Object.entries(defs).map(function(entry) {
+        var id = entry[0], def = entry[1];
+        var isUnlocked = !!unlocked[id];
+        var borderClass = isUnlocked ? "border-warning/30 bg-warning/5" : "border-border";
+        var opacityClass = isUnlocked ? "" : "opacity-50";
+        return (
+          '<div class="flex flex-col items-center gap-1 rounded-xl border p-3 text-center transition-all ' + borderClass + " " + opacityClass + '">' +
+            '<div class="flex h-8 w-8 items-center justify-center rounded-full ' + (isUnlocked ? "bg-warning/20" : "bg-surface-alt") + '">' +
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="' + (isUnlocked ? "var(--warning)" : "var(--text-muted)") + '" stroke-width="2">' +
+                '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' +
+              "</svg>" +
+            "</div>" +
+            '<span class="text-xs font-medium ' + (isUnlocked ? "" : "text-text-muted") + '">' + def.title + "</span>" +
+            '<span class="text-[10px] text-text-muted leading-tight">' + def.desc + "</span>" +
+          "</div>"
+        );
+      }).join("");
+
+      // Recent activity
+      var activity = el("recent-activity");
+      var items = [];
+      if (currentStreak > 0) items.push("Study streak: " + currentStreak + " days");
+      if (completedCount > 0) items.push("Levels: " + completedCount + "/6 completed");
+      if (vocabCount > 0) items.push("Vocabulary: " + vocabCount + " words saved");
+      if (unlockedCount > 0) items.push("Achievements: " + unlockedCount + " unlocked");
+      var quizCount = Object.keys(quizResults.get()).length;
+      if (quizCount > 0) items.push("Quizzes: " + quizCount + " taken");
+
+      activity.innerHTML = items.length > 0
+        ? items.map(function(r) { return '<div class="flex items-center gap-2 text-sm"><span class="text-text-secondary">' + r + "</span></div>"; }).join("")
+        : '<p class="text-sm text-text-muted">No activity yet. Complete a quiz or read a story to get started!</p>';
+    }
+
+    // Subscribe and update
+    xp.subscribe(updateDashboard);
+    streak.subscribe(updateDashboard);
+    vocabularyList.subscribe(updateDashboard);
+    completedLevels.subscribe(updateDashboard);
+    unlockedAchievements.subscribe(updateDashboard);
+    updateDashboard();
+  </script>
+  <AchievementModal client:load />
+</BaseLayout>

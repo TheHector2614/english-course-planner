@@ -9,11 +9,19 @@ const levels = [
   { id: "b2", label: "B2", color: "b2" },
   { id: "b2+", label: "B2+", color: "b2p" },
 ];
+
+const features = [
+  { href: "/dictionary", label: "Dictionary" },
+  { href: "/vocabulary", label: "Vocabulary" },
+  { href: "/reading", label: "Reading" },
+  { href: "/crossword", label: "Crossword" },
+  { href: "/resources", label: "Resources" },
+];
 ---
 
 <header class="border-b border-border">
   <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-    <a href="/" class="flex items-center gap-2 text-lg font-bold font-display no-underline">
+    <a href="/" class="flex items-center gap-2 text-lg font-bold font-display no-underline shrink-0">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
         <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
@@ -21,17 +29,26 @@ const levels = [
       </svg>
       <span>English Course</span>
     </a>
-    <nav class="flex items-center gap-1">
+    <nav class="flex items-center gap-1 overflow-x-auto">
+      {features.map((f) => (
+        <a
+          href={f.href}
+          class="whitespace-nowrap rounded-full px-2p5 py-1 text-sm font-medium text-text-secondary transition-colors hover:bg-surface-alt"
+        >
+          {f.label}
+        </a>
+      ))}
+      <span class="mx-1 h-5 w-px bg-border" role="separator"></span>
       {levels.map((l) => (
         <a
           href={`/level/${l.id}`}
-          class="rounded-full px-3 py-1 text-sm font-medium transition-colors"
+          class="whitespace-nowrap rounded-full px-2p5 py-1 text-sm font-medium transition-colors"
           style={`color: var(--${l.color});`}
         >
           {l.label}
         </a>
       ))}
-      <a href="/dashboard" class="ml-2 rounded-full bg-surface-alt px-3 py-1 text-sm text-text-secondary transition-colors">
+      <a href="/dashboard" class="ml-1 rounded-full bg-surface-alt px-3 py-1 text-sm text-text-secondary transition-colors">
         Dashboard
       </a>
       <ThemeToggle client:load />

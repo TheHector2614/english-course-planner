@@ -1,0 +1,90 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Crossword from "../components/interactive/Crossword";
+import AchievementModal from "../components/interactive/AchievementModal";
+
+// A1 level: Colors & Animals crossword
+const puzzleA1 = {
+  title: "Colors & Animals",
+  grid: [
+    ["r","e","d","","",""],
+    ["","","","","c",""],
+    ["d","o","g","","a",""],
+    ["","","","","t",""],
+    ["","","","","",""],
+  ],
+  clues: [
+    { number: 1, direction: "across", text: "A common color (like fire trucks)", length: 3, startRow: 0, startCol: 0 },
+    { number: 2, direction: "across", text: "A pet that barks (3 letters)", length: 3, startRow: 2, startCol: 0 },
+    { number: 3, direction: "down", text: "A small pet that says meow", length: 3, startRow: 1, startCol: 4 },
+  ],
+  rows: 5,
+  cols: 6,
+};
+
+// A2 level: Daily Life
+const puzzleA2 = {
+  title: "Daily Life",
+  grid: [
+    ["w","a","l","k","",""],
+    ["","","","","",""],
+    ["","","","","",""],
+    ["e","a","t","","",""],
+    ["","","","","",""],
+  ],
+  clues: [
+    { number: 1, direction: "across", text: "To move on foot (4 letters)", length: 4, startRow: 0, startCol: 0 },
+    { number: 2, direction: "across", text: "To consume food (3 letters)", length: 3, startRow: 3, startCol: 0 },
+  ],
+  rows: 5,
+  cols: 5,
+};
+
+// B1 level: Travel
+const puzzleB1 = {
+  title: "Travel Words",
+  grid: [
+    ["m","a","p","",""],
+    ["","","","",""],
+    ["h","o","t","e","l"],
+    ["","","","",""],
+    ["","","","",""],
+  ],
+  clues: [
+    { number: 1, direction: "across", text: "Shows you where to go (3 letters)", length: 3, startRow: 0, startCol: 0 },
+    { number: 2, direction: "across", text: "A place to sleep when traveling (5 letters)", length: 5, startRow: 2, startCol: 0 },
+  ],
+  rows: 5,
+  cols: 5,
+};
+
+const allPuzzles = [
+  { id: "a1-colors", puzzle: puzzleA1, level: "a1" },
+  { id: "a2-daily", puzzle: puzzleA2, level: "a2" },
+  { id: "b1-travel", puzzle: puzzleB1, level: "b1" },
+];
+---
+
+<BaseLayout title="Crossword" description="Interactive crossword puzzles for English vocabulary practice.">
+  <section class="mx-auto max-w-5xl px-4 py-12">
+    <div class="mb-8 text-center">
+      <span class="inline-block rounded-full bg-a1-bg px-4 py-1 text-sm font-semibold text-a1">Crossword</span>
+      <h1 class="mt-3 text-4xl font-bold font-display">Crossword Puzzles</h1>
+      <p class="mx-auto mt-2 max-w-lg text-text-secondary">
+        Solve crossword puzzles to practice vocabulary. Click a cell, type letters, and use Tab to move between cells.
+      </p>
+    </div>
+
+    <div class="space-y-8">
+      {allPuzzles.map((p) => (
+        <div key={p.id}>
+          <h2 class="mb-3 text-lg font-semibold font-display" style={{ color: `var(--${p.level})` }}>
+            {p.level.toUpperCase()} — {p.puzzle.title}
+          </h2>
+          <Crossword puzzle={p.puzzle} level={p.level} client:load />
+        </div>
+      ))}
+    </div>
+  </section>
+  <AchievementModal client:load />
+</BaseLayout>

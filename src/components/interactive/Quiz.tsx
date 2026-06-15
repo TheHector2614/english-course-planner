@@ -88,8 +88,8 @@ export default function Quiz({ level, questions }: Props) {
                 })}
               </div>
               {submitted && (
-                <p class="mt-2 text-sm" style={{ color: isCorrect ? "var(--color-correct)" : "var(--color-incorrect)" }}>
-                  {isCorrect ? "✓ Correct!" : isWrong ? `✗ ${q.explanation}` : ""}
+                <p class="mt-2 text-sm" style={{ color: isCorrect ? "var(--correct)" : "var(--incorrect)" }}>
+                  {isCorrect ? "Correct!" : isWrong ? q.explanation : ""}
                 </p>
               )}
             </div>
@@ -102,7 +102,7 @@ export default function Quiz({ level, questions }: Props) {
           onClick={handleSubmit}
           disabled={!allAnswered}
           class="mt-6 w-full rounded-full px-6 py-3 font-semibold text-white transition-all disabled:opacity-40"
-          style={{ background: allAnswered ? "var(--color-a1)" : "var(--color-border)" }}
+          style={{ background: allAnswered ? "var(--a1)" : "var(--border)" }}
         >
           {allAnswered ? "Check Answers" : "Answer all questions first"}
         </button>
