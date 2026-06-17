@@ -1,10 +1,43 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Quiz from "../../components/interactive/Quiz";
+import FillBlank from "../../components/interactive/FillBlank";
+import Matching from "../../components/interactive/Matching";
+import SentenceReorder from "../../components/interactive/SentenceReorder";
 import FlashcardDeck from "../../components/interactive/FlashcardDeck";
 import WritingExercise from "../../components/interactive/WritingExercise";
+import SpeakingPractice from "../../components/interactive/SpeakingPractice";
+import Dictation from "../../components/interactive/Dictation";
+import ListeningExercise from "../../components/interactive/ListeningExercise";
+import ErrorCorrection from "../../components/interactive/ErrorCorrection";
+import SentenceTransformation from "../../components/interactive/SentenceTransformation";
+import ClozePassage from "../../components/interactive/ClozePassage";
+import LevelTabBar from "../../components/dynamics/LevelTabBar";
+import { LEVELS } from "../../data/levels";
 
-const { level, name, label, color, units, quiz, flashcards } = Astro.props;
+// Business English data
+import businessA1 from "../../data/business/a1";
+import businessA2 from "../../data/business/a2";
+import businessB1 from "../../data/business/b1";
+import businessB1P from "../../data/business/b1p";
+import businessB2 from "../../data/business/b2";
+import businessB2P from "../../data/business/b2p";
+
+// Technology English data
+import techA1 from "../../data/tech/a1";
+import techA2 from "../../data/tech/a2";
+import techB1 from "../../data/tech/b1";
+import techB1P from "../../data/tech/b1p";
+import techB2 from "../../data/tech/b2";
+import techB2P from "../../data/tech/b2p";
+
+const bizData: Record<string, any> = { a1: businessA1, a2: businessA2, b1: businessB1, "b1+": businessB1P, b2: businessB2, "b2+": businessB2P };
+const techData: Record<string, any> = { a1: techA1, a2: techA2, b1: techB1, "b1+": techB1P, b2: techB2, "b2+": techB2P };
+
+const { level, name, label, color, units, quiz, flashcards, fillBlank, matchPairs, reorder, speaking, dictation, listening, errorCorrection, sentenceTransformation, clozePassage } = Astro.props;
+
+const business = bizData[level];
+const tech = techData[level];
 
 export function getStaticPaths() {
   return [
@@ -37,7 +70,49 @@ export function getStaticPaths() {
         { front: "No", back: "No", example: "No, I don't know." },
         { front: "My name is", back: "Me llamo", example: "My name is John." },
         { front: "How are you?", back: "¿Cómo estás?", example: "How are you today?" },
-      ]
+      ],
+      fillBlank: [
+        { sentence: "She ___ a teacher.", answer: "is", options: ["am", "is", "are"], explanation: "'She' takes 'is'." },
+        { sentence: "They ___ from Spain.", answer: "are", options: ["is", "am", "are"], explanation: "'They' takes 'are'." },
+        { sentence: "I ___ twenty years old.", answer: "am", options: ["is", "am", "are"], explanation: "'I' takes 'am'." },
+        { sentence: "He ___ in London.", answer: "lives", options: ["live", "lives", "living"], explanation: "Third person adds 's'." },
+        { sentence: "We ___ two cats.", answer: "have", options: ["has", "have", "having"], explanation: "'We' takes 'have'." },
+      ],
+      matchPairs: [
+        { left: "Hello", right: "Greeting" },
+        { left: "Teacher", right: "Person who teaches" },
+        { left: "Student", right: "Person who learns" },
+        { left: "Happy", right: "Feeling good" },
+        { left: "Sad", right: "Feeling bad" },
+        { left: "Big", right: "Not small" },
+      ],
+      reorder: [
+        { words: ["she", "is", "teacher", "a"], correct: "She is a teacher." },
+        { words: ["are", "they", "from", "Spain"], correct: "They are from Spain." },
+        { words: ["name", "my", "is", "John"], correct: "My name is John." },
+        { words: ["you", "how", "are"], correct: "How are you?" },
+        { words: ["I", "am", "old", "years", "twenty"], correct: "I am twenty years old." },
+      ],
+      speaking: [
+        { text: "Hello, how are you?", phonetic: "/həˈloʊ haʊ ɑːr juː/" },
+        { text: "My name is John.", phonetic: "/maɪ neɪm ɪz dʒɒn/" },
+        { text: "I am a student.", phonetic: "/aɪ æm ə ˈstjuːdənt/" },
+        { text: "Nice to meet you.", phonetic: "/naɪs tə miːt juː/" },
+        { text: "Thank you very much.", phonetic: "/θæŋk juː ˈveri mʌtʃ/" },
+      ],
+      dictation: [
+        { text: "I wake up at seven o'clock." },
+        { text: "She is a teacher." },
+        { text: "They are from Spain." },
+        { text: "The cat is white and black." },
+        { text: "We go to the park on Saturday." },
+      ],
+      listening: [
+        { text: "Hello, I am Maria. I am from Mexico. I speak Spanish and English.", question: "Where is Maria from?", options: ["Spain", "Mexico", "Argentina", "Colombia"], correct: 1 },
+        { text: "My favorite food is pizza. I eat pizza every Friday with my family.", question: "When does the person eat pizza?", options: ["Monday", "Wednesday", "Friday", "Sunday"], correct: 2 },
+        { text: "The school is next to the park. I walk there every morning with my friend.", question: "Where is the school?", options: ["Next to the library", "Next to the park", "Next to the hospital", "Next to the store"], correct: 1 },
+      ],
+      clozePassage: null,
     }},
     { params: { level: "a2" }, props: { 
       level: "a2", name: "A2", label: "Elementary", color: "a2", hue: 220,
@@ -68,7 +143,58 @@ export function getStaticPaths() {
         { front: "Never", back: "Nunca", example: "I never smoke." },
         { front: "Big", back: "Grande", example: "That is a big house." },
         { front: "Small", back: "Pequeño", example: "The cat is small." },
-      ]
+      ],
+      fillBlank: [
+        { sentence: "Yesterday I ___ to the park.", answer: "went", options: ["go", "went", "gone"], explanation: "Past simple of 'go' is 'went'." },
+        { sentence: "She ___ a book right now.", answer: "is reading", options: ["reads", "is reading", "read"], explanation: "Present continuous: is + verb-ing." },
+        { sentence: "A car is ___ than a bicycle.", answer: "faster", options: ["fast", "faster", "fastest"], explanation: "One-syllable adjective: add -er." },
+        { sentence: "There ___ some milk in the fridge.", answer: "is", options: ["is", "are", "have"], explanation: "'Milk' is uncountable, use 'is'." },
+        { sentence: "They ___ at home last night.", answer: "were", options: ["was", "were", "are"], explanation: "'They' takes 'were' in past." },
+      ],
+      matchPairs: [
+        { left: "Go", right: "Went" },
+        { left: "Eat", right: "Ate" },
+        { left: "Buy", right: "Bought" },
+        { left: "See", right: "Saw" },
+        { left: "Take", right: "Took" },
+        { left: "Drink", right: "Drank" },
+      ],
+      reorder: [
+        { words: ["yesterday", "I", "to", "the", "park", "went"], correct: "I went to the park yesterday." },
+        { words: ["is", "she", "reading", "book", "a"], correct: "She is reading a book." },
+        { words: ["than", "faster", "a car", "a bicycle", "is"], correct: "A car is faster than a bicycle." },
+        { words: ["last", "they", "home", "at", "night", "were"], correct: "They were at home last night." },
+        { words: ["some", "there", "fridge", "milk", "in", "is", "the"], correct: "There is some milk in the fridge." },
+      ],
+      speaking: [
+        { text: "I went to the store yesterday.", phonetic: "/aɪ wɛnt tə ðə stɔːr ˈjɛstərdeɪ/" },
+        { text: "She is reading a book right now.", phonetic: "/ʃiː ɪz ˈriːdɪŋ ə bʊk raɪt naʊ/" },
+        { text: "A car is faster than a bicycle.", phonetic: "/ə kɑːr ɪz ˈfæstər ðæn ə ˈbaɪsɪkəl/" },
+        { text: "Would you like some tea?", phonetic: "/wʊd juː laɪk sʌm tiː/" },
+        { text: "They were at home last night.", phonetic: "/ðeɪ wɜːr æt hoʊm læst naɪt/" },
+      ],
+      dictation: [
+        { text: "My sister is older than me." },
+        { text: "We are watching a movie right now." },
+        { text: "I bought some apples at the store." },
+        { text: "There is a bank next to the post office." },
+        { text: "She was happy with her birthday present." },
+      ],
+      listening: [
+        { text: "Last weekend, we went to the beach. The weather was beautiful and we swam in the sea. We also had lunch at a small restaurant near the beach.", question: "What did they do last weekend?", options: ["Visited a museum", "Went to the beach", "Went shopping", "Stayed home"], correct: 1 },
+        { text: "I usually wake up at six thirty. First I take a shower, then I have breakfast. I leave home at seven fifteen and walk to the bus stop.", question: "What time does the person leave home?", options: ["Six thirty", "Seven o'clock", "Seven fifteen", "Eight o'clock"], correct: 2 },
+        { text: "Sarah went to the library after school. She needed to find a book for her science project. She stayed there for two hours.", question: "Why did Sarah go to the library?", options: ["To meet a friend", "To study for an exam", "To find a book for a project", "To use the computer"], correct: 2 },
+      ],
+      clozePassage: {
+        text: "Yesterday, I {0} to the park with my friend Tom. While we {1} football, it started to rain. We {2} under a tree for a few minutes, but the rain got stronger. Finally, we {3} to run home. When we arrived, we {4} completely wet!",
+        blanks: [
+          { correct: "went", options: ["go", "went", "gone"], explanation: "Past simple of 'go' is 'went'." },
+          { correct: "were playing", options: ["played", "were playing", "play"], explanation: "Use past continuous for an action in progress when another event happened." },
+          { correct: "stayed", options: ["stay", "stayed", "staying"], explanation: "Past simple for completed action." },
+          { correct: "decided", options: ["decide", "decided", "deciding"], explanation: "Past simple of 'decide' is 'decided'." },
+          { correct: "were", options: ["was", "were", "are"], explanation: "'We' takes 'were' in past simple." },
+        ],
+      },
     }},
     { params: { level: "b1" }, props: { 
       level: "b1", name: "B1", label: "Intermediate", color: "b1", hue: 275,
@@ -99,7 +225,70 @@ export function getStaticPaths() {
         { front: "Might", back: "Podría", example: "It might rain later." },
         { front: "Passive", back: "Voz pasiva", example: "The letter was sent yesterday." },
         { front: "Phrasal verb", back: "Verbo frasal", example: "I need to look up this word." },
-      ]
+      ],
+      fillBlank: [
+        { sentence: "I have ___ been to Japan.", answer: "never", options: ["ever", "never", "yet"], explanation: "'Never' means at no time." },
+        { sentence: "You ___ see a doctor.", answer: "should", options: ["must", "should", "can"], explanation: "'Should' gives advice." },
+        { sentence: "The book ___ by a famous author.", answer: "was written", options: ["wrote", "was written", "is writing"], explanation: "Passive: was + past participle." },
+        { sentence: "If it rains, I ___ stay home.", answer: "will", options: ["will", "would", "won't"], explanation: "First conditional: if + present, will + base." },
+        { sentence: "She can ___ Spanish fluently.", answer: "speak", options: ["speak", "speaks", "speaking"], explanation: "After 'can' use base verb." },
+      ],
+      matchPairs: [
+        { left: "Present Perfect", right: "Have + past participle" },
+        { left: "Passive Voice", right: "Be + past participle" },
+        { left: "First Conditional", right: "If + present, will + base" },
+        { left: "Modal Verb", right: "Can, should, must, might" },
+        { left: "Phrasal Verb", right: "Verb + preposition" },
+        { left: "Countable", right: "Can use a/an, many" },
+      ],
+      reorder: [
+        { words: ["to", "never", "Japan", "been", "have", "I"], correct: "I have never been to Japan." },
+        { words: ["by", "written", "was", "author", "the", "book", "a", "famous"], correct: "The book was written by a famous author." },
+        { words: ["rains", "if", "it", "stay", "I", "will", "home"], correct: "If it rains, I will stay home." },
+        { words: ["should", "doctor", "see", "you", "a"], correct: "You should see a doctor." },
+        { words: ["fluently", "can", "Spanish", "she", "speak"], correct: "She can speak Spanish fluently." },
+      ],
+      speaking: [
+        { text: "I have never been to Japan.", phonetic: "/aɪ hæv ˈnɛvər biːn tə dʒəˈpæn/" },
+        { text: "You should see a doctor.", phonetic: "/juː ʃʊd siː ə ˈdɒktər/" },
+        { text: "The book was written by a famous author.", phonetic: "/ðə bʊk wɒz ˈrɪtən baɪ ə ˈfeɪməs ˈɔːθər/" },
+        { text: "If it rains, I will stay home.", phonetic: "/ɪf ɪt reɪnz aɪ wɪl steɪ hoʊm/" },
+        { text: "She can speak Spanish fluently.", phonetic: "/ʃiː kæn spiːk ˈspænɪʃ ˈfluːəntli/" },
+      ],
+      dictation: [
+        { text: "Have you ever been to London?" },
+        { text: "The letter was sent yesterday morning." },
+        { text: "You might want to bring an umbrella." },
+        { text: "I have just finished my homework." },
+        { text: "She must wear a uniform at school." },
+      ],
+      listening: [
+        { text: "I have been learning English for five years. I started when I was in high school. My favorite part is speaking with native speakers because I can learn new expressions.", question: "Why does the person like speaking with native speakers?", options: ["It is easy", "To learn new expressions", "To practice grammar", "To get better grades"], correct: 1 },
+        { text: "If you want to improve your English, you should read books every day. You can also watch movies in English with subtitles. The most important thing is to practice regularly.", question: "What is the most important thing for improving English?", options: ["Reading books", "Watching movies", "Practicing regularly", "Using subtitles"], correct: 2 },
+        { text: "Scientists have discovered a new species of frog in the Amazon rainforest. The frog has bright blue skin and makes a sound like a bird. Researchers say this discovery is very important.", question: "What does the new frog look like?", options: ["Green skin", "Bright blue skin", "Red skin", "Yellow skin"], correct: 1 },
+      ],
+      clozePassage: {
+        text: "I {0} learning English for three years now. Last month, I {1} an advanced course. The teacher {2} us to practice every day. If we {3} our homework, she gives us extra exercises. I think I {4} a lot since I started.",
+        blanks: [
+          { correct: "have been", options: ["am", "have been", "was being"], explanation: "Present perfect continuous for duration up to now." },
+          { correct: "started", options: ["start", "started", "have started"], explanation: "'Last month' is a specific past time — use past simple." },
+          { correct: "encourages", options: ["encouraged", "encourages", "is encouraging"], explanation: "Habitual action: present simple." },
+          { correct: "don't do", options: ["don't do", "didn't do", "haven't done"], explanation: "Zero/first conditional: present simple after 'if'." },
+          { correct: "have improved", options: ["improved", "have improved", "am improving"], explanation: "Present perfect for result up to now." },
+        ],
+      },
+      errorCorrection: [
+        { incorrect: "I have went to the store yesterday.", correct: "I went to the store yesterday.", explanation: "With a specific past time (yesterday), use past simple, not present perfect." },
+        { incorrect: "She have finished her homework.", correct: "She has finished her homework.", explanation: "Third person singular takes 'has', not 'have', in present perfect." },
+        { incorrect: "If it will rain, I will stay home.", correct: "If it rains, I will stay home.", explanation: "In first conditional, use present simple after 'if', not 'will'." },
+        { incorrect: "The book was write by a famous author.", correct: "The book was written by a famous author.", explanation: "Passive voice requires past participle: write → written." },
+      ],
+      sentenceTransformation: [
+        { prompt: "Someone stole my car last night.", startWith: "My car", correct: ["My car was stolen last night."], hint: "Passive voice — focus on the object", explanation: "Active to passive: object becomes subject, add 'was' + past participle." },
+        { prompt: "\"I will help you,\" she said.", startWith: "She said", correct: ["She said she would help me.", "She said that she would help me."], hint: "Reported speech — backshift the tense", explanation: "Direct to reported: 'will' becomes 'would', 'you' becomes 'me'." },
+        { prompt: "You should see a doctor.", startWith: "A doctor", correct: ["A doctor should be seen.", "A doctor should be seen by you."], hint: "Passive with modal verb", explanation: "Modal passive: modal + be + past participle." },
+        { prompt: "I can speak French and Spanish.", startWith: "Not only", correct: ["Not only can I speak French, but I can also speak Spanish.", "Not only can I speak French but also Spanish."], hint: "Inversion with 'not only'", explanation: "After 'not only', invert the subject and auxiliary verb." },
+      ],
     }},
     { params: { level: "b1+" }, props: { 
       level: "b1+", name: "B1+", label: "Upper Intermediate", color: "b1p", hue: 15,
@@ -130,7 +319,70 @@ export function getStaticPaths() {
         { front: "Told", back: "Dijo a", example: "She told me to wait." },
         { front: "Hypothetical", back: "Hipotético", example: "If I were you, I'd study." },
         { front: "Causative", back: "Causativo", example: "I had my car repaired." },
-      ]
+      ],
+      fillBlank: [
+        { sentence: "I have been ___ here since 9 AM.", answer: "waiting", options: ["wait", "waited", "waiting"], explanation: "Present perfect continuous: have been + verb-ing." },
+        { sentence: "If I ___ rich, I would travel the world.", answer: "were", options: ["am", "was", "were"], explanation: "Second conditional uses 'were' for all subjects." },
+        { sentence: "She said she ___ coming.", answer: "was", options: ["is", "was", "will be"], explanation: "Backshift: present → past in reported speech." },
+        { sentence: "He told me ___ wait.", answer: "to", options: ["to", "that", "for"], explanation: "'Tell' + object + infinitive." },
+        { sentence: "I have been ___ English for 3 years.", answer: "learning", options: ["learn", "learned", "learning"], explanation: "Duration action: have been + verb-ing." },
+      ],
+      matchPairs: [
+        { left: "Present Perfect Continuous", right: "Have been + verb-ing" },
+        { left: "Second Conditional", right: "If + past, would + base" },
+        { left: "Reported Speech", right: "Backshift tenses" },
+        { left: "Say", right: "Say + (that) + clause" },
+        { left: "Tell", right: "Tell + object + clause" },
+        { left: "Causative Have", right: "Have + object + past participle" },
+      ],
+      reorder: [
+        { words: ["since", "waiting", "been", "9", "AM", "I", "have"], correct: "I have been waiting since 9 AM." },
+        { words: ["rich", "I", "if", "world", "were", "would", "the", "travel", "I"], correct: "If I were rich, I would travel the world." },
+        { words: ["said", "coming", "she", "was", "she"], correct: "She said she was coming." },
+        { words: ["me", "told", "to", "he", "wait"], correct: "He told me to wait." },
+        { words: ["for", "learning", "years", "been", "English", "three", "have", "I"], correct: "I have been learning English for three years." },
+      ],
+      speaking: [
+        { text: "I have been waiting since 9 AM.", phonetic: "/aɪ hæv bɪn ˈweɪtɪŋ sɪns naɪn eɪ ɛm/" },
+        { text: "If I were rich, I would travel the world.", phonetic: "/ɪf aɪ wɜːr rɪtʃ aɪ wʊd ˈtrævəl ðə wɜːrld/" },
+        { text: "She said she was coming to the party.", phonetic: "/ʃiː sɛd ʃiː wɒz ˈkʌmɪŋ tə ðə ˈpɑːrti/" },
+        { text: "He told me to wait for the results.", phonetic: "/hiː təʊld miː tə weɪt fɔːr ðə rɪˈzʌlts/" },
+        { text: "The house needs to be painted soon.", phonetic: "/ðə haʊs niːdz tə biː ˈpeɪntɪd suːn/" },
+      ],
+      dictation: [
+        { text: "I have been studying English for three years." },
+        { text: "If I were you, I would accept the offer." },
+        { text: "She told me that she had already finished." },
+        { text: "The window was broken during the storm." },
+        { text: "He asked me where I had put the keys." },
+      ],
+      listening: [
+        { text: "I've been working at this company since 2019. If I had more free time, I would take up photography. I've always been interested in capturing beautiful landscapes and cityscapes.", question: "What would the person do with more free time?", options: ["Travel more", "Take up photography", "Change jobs", "Learn cooking"], correct: 1 },
+        { text: "The manager said the meeting had been postponed until Friday. She told us to prepare the quarterly report and bring it to the conference room at 10 AM.", question: "When is the rescheduled meeting?", options: ["Wednesday", "Thursday", "Friday", "Monday"], correct: 2 },
+        { text: "Had the rescue team arrived earlier, they might have found more survivors. The weather conditions were extremely difficult, with heavy rain and strong winds throughout the night.", question: "What made the rescue difficult?", options: ["Lack of equipment", "Weather conditions", "Night time", "Few survivors"], correct: 1 },
+      ],
+      clozePassage: {
+        text: "She {0} for this company since 2019. If she {1} more free time, she would take up photography. The manager said the meeting {2} until Friday. He told us {3} the quarterly report. If we {4} earlier, we would have finished everything.",
+        blanks: [
+          { correct: "has been working", options: ["works", "has been working", "worked"], explanation: "Present perfect continuous — started in past and continues." },
+          { correct: "had", options: ["has", "had", "would have"], explanation: "Second conditional: if + past simple." },
+          { correct: "had been postponed", options: ["was postponed", "had been postponed", "is postponed"], explanation: "Backshift in reported speech: present perfect → past perfect." },
+          { correct: "to prepare", options: ["prepare", "to prepare", "preparing"], explanation: "'Told' + object + to-infinitive." },
+          { correct: "had arrived", options: ["arrived", "had arrived", "would arrive"], explanation: "Third conditional: if + past perfect." },
+        ],
+      },
+      errorCorrection: [
+        { incorrect: "I have been working here since three years.", correct: "I have been working here for three years.", explanation: "Use 'for' with duration (three years), 'since' with a starting point." },
+        { incorrect: "If I would be rich, I would travel the world.", correct: "If I were rich, I would travel the world.", explanation: "Second conditional uses 'if + past simple', not 'if + would'." },
+        { incorrect: "She said me that she was tired.", correct: "She told me that she was tired.", explanation: "'Say' does not take an indirect object. Use 'tell' + person." },
+        { incorrect: "I wish I can swim.", correct: "I wish I could swim.", explanation: "After 'wish', use past tense for present desires: can → could." },
+      ],
+      sentenceTransformation: [
+        { prompt: "I have studied English for three years.", startWith: "I started", correct: ["I started studying English three years ago."], hint: "Change the time reference", explanation: "Present perfect + for → past simple + ago." },
+        { prompt: "\"Where do you live?\" he asked.", startWith: "He asked", correct: ["He asked where I lived.", "He asked me where I lived."], hint: "Reported question — no inversion", explanation: "Reported questions use statement word order and backshift." },
+        { prompt: "I don't have enough money, so I can't buy the car.", startWith: "If", correct: ["If I had enough money, I would buy the car.", "If I had enough money I would buy the car."], hint: "Second conditional", explanation: "Second conditional: if + past, would + base verb." },
+        { prompt: "People say that the castle is haunted.", startWith: "The castle", correct: ["The castle is said to be haunted.", "The castle is said to be haunted by people."], hint: "Passive reporting structure", explanation: "Active 'people say that' → passive 'it is said that' or 'something is said to be'." },
+      ],
     }},
     { params: { level: "b2" }, props: { 
       level: "b2", name: "B2", label: "Advanced", color: "b2", hue: 250,
@@ -161,7 +413,70 @@ export function getStaticPaths() {
         { front: "Discourse marker", back: "Marcador discursivo", example: "Nevertheless, we continued." },
         { front: "Hedging", back: "Atenuación", example: "It seems that the results are valid." },
         { front: "Emphasis", back: "Énfasis", example: "It was John who called." },
-      ]
+      ],
+      fillBlank: [
+        { sentence: "If I had studied, I ___ the exam.", answer: "would have passed", options: ["would pass", "would have passed", "will pass"], explanation: "Third conditional: would have + past participle." },
+        { sentence: "Not only ___ late, but he also forgot the documents.", answer: "was he", options: ["he was", "was he", "he is"], explanation: "Inversion after 'not only' at start." },
+        { sentence: "He must ___ the train. He's not here.", answer: "have missed", options: ["miss", "missed", "have missed"], explanation: "Modal perfect for past deduction." },
+        { sentence: "___ is that he never gives up.", answer: "What impresses me", options: ["What impresses me", "It impresses me", "The thing"], explanation: "Cleft: 'What...is...' for emphasis." },
+        { sentence: "Under no circumstances ___ the door.", answer: "should you open", options: ["you should open", "should you open", "you open"], explanation: "Negative adverbial triggers inversion." },
+      ],
+      matchPairs: [
+        { left: "Third Conditional", right: "If + past perfect, would have + past participle" },
+        { left: "Inversion", right: "Verb before subject" },
+        { left: "Modal Perfect", right: "Modal + have + past participle" },
+        { left: "Cleft Sentence", right: "What/It + be + focus" },
+        { left: "Hedging", right: "Softening claims" },
+        { left: "Discourse Marker", right: "Nevertheless, moreover, however" },
+      ],
+      reorder: [
+        { words: ["studied", "if", "passed", "I", "had", "would", "have", "the", "exam", "I"], correct: "If I had studied, I would have passed the exam." },
+        { words: ["only", "was", "not", "he", "late", "but", "also", "forgot", "documents", "the"], correct: "Not only was he late, but he also forgot the documents." },
+        { words: ["have", "train", "missed", "must", "the", "he"], correct: "He must have missed the train." },
+        { words: ["never", "have", "such", "beauty", "seen", "I"], correct: "Never have I seen such beauty." },
+        { words: ["is", "what", "a", "break", "need", "I"], correct: "What I need is a break." },
+      ],
+      speaking: [
+        { text: "If I had studied, I would have passed the exam.", phonetic: "/ɪf aɪ hæd ˈstʌdid aɪ wʊd hæv pæst ði ɪɡˈzæm/" },
+        { text: "Not only was he late, but he also forgot the documents.", phonetic: "/nɒt ˈoʊnli wɒz hiː leɪt bʌt hiː ˈɔːlsoʊ fərˈɡɒt ðə ˈdɒkjʊmənts/" },
+        { text: "He must have missed the train.", phonetic: "/hiː mʌst hæv mɪst ðə treɪn/" },
+        { text: "Never have I seen such beauty.", phonetic: "/ˈnɛvər hæv aɪ siːn sʌtʃ ˈbjuːti/" },
+        { text: "Under no circumstances should you open the door.", phonetic: "/ˈʌndər noʊ ˈsɜːrkəmstænsɪz ʃʊd juː ˈoʊpən ðə dɔːr/" },
+      ],
+      dictation: [
+        { text: "Under no circumstances should you touch that equipment." },
+        { text: "Had we known earlier, we would have changed our plans." },
+        { text: "She might have gotten lost; let's call her." },
+        { text: "What impresses me most is his determination." },
+        { text: "No sooner had I left than it started raining." },
+      ],
+      listening: [
+        { text: "Had the committee approved the proposal, construction would have begun last spring. However, they raised concerns about the environmental impact and requested a revised plan. The developers are now working on an alternative approach.", question: "Why hasn't construction begun?", options: ["Lack of funding", "Environmental concerns", "Legal issues", "Weather conditions"], correct: 1 },
+        { text: "Not only does meditation reduce stress, but it also improves concentration and emotional well-being. Studies have shown that people who meditate regularly experience lower blood pressure and better sleep quality.", question: "What is NOT mentioned as a benefit of meditation?", options: ["Reduced stress", "Better concentration", "Weight loss", "Improved sleep"], correct: 2 },
+        { text: "It was Dr. Nakamura who first identified the anomaly in the data. Without her keen observation, the error might have gone unnoticed for months. The team has since corrected the methodology and replicated the results.", question: "How was the error discovered?", options: ["By a computer program", "By Dr. Nakamura", "During a peer review", "By a student"], correct: 1 },
+      ],
+      clozePassage: {
+        text: "If the committee {0} the proposal, construction would have begun last spring. However, {1} did they raise concerns, but they also requested a revised plan. It {2} Dr. Nakamura who identified the anomaly. Without her, the error might {3} unnoticed. The team {4} the results since then.",
+        blanks: [
+          { correct: "had approved", options: ["approved", "had approved", "would approve"], explanation: "Third conditional: if + past perfect." },
+          { correct: "not only", options: ["not only", "only not", "not just"], explanation: "'Not only...but also...' triggers inversion." },
+          { correct: "was", options: ["is", "was", "has been"], explanation: "Cleft sentence: It + be + focus. Past tense for past story." },
+          { correct: "have gone", options: ["go", "have gone", "be going"], explanation: "Modal perfect: might + have + past participle." },
+          { correct: "has replicated", options: ["replicated", "has replicated", "had replicated"], explanation: "Present perfect: 'since then' = up to now." },
+        ],
+      },
+      errorCorrection: [
+        { incorrect: "If I would have studied, I would have passed the exam.", correct: "If I had studied, I would have passed the exam.", explanation: "Third conditional uses 'if + past perfect', not 'if + would have'." },
+        { incorrect: "Never I have seen such a beautiful sunset.", correct: "Never have I seen such a beautiful sunset.", explanation: "Negative adverbials at the start trigger subject-verb inversion." },
+        { incorrect: "She must had left early; her coat is gone.", correct: "She must have left early; her coat is gone.", explanation: "Modal perfect: must + have + past participle, not 'must had'." },
+        { incorrect: "Not only he was late, but he also forgot the documents.", correct: "Not only was he late, but he also forgot the documents.", explanation: "Inversion after 'not only' at the start: auxiliary verb before subject." },
+      ],
+      sentenceTransformation: [
+        { prompt: "I didn't study, so I failed the exam.", startWith: "If", correct: ["If I had studied, I would have passed the exam.", "If I had studied I would not have failed the exam."], hint: "Third conditional — past regret", explanation: "Third conditional: if + past perfect, would have + past participle." },
+        { prompt: "Nobody has ever climbed that mountain before.", startWith: "That mountain", correct: ["That mountain has never been climbed before.", "That mountain has never been climbed before by anybody."], hint: "Passive with present perfect + never", explanation: "Active to passive in present perfect: has + been + past participle." },
+        { prompt: "The last time I saw him was in 2020.", startWith: "I haven't", correct: ["I haven't seen him since 2020."], hint: "Present perfect with 'since'", explanation: "Transform 'the last time was' → 'haven't seen since'." },
+        { prompt: "I think it's necessary for you to apologize.", startWith: "You", correct: ["You must apologize.", "You need to apologize.", "You ought to apologize.", "You should apologize."], hint: "Use a modal verb", explanation: "It's necessary → modal (must/need to/ought to/should)." },
+      ],
     }},
     { params: { level: "b2+" }, props: { 
       level: "b2+", name: "B2+", label: "Pre-Advanced", color: "b2p", hue: 185,
@@ -192,34 +507,106 @@ export function getStaticPaths() {
         { front: "Fronting", back: "Anteposición", example: "Never had I felt so alive." },
         { front: "Register", back: "Registro", example: "Formal vs informal language." },
         { front: "Persuasion", back: "Persuasión", example: "I firmly believe that..." },
-      ]
+      ],
+      fillBlank: [
+        { sentence: "___ by the view, she stopped walking.", answer: "Stunned", options: ["Stunned", "Stunning", "Being stunned"], explanation: "Past participle for passive meaning." },
+        { sentence: "I wish I ___ harder when I was younger.", answer: "had studied", options: ["studied", "had studied", "study"], explanation: "Wish + past perfect for past regret." },
+        { sentence: "I'd rather you ___ smoke in here.", answer: "didn't", options: ["don't", "didn't", "not"], explanation: "'Would rather' + subject + past." },
+        { sentence: "___ the budget, we cannot proceed.", answer: "Given", options: ["Given", "Giving", "Having given"], explanation: "Participle clause: 'given' = considering." },
+        { sentence: "It's high time you ___ a decision.", answer: "made", options: ["make", "made", "making"], explanation: "It's high time + past subjunctive." },
+      ],
+      matchPairs: [
+        { left: "Participle Clause", right: "-ed/-ing phrase replacing clause" },
+        { left: "Wish + Past Perfect", right: "Regret about the past" },
+        { left: "Would Rather", right: "Preference for another's action" },
+        { left: "It's High Time", right: "Something should happen now" },
+        { left: "Formal Register", right: "Passive, advanced structures" },
+        { left: "Business English", right: "Meetings, negotiations, emails" },
+      ],
+      reorder: [
+        { words: ["by", "stunned", "view", "walking", "the", "she", "stopped"], correct: "Stunned by the view, she stopped walking." },
+        { words: ["I", "when", "harder", "wish", "had", "studied", "I", "younger", "was"], correct: "I wish I had studied harder when I was younger." },
+        { words: ["you", "rather", "here", "smoke", "didn't", "I'd"], correct: "I'd rather you didn't smoke here." },
+        { words: ["given", "cannot", "budget", "proceed", "the", "we"], correct: "Given the budget, we cannot proceed." },
+        { words: ["time", "it's", "made", "high", "decision", "you", "a"], correct: "It's high time you made a decision." },
+      ],
+      speaking: [
+        { text: "Stunned by the view, she stopped walking.", phonetic: "/stʌnd baɪ ðə vjuː ʃiː stɒpt ˈwɔːkɪŋ/" },
+        { text: "I wish I had studied harder when I was younger.", phonetic: "/aɪ wɪʃ aɪ hæd ˈstʌdid ˈhɑːrdər wɛn aɪ wɒz ˈjʌŋɡər/" },
+        { text: "Given the budget, we cannot proceed.", phonetic: "/ˈɡɪvən ðə ˈbʌdʒɪt wiː ˈkænɒt prəˈsiːd/" },
+        { text: "I'd rather you didn't smoke in here.", phonetic: "/aɪd ˈræðər juː ˈdɪdnt sməʊk ɪn hɪər/" },
+        { text: "It's high time you made a decision.", phonetic: "/ɪts haɪ taɪm juː meɪd ə dɪˈsɪʒən/" },
+      ],
+      dictation: [
+        { text: "Exhausted by the long journey, he went straight to bed." },
+        { text: "I wish I had taken that job opportunity." },
+        { text: "It's high time the government took action." },
+        { text: "Not until later did we realize the mistake." },
+        { text: "Were the company to invest more, it would grow faster." },
+      ],
+      listening: [
+        { text: "Were the company to invest more in renewable energy, it would reduce its carbon footprint significantly. Given the current regulatory environment, shareholders are pressuring the board to act. It's high time they made a strategic decision.", question: "What are shareholders pressuring the board to do?", options: ["Reduce costs", "Invest in renewable energy", "Hire more staff", "Expand internationally"], correct: 1 },
+        { text: "Having reviewed the applications, the hiring committee decided to interview only three candidates. What impressed them most was not the applicants' experience, but their adaptability and willingness to learn in a fast-changing industry.", question: "What impressed the hiring committee most?", options: ["Experience", "Education", "Adaptability", "References"], correct: 2 },
+        { text: "So controversial was the proposal that the meeting lasted over four hours. Not until midnight did the board reach a compromise. Had someone prepared a risk assessment beforehand, the discussion might have been shorter.", question: "Why was the meeting so long?", options: ["Many candidates", "The proposal was controversial", "The board was late", "Technical issues"], correct: 1 },
+      ],
+      clozePassage: {
+        text: "Were the company {0} more in renewable energy, it would reduce its carbon footprint. {1} the current regulations, shareholders are pressuring the board to act. It's high time they {2} a decision. Having {3} the proposals, the committee voted unanimously. I wish the board {4} this earlier.",
+        blanks: [
+          { correct: "to invest", options: ["investing", "to invest", "invested"], explanation: "Inverted conditional: 'Were + subject + to-infinitive'." },
+          { correct: "Given", options: ["Given", "Giving", "Having given"], explanation: "Participle clause: 'Given' = considering." },
+          { correct: "made", options: ["make", "made", "would make"], explanation: "'It's high time' + past subjunctive." },
+          { correct: "reviewed", options: ["review", "reviewed", "been reviewing"], explanation: "Having + past participle = after completing the action." },
+          { correct: "had considered", options: ["considered", "had considered", "would consider"], explanation: "Wish + past perfect for past regret." },
+        ],
+      },
+      errorCorrection: [
+        { incorrect: "Exhausting by the journey, he went to bed.", correct: "Exhausted by the journey, he went to bed.", explanation: "Past participle (-ed) for passive meaning. 'Exhausting' means it causes exhaustion." },
+        { incorrect: "I wish I was taller.", correct: "I wish I were taller.", explanation: "After 'wish', use 'were' for all subjects in formal English (subjunctive mood)." },
+        { incorrect: "I'd rather you don't smoke in here.", correct: "I'd rather you didn't smoke in here.", explanation: "After 'would rather' + different subject, use past tense." },
+        { incorrect: "It's high time we will leave.", correct: "It's high time we left.", explanation: "After 'it's high time', use past tense (subjunctive), not 'will'." },
+      ],
+      sentenceTransformation: [
+        { prompt: "Because the company invested in new technology, it grew faster.", startWith: "Given", correct: ["Given that the company invested in new technology, it grew faster.", "Given the investment in new technology, the company grew faster."], hint: "Participle clause with 'given'", explanation: "'Because' → 'Given that' or 'Given + noun phrase' to sound more formal." },
+        { prompt: "I regret not accepting the job offer.", startWith: "I wish", correct: ["I wish I had accepted the job offer."], hint: "Wish + past perfect for past regret", explanation: "'Regret not doing' → 'wish + had + past participle'." },
+        { prompt: "She prefers that we don't smoke in the office.", startWith: "She'd rather", correct: ["She'd rather we didn't smoke in the office."], hint: "'Would rather' + subject + past", explanation: "'Prefer that + subject + don't' → 'would rather + subject + didn't'." },
+        { prompt: "We should probably start the meeting now.", startWith: "It's high time", correct: ["It's high time we started the meeting.", "It's high time we began the meeting."], hint: "Fixed expression with past subjunctive", explanation: "It's high time + subject + past tense." },
+      ],
     }},
   ];
 }
 ---
 
 <BaseLayout title={`Level ${level} — ${label}`}>
-  <section class="mx-auto max-w-6xl px-4 sm:px-4 py-8 sm:py-12">
-    <div class="mb-6 sm:mb-8">
-      <div class="flex items-center gap-3">
-        <span class="text-3xl sm:text-4xl font-black font-display tracking-tight" style={`color: var(--${color});`}>
-          {name}
-        </span>
-        <span class="rounded-full px-3 py-1 text-sm font-medium" style={`background: var(--${color}-bg); color: var(--${color});`}>
-          {label}
-        </span>
+  <section class="mx-auto max-w-6xl px-4 py-8 sm:py-12">
+    <!-- Level Header -->
+    <div class="mb-8 sm:mb-12 relative">
+      <div class="absolute -inset-10 rounded-full bg-radial-gradient from-focus-accent-light/10 to-transparent blur-3xl pointer-events-none -z-10"></div>
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        <div class="flex items-center gap-4">
+          <span class="text-4xl sm:text-5xl font-black font-display tracking-tight" style={`color: var(--${color});`}>
+            {name}
+          </span>
+          <span class="rounded-full px-4 py-1 text-sm font-bold border" style={`background: var(--${color}-bg); color: var(--${color}); border-color: color-mix(in oklch, var(--${color}) 20%, transparent)`}>
+            {label}
+          </span>
+        </div>
+        <span id="level-mode-badge" class="rounded-full px-3.5 py-1.5 text-xs font-bold uppercase tracking-wider" style="background: var(--focus-accent-bg); color: var(--focus-accent); border: 1px solid color-mix(in oklch, var(--focus-accent) 20%, transparent)">General</span>
       </div>
-      <p class="mt-2 text-text-secondary">{units.length} units · ~{(units.length * 3)}h</p>
+      <p class="mt-4 text-base sm:text-lg text-text-secondary leading-relaxed font-medium">{units.length} units · ~{(units.length * 3)} hours of study</p>
     </div>
 
+    <!-- Units Grid -->
     <div class="mb-12 grid gap-4 md:grid-cols-2">
-      {units.map((u) => (
-        <div class="rounded-xl shadow-border bg-surface p-5">
-          <h3 class="text-lg font-semibold">{u.title}</h3>
-          <p class="mt-1 text-sm text-text-secondary">{u.desc}</p>
-          <div class="mt-3 flex gap-2">
+      {units.map((u, i) => (
+        <div 
+          class="unit-card glass-card rounded-[var(--radius-lg)] p-5 animate-fade-in-up" 
+          style={`animation-delay: ${i * 80}ms; --hover-color: var(--${color}); --hover-shadow: color-mix(in oklch, var(--${color}) 18%, transparent);`}
+        >
+          <h3 class="text-lg font-bold font-display text-text">{u.title}</h3>
+          <p class="mt-1 text-sm text-text-secondary leading-relaxed">{u.desc}</p>
+          <div class="mt-4 flex gap-2">
             {u.tags.map((t) => (
-              <span class="rounded-full px-2p5 py-0p5 text-xs font-medium" style={`background: var(--${color}-bg); color: var(--${color});`}>
+              <span class="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider" style={`background: var(--${color}-bg); color: var(--${color}); border: 1px solid color-mix(in oklch, var(--${color}) 15%, transparent)`}>
                 {t}
               </span>
             ))}
@@ -228,21 +615,274 @@ export function getStaticPaths() {
       ))}
     </div>
 
-    <div class="mb-12">
-      <h2 class="mb-4 text-2xl font-bold font-display">Quiz</h2>
-      <Quiz level={level} questions={quiz.questions} client:load />
-    </div>
+    <!-- Tab Bar (client-side) -->
+    <LevelTabBar client:load />
 
-    <div class="mb-12">
-      <h2 class="mb-4 text-2xl font-bold font-display">Vocabulary Flashcards</h2>
-      <FlashcardDeck cards={flashcards} client:load />
-    </div>
-
-    {level === "b1" && (
+    <!-- Core Grammar Tab -->
+    <div data-tab="core">
       <div class="mb-12">
-        <h2 class="mb-4 text-2xl font-bold font-display">Writing Exercise</h2>
-        <WritingExercise prompt="Describe your last vacation. Include where you went, what you did, and how you felt." minWords={80} maxWords={120} client:load />
+        <h2 class="mb-4 text-2xl font-bold font-display">Quiz</h2>
+        <Quiz level={level} questions={quiz.questions} client:load />
       </div>
-    )}
+
+      <div class="mb-12">
+        <h2 class="mb-4 text-2xl font-bold font-display">Fill in the Blank</h2>
+        <FillBlank questions={fillBlank} level={level} client:load />
+      </div>
+      <div class="mb-12">
+        <h2 class="mb-4 text-2xl font-bold font-display">Matching</h2>
+        <Matching pairs={matchPairs} level={level} client:load />
+      </div>
+
+      <div class="mb-12">
+        <h2 class="mb-4 text-2xl font-bold font-display">Sentence Reorder</h2>
+        <SentenceReorder questions={reorder} level={level} client:load />
+      </div>
+
+      <div class="mb-12">
+        <h2 class="mb-4 text-2xl font-bold font-display">Vocabulary Flashcards</h2>
+        <FlashcardDeck cards={flashcards} client:load />
+      </div>
+    </div>
+
+    <!-- Business Skills Tab -->
+    <div data-tab="business" class="hidden">
+      <div class="mb-12">
+        <h2 class="mb-4 text-2xl font-bold font-display">Business Quiz</h2>
+        <Quiz level={level} questions={business.quiz.questions} client:load />
+      </div>
+
+      <div class="mb-12">
+        <h2 class="mb-4 text-2xl font-bold font-display">Business Fill in the Blank</h2>
+        <FillBlank questions={business.fillBlank} level={level} client:load />
+      </div>
+
+      <div class="mb-12">
+        <h2 class="mb-4 text-2xl font-bold font-display">Business Vocabulary</h2>
+        <Matching pairs={business.matchPairs} level={level} client:load />
+      </div>
+
+      <div class="mb-12">
+        <h2 class="mb-4 text-2xl font-bold font-display">Business Sentence Reorder</h2>
+        <SentenceReorder questions={business.reorder} level={level} client:load />
+      </div>
+
+      <div class="mb-12">
+        <h2 class="mb-4 text-2xl font-bold font-display">Business Flashcards</h2>
+        <FlashcardDeck cards={business.flashcards} client:load />
+      </div>
+
+      {business.speaking && business.speaking.length > 0 && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Business Speaking</h2>
+          <SpeakingPractice items={business.speaking} level={level} client:load />
+        </div>
+      )}
+
+      {business.dictation && business.dictation.length > 0 && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Business Dictation</h2>
+          <Dictation items={business.dictation} level={level} client:load />
+        </div>
+      )}
+
+      {business.listening && business.listening.length > 0 && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Business Listening</h2>
+          <ListeningExercise questions={business.listening} level={level} client:load />
+        </div>
+      )}
+
+      {business.errorCorrection && business.errorCorrection.length > 0 && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Business Error Correction</h2>
+          <ErrorCorrection questions={business.errorCorrection} level={level} client:load />
+        </div>
+      )}
+
+      {business.sentenceTransformation && business.sentenceTransformation.length > 0 && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Business Sentence Transformation</h2>
+          <SentenceTransformation questions={business.sentenceTransformation} level={level} client:load />
+        </div>
+      )}
+
+      {business.clozePassage && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Business Cloze Passage</h2>
+          <ClozePassage title={`${name} Business`} text={business.clozePassage.text} blanks={business.clozePassage.blanks} level={level} client:load />
+        </div>
+      )}
+    </div>
+
+    <!-- Tech Terms Tab -->
+    <div data-tab="tech" class="hidden">
+      <div class="mb-12">
+        <h2 class="mb-4 text-2xl font-bold font-display">Tech Quiz</h2>
+        <Quiz level={level} questions={tech.quiz.questions} client:load />
+      </div>
+
+      <div class="mb-12">
+        <h2 class="mb-4 text-2xl font-bold font-display">Tech Fill in the Blank</h2>
+        <FillBlank questions={tech.fillBlank} level={level} client:load />
+      </div>
+
+      <div class="mb-12">
+        <h2 class="mb-4 text-2xl font-bold font-display">Tech Vocabulary</h2>
+        <Matching pairs={tech.matchPairs} level={level} client:load />
+      </div>
+
+      <div class="mb-12">
+        <h2 class="mb-4 text-2xl font-bold font-display">Tech Sentence Reorder</h2>
+        <SentenceReorder questions={tech.reorder} level={level} client:load />
+      </div>
+
+      <div class="mb-12">
+        <h2 class="mb-4 text-2xl font-bold font-display">Tech Flashcards</h2>
+        <FlashcardDeck cards={tech.flashcards} client:load />
+      </div>
+
+      {tech.speaking && tech.speaking.length > 0 && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Tech Speaking</h2>
+          <SpeakingPractice items={tech.speaking} level={level} client:load />
+        </div>
+      )}
+
+      {tech.dictation && tech.dictation.length > 0 && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Tech Dictation</h2>
+          <Dictation items={tech.dictation} level={level} client:load />
+        </div>
+      )}
+
+      {tech.listening && tech.listening.length > 0 && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Tech Listening</h2>
+          <ListeningExercise questions={tech.listening} level={level} client:load />
+        </div>
+      )}
+
+      {tech.errorCorrection && tech.errorCorrection.length > 0 && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Tech Error Correction</h2>
+          <ErrorCorrection questions={tech.errorCorrection} level={level} client:load />
+        </div>
+      )}
+
+      {tech.sentenceTransformation && tech.sentenceTransformation.length > 0 && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Tech Sentence Transformation</h2>
+          <SentenceTransformation questions={tech.sentenceTransformation} level={level} client:load />
+        </div>
+      )}
+
+      {tech.clozePassage && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Tech Cloze Passage</h2>
+          <ClozePassage title={`${name} Tech`} text={tech.clozePassage.text} blanks={tech.clozePassage.blanks} level={level} client:load />
+        </div>
+      )}
+    </div>
+
+    <!-- Practice Tab -->
+    <div data-tab="practice" class="hidden">
+      {speaking && speaking.length > 0 && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Speaking Practice</h2>
+          <SpeakingPractice items={speaking} level={level} client:load />
+        </div>
+      )}
+
+      {dictation && dictation.length > 0 && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Dictation</h2>
+          <Dictation items={dictation} level={level} client:load />
+        </div>
+      )}
+
+      {listening && listening.length > 0 && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Listening Comprehension</h2>
+          <ListeningExercise questions={listening} level={level} client:load />
+        </div>
+      )}
+
+      {errorCorrection && errorCorrection.length > 0 && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Error Correction</h2>
+          <ErrorCorrection questions={errorCorrection} level={level} client:load />
+        </div>
+      )}
+
+      {sentenceTransformation && sentenceTransformation.length > 0 && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Sentence Transformation</h2>
+          <SentenceTransformation questions={sentenceTransformation} level={level} client:load />
+        </div>
+      )}
+
+      {clozePassage && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Cloze Passage</h2>
+          <ClozePassage title={clozePassage.title} text={clozePassage.text} blanks={clozePassage.blanks} level={level} client:load />
+        </div>
+      )}
+
+      {level === "b1" && (
+        <div class="mb-12">
+          <h2 class="mb-4 text-2xl font-bold font-display">Writing Exercise</h2>
+          <WritingExercise prompt="Describe your last vacation. Include where you went, what you did, and how you felt." minWords={80} maxWords={120} level={level} client:load />
+        </div>
+      )}
+    </div>
+
+    <!-- Progress Tab -->
+    <div data-tab="progress" class="hidden">
+      <div class="glass-card rounded-[var(--radius-lg)] p-5">
+        <h3 class="text-lg font-bold font-display mb-4">Level Progress</h3>
+        <div class="space-y-4">
+          <div>
+            <div class="flex items-center justify-between text-sm mb-1.5">
+              <span class="font-semibold text-text-secondary">Units Completed</span>
+              <span class="text-text-muted font-bold tabular-nums">0 / {units.length}</span>
+            </div>
+            <div class="h-3 rounded-full bg-surface-alt overflow-hidden p-0.5 border border-border-light">
+              <div class="h-full rounded-full bg-focus-accent transition-all duration-500 ease-out" style="width: 0%"></div>
+            </div>
+          </div>
+          <div>
+            <div class="flex items-center justify-between text-sm mb-1.5">
+              <span class="font-semibold text-text-secondary">Quiz Best Score</span>
+              <span class="text-text-muted font-bold tabular-nums">—</span>
+            </div>
+            <div class="h-3 rounded-full bg-surface-alt overflow-hidden p-0.5 border border-border-light">
+              <div class="h-full rounded-full bg-focus-accent transition-all duration-500 ease-out" style="width: 0%"></div>
+            </div>
+          </div>
+          <p class="text-sm text-text-secondary">Complete exercises and quizzes to track your progress in this level.</p>
+        </div>
+      </div>
+    </div>
   </section>
+
+  <style>
+    .unit-card {
+      transition: border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+    }
+    .unit-card:hover {
+      border-color: var(--hover-color);
+      box-shadow: 0 12px 28px -4px var(--hover-shadow);
+      transform: translateY(-2px);
+    }
+  </style>
+
+  <script>
+    import { focusMode, FOCUS_LABELS } from "../../stores/modes";
+
+    focusMode.subscribe(() => {
+      const badge = document.getElementById("level-mode-badge");
+      if (badge) badge.textContent = FOCUS_LABELS[focusMode.get()].split(" ")[0];
+    });
+  </script>
 </BaseLayout>

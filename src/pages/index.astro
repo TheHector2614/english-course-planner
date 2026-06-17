@@ -4,14 +4,9 @@ import ProgressOverview from "../components/dynamics/ProgressOverview";
 import AchievementModal from "../components/interactive/AchievementModal";
 import ModeCarousel from "../components/interactive/ModeCarousel";
 
-const levels = [
-  { id: "a1", name: "A1", label: "Beginner", hours: 8, units: 4, color: "a1", hue: 150, desc: "Fundamentals: greetings, family, daily routine, directions" },
-  { id: "a2", name: "A2", label: "Elementary", hours: 10, units: 4, color: "a2", hue: 220, desc: "Past tense, present continuous, comparatives, shopping" },
-  { id: "b1", name: "B1", label: "Intermediate", hours: 12, units: 4, color: "b1", hue: 275, desc: "Present perfect, conditionals, passive, phrasal verbs" },
-  { id: "b1+", name: "B1+", label: "Upper Intermediate", hours: 12, units: 4, color: "b1p", hue: 15, desc: "Perfect continuous, 2nd conditional, reported speech" },
-  { id: "b2", name: "B2", label: "Advanced", hours: 14, units: 4, color: "b2", hue: 250, desc: "Mixed conditionals, inversion, modal perfects" },
-  { id: "b2+", name: "B2+", label: "Pre-Advanced", hours: 14, units: 4, color: "b2p", hue: 185, desc: "Participle clauses, wish, business English" },
-];
+import { LEVELS } from "../data/levels";
+
+const levels = LEVELS;
 
 const genericFeatures = [
   { icon: "search", label: "Dictionary", href: "/dictionary", desc: "Look up words with definitions, examples, and phonetics. Save to your vocabulary.", color: "a2" },

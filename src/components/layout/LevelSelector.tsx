@@ -1,0 +1,126 @@
+import { useState, useRef, useEffect } from "react";
+import { useStore } from "@nanostores/react";
+import { levelMode, setLevelMode } from "../../stores/modes";
+import type { LevelMode } from "../../stores/modes";
+import { LEVELS } from "../../data/levels";
+import { ErrorBoundary } from "../interactive/ErrorBoundary";
+
+function LevelSelectorInner() {
+  const currentLevel = useStore(levelMode);
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const levels = LEVELS.map((l) => ({
+    id: l.id as LevelMode,
+    label: l.name,
+    desc: l.label,
+    color: l.color,
+  }));
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleLevelSelect = (levelId: LevelMode) => {
+    setLevelMode(levelId);
+    setIsOpen(false);
+    
+    // If we are on a level details page, redirect to the new level page
+    if (window.location.pathname.startsWith("/level/")) {
+      window.location.href = `/level/${levelId}`;
+    }
+  };
+
+  const currentLevelInfo = levels.find((l) => l.id === currentLevel) || levels[0];
+
+  return (
+    <div ref={containerRef} class="relative inline-block text-left">
+      <button
+        onClick={() => setIsOpen((prev) => !prev)}
+        class="flex min-h-11 items-center gap-2 rounded-full border border-border bg-surface px-4 py-2.5 text-xs font-bold transition-all hover:bg-surface-alt active-scale"
+        aria-haspopup="true"
+        aria-expanded={isOpen}
+      >
+        <span
+          class="inline-block h-2 w-2 rounded-full"
+          style={{ background: `var(--${currentLevelInfo.color})` }}
+        />
+        <span>Level: {currentLevelInfo.label}</span>
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          class={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+
+      {isOpen && (
+        <div class="absolute right-0 mt-2.5 z-50 w-64 rounded-xl border border-border bg-surface p-1.5 shadow-2xl animate-fade-in-scale">
+          <p class="px-3 py-1.5 text-[10px] font-bold text-text-secondary uppercase tracking-wider">
+            Select Your Level
+          </p>
+          <div class="space-y-0.5 max-h-72 overflow-y-auto">
+            {levels.map((l) => (
+              <button
+                key={l.id}
+                onClick={() => handleLevelSelect(l.id)}
+                class={`w-full flex items-center justify-between rounded-lg px-3 py-2.5 text-left text-xs font-bold transition-all ${
+                  currentLevel === l.id
+                    ? "bg-surface-alt text-text"
+                    : "text-text-secondary hover:bg-surface-alt hover:text-text"
+                }`}
+              >
+                <div class="flex items-center gap-2.5">
+                  <span
+                    class="inline-block h-2 w-2 rounded-full"
+                    style={{ background: `var(--${l.color})` }}
+                  />
+                  <div>
+                    <p class="text-xs font-bold">{l.label}</p>
+                    <p class="text-[10px] font-medium text-text-muted">{l.desc}</p>
+                  </div>
+                </div>
+                {currentLevel === l.id && (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={`var(--${l.color})`} stroke-width="3" stroke-linecap="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                )}
+              </button>
+            ))}
+          </div>
+          <div class="border-t border-border mt-1.5 pt-1.5 px-1.5">
+            <a
+              href={`/level/${currentLevel}`}
+              class="flex w-full items-center justify-center min-h-9 gap-1 rounded-lg bg-text text-surface text-center py-2 text-xs font-bold hover:opacity-95 transition-opacity"
+            >
+              Go to level page
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default function LevelSelector() {
+  return (
+    <ErrorBoundary fallbackTitle="Level Selector Error">
+      <LevelSelectorInner />
+    </ErrorBoundary>
+  );
+}
