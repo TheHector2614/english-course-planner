@@ -11,11 +11,15 @@ export default function AchievementModal() {
     if (achievementId) {
       setVisible(true);
       markSeen(achievementId);
+      let t2: NodeJS.Timeout | undefined;
       const timer = setTimeout(() => {
         setVisible(false);
-        setTimeout(() => dismissAchievement(), 300);
+        t2 = setTimeout(() => dismissAchievement(), 300);
       }, 4000);
-      return () => clearTimeout(timer);
+      return () => {
+        clearTimeout(timer);
+        if (t2) clearTimeout(t2);
+      };
     }
   }, [achievementId]);
 
@@ -34,7 +38,7 @@ export default function AchievementModal() {
     >
       <div class="rounded-xl border border-border bg-surface-raised p-5 shadow-lg">
         <div class="flex items-start gap-3">
-          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-warning/20 text-lg" aria-hidden="true">
+          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-lg" aria-hidden="true" style={{ background: "color-mix(in oklch, var(--warning) 20%, transparent)" }}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2">
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
             </svg>
@@ -45,7 +49,7 @@ export default function AchievementModal() {
             <p class="text-sm text-text-secondary">{def.desc}</p>
             <div class="mt-2 flex gap-1">
               {Array.from({ length: 3 }).map((_, i) => (
-                <span key={i} class="inline-block h-1.5 w-6 rounded-full bg-warning/30" style={{ opacity: 1 - i * 0.25 }} />
+                <span key={i} class="inline-block h-1.5 w-6 rounded-full" style={{ background: "color-mix(in oklch, var(--warning) 30%, transparent)", opacity: 1 - i * 0.25 }} />
               ))}
             </div>
           </div>

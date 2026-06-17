@@ -9,8 +9,10 @@ import {
   getDueWords,
 } from "../../stores/vocabulary";
 import type { SavedWord } from "../../stores/db";
+import { exportJSON, exportCSV, exportHTMLFlashcards, printVocabulary } from "../../utils/export";
+import { ErrorBoundary } from "./ErrorBoundary";
 
-export default function VocabularyBuilder() {
+function VocabularyBuilderInner() {
   const words = useStore(vocabularyList);
   const loading = useStore(vocabularyLoading);
   const [filter, setFilter] = useState<string>("all");
@@ -18,6 +20,7 @@ export default function VocabularyBuilder() {
   const [dueWords, setDueWords] = useState<SavedWord[]>([]);
   const [reviewing, setReviewing] = useState<SavedWord | null>(null);
   const [showReview, setShowReview] = useState(false);
+  const [showExport, setShowExport] = useState(false);
   const [deleting, setDeleting] = useState<number | null>(null);
 
   useEffect(() => {
@@ -25,7 +28,13 @@ export default function VocabularyBuilder() {
   }, []);
 
   useEffect(() => {
-    getDueWords().then(setDueWords);
+    let active = true;
+    getDueWords().then((res) => {
+      if (active) setDueWords(res);
+    });
+    return () => {
+      active = false;
+    };
   }, [words]);
 
   const wordList = Object.values(words);
@@ -89,7 +98,7 @@ export default function VocabularyBuilder() {
         </div>
         <h3 class="text-lg font-semibold">No words saved yet</h3>
         <p class="mt-1 text-sm text-text-secondary">Use the Dictionary to look up words and save them here.</p>
-        <a href="/dictionary" class="mt-4 inline-flex items-center gap-2 rounded-full bg-text px-5 py-2 text-sm font-semibold text-surface transition-all hover:opacity-90">
+        <a href="/dictionary" class="mt-4 inline-flex items-center gap-2 rounded-full bg-text px-5 py-2 text-sm font-semibold text-surface transition-opacity hover:opacity-90 active-scale">
           Go to Dictionary
         </a>
       </div>
@@ -107,57 +116,90 @@ export default function VocabularyBuilder() {
           { label: "Learning", value: stats.learning, color: "warning" },
           { label: "New", value: stats.new, color: "a2" },
         ].map((s) => (
-          <div key={s.label} class="rounded-xl shadow-border p-4 text-center" style={{ borderColor: `var(--${s.color})` }}>
-            <p class="text-2xl font-bold font-display" style={{ color: `var(--${s.color})` }}>{s.value}</p>
-            <p class="text-xs text-text-secondary">{s.label}</p>
+          <div key={s.label} class="glass-card rounded-[var(--radius-lg)] p-4 text-center transition-all hover:-translate-y-0.5 duration-300" style={{ borderBottom: `3px solid var(--${s.color})` }}>
+            <p class="text-2xl font-black font-display tracking-tight tabular-nums" style={{ color: `var(--${s.color})` }}>{s.value}</p>
+            <p class="text-xs font-bold text-text-secondary uppercase tracking-wider mt-0.5">{s.label}</p>
           </div>
         ))}
       </div>
 
       {/* Filters */}
-      <div class="flex flex-wrap items-center gap-3">
-        <div class="flex flex-wrap gap-1">
+      <div class="flex flex-wrap items-center gap-4">
+        <div class="flex flex-wrap gap-1.5">
           {[
             { id: "all", label: "All" },
             { id: "due", label: "Due" },
             { id: "a1", label: "A1" },
             { id: "a2", label: "A2" },
             { id: "b1", label: "B1" },
+            { id: "b1+", label: "B1+" },
             { id: "b2", label: "B2" },
+            { id: "b2+", label: "B2+" },
           ].map((f) => (
             <button
               key={f.id}
               onClick={() => setFilter(f.id)}
-              class={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-                filter === f.id ? "bg-text text-surface" : "bg-surface-alt text-text-secondary hover:bg-border"
+              class={`rounded-full px-4.5 py-1.5 text-xs font-bold transition-all active-scale ${
+                filter === f.id ? "bg-text text-surface shadow-md" : "bg-surface-alt border border-border text-text-secondary hover:bg-border"
               }`}
             >
               {f.label}
             </button>
           ))}
         </div>
-        <select
-          value={sort}
-          onChange={(e) => setSort(e.target.value as any)}
-          class="ml-auto rounded-lg border border-border bg-surface-alt px-3 py-1.5 text-xs outline-none"
-          aria-label="Sort by"
-        >
-          <option value="recent">Most Recent</option>
-          <option value="nextReview">Due Date</option>
-          <option value="word">Alphabetical</option>
-        </select>
+        <div class="flex flex-wrap items-center gap-3 sm:ml-auto w-full sm:w-auto">
+          <div class="relative flex-1 sm:flex-initial">
+            <button onClick={() => setShowExport((v) => !v)} class="w-full min-h-11 rounded-lg border border-border bg-surface px-4 py-2 text-xs font-bold text-text-secondary hover:bg-surface-alt transition-all active-scale flex items-center justify-center gap-1.5">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export
+            </button>
+            {showExport && <div class="fixed inset-0 z-20" onClick={() => setShowExport(false)} />}
+            {showExport && (
+              <div class="absolute right-0 top-full mt-2.5 z-30 min-w-[200px] rounded-xl border border-border bg-surface p-1.5 shadow-2xl animate-fade-in-scale">
+                <button onClick={() => { exportJSON(wordList); setShowExport(false); }} class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-xs font-bold text-text-secondary hover:bg-surface-alt transition-colors">
+                  JSON
+                </button>
+                <button onClick={() => { exportCSV(wordList); setShowExport(false); }} class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-xs font-bold text-text-secondary hover:bg-surface-alt transition-colors">
+                  CSV
+                </button>
+                <button onClick={() => { exportHTMLFlashcards(wordList); setShowExport(false); }} class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-xs font-bold text-text-secondary hover:bg-surface-alt transition-colors">
+                  Flashcards (HTML)
+                </button>
+                <button onClick={() => { printVocabulary(wordList); setShowExport(false); }} class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-xs font-bold text-text-secondary hover:bg-surface-alt transition-colors">
+                  Print List
+                </button>
+              </div>
+            )}
+          </div>
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value as any)}
+            class="flex-1 sm:flex-initial rounded-lg border border-border bg-surface p-2.5 text-xs font-semibold outline-none transition-all focus:border-a1 focus:ring-2 focus:ring-a1-bg min-h-11"
+            aria-label="Sort by"
+          >
+            <option value="recent">Most Recent</option>
+            <option value="nextReview">Due Date</option>
+            <option value="word">Alphabetical</option>
+          </select>
+        </div>
       </div>
 
       {/* Review Modal */}
       {showReview && reviewing && (
-        <div class="fixed inset-0 z-40 flex items-center justify-center bg-surface/80 backdrop-blur-sm" onClick={() => setShowReview(false)}>
-          <div class="mx-4 w-full max-w-md animate-fade-in-scale rounded-xl border border-border bg-surface-raised p-6 shadow-lg" onClick={(e) => e.stopPropagation()}>
-            <h3 class="text-lg font-semibold font-display">Review: {reviewing.word}</h3>
-            {reviewing.phonetic && <p class="text-sm text-text-muted">{reviewing.phonetic}</p>}
-            <p class="mt-3 text-base">{reviewing.definition}</p>
-            {reviewing.example && <p class="mt-2 text-sm italic text-text-secondary">"{reviewing.example}"</p>}
-            <p class="mt-4 text-xs font-medium text-text-muted">How well did you remember?</p>
-            <div class="mt-2 flex gap-2">
+        <div class="fixed inset-0 z-40 flex items-center justify-center bg-surface/40 backdrop-blur-md" onClick={() => setShowReview(false)}>
+          <div class="mx-4 w-full max-w-md animate-fade-in-scale rounded-[var(--radius-lg)] border border-border bg-surface p-6 shadow-2xl relative" onClick={(e) => e.stopPropagation()}>
+            <div class="absolute top-4 right-4">
+              <button onClick={() => setShowReview(false)} class="text-text-muted hover:text-text p-1 transition-colors" aria-label="Close review">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
+              </button>
+            </div>
+            <span class="inline-block rounded-full bg-a2-bg px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-a2" style={{ border: "1px solid color-mix(in oklch, var(--a2) 20%, transparent)" }}>Review Card</span>
+            <h3 class="text-2xl font-black font-display mt-3 text-text tracking-tight">{reviewing.word}</h3>
+            {reviewing.phonetic && <p class="text-sm font-mono text-text-muted mt-1">{reviewing.phonetic}</p>}
+            <p class="mt-4 text-base text-text leading-relaxed font-medium">{reviewing.definition}</p>
+            {reviewing.example && <p class="mt-3 text-sm italic text-text-secondary border-l-2 border-border-light pl-3">"{reviewing.example}"</p>}
+            <p class="mt-6 text-xs font-bold text-text-muted uppercase tracking-wider">How well did you remember?</p>
+            <div class="mt-2.5 flex gap-2">
               {[
                 { label: "Forgot", quality: 1, color: "incorrect" },
                 { label: "Hard", quality: 2, color: "warning" },
@@ -167,81 +209,102 @@ export default function VocabularyBuilder() {
                 <button
                   key={opt.quality}
                   onClick={() => handleReview(reviewing, opt.quality)}
-                  class={`flex-1 rounded-lg px-3 py-2 text-xs font-semibold transition-all hover:opacity-80`}
-                  style={{ background: `var(--${opt.color})`, color: "white" }}
+                  class="min-h-11 flex-1 rounded-lg px-3 py-2.5 text-xs font-black uppercase tracking-wider transition-all hover:brightness-95 active-scale"
+                  style={{ 
+                    background: `color-mix(in oklch, var(--${opt.color}) 18%, transparent)`, 
+                    color: `var(--${opt.color})`,
+                    border: `1px solid color-mix(in oklch, var(--${opt.color}) 30%, transparent)`
+                  }}
                 >
                   {opt.label}
                 </button>
               ))}
             </div>
-            <button onClick={() => setShowReview(false)} class="mt-3 w-full text-center text-xs text-text-muted hover:text-text">
-              Cancel
-            </button>
           </div>
         </div>
       )}
 
       {/* Word List */}
-      <div class="space-y-2">
+      <div class="space-y-3">
         {filtered.length === 0 && (
           <p class="py-8 text-center text-sm text-text-muted">No words match this filter.</p>
         )}
-        {filtered.map((w) => (
-          <div
-            key={w.id}
-            class={`animate-fade-in-up group flex items-start justify-between rounded-xl p-4 transition-all ${
-              deleting === w.id ? "opacity-0 scale-95" : ""
-            } ${w.nextReview <= Date.now() && w.repetitions < 5 ? "border border-warning/30 bg-warning/5" : "shadow-border"}`}
-          >
-            <div class="flex-1">
-              <div class="flex items-center gap-2">
-                <span class="font-semibold">{w.word}</span>
-                {w.phonetic && <span class="text-xs text-text-muted">{w.phonetic}</span>}
-                {w.repetitions >= 5 && (
-                  <span class="rounded-full bg-correct/10 px-2 py-0.5 text-xs text-correct font-medium">Mastered</span>
-                )}
-                {w.repetitions === 0 && w.nextReview <= Date.now() && (
-                  <span class="rounded-full bg-warning/10 px-2 py-0.5 text-xs text-warning font-medium">New</span>
-                )}
+        {filtered.map((w) => {
+          const isDue = w.nextReview <= Date.now() && w.repetitions < 5;
+          const cardStyle = isDue
+            ? {
+                border: "1px solid color-mix(in oklch, var(--warning) 35%, transparent)",
+                background: "color-mix(in oklch, var(--warning) 6%, transparent)",
+                boxShadow: "0 4px 12px -2px color-mix(in oklch, var(--warning) 15%, transparent)"
+              }
+            : undefined;
+
+          return (
+            <div
+              key={w.id}
+              class={`animate-fade-in-up group flex items-start justify-between rounded-[var(--radius-lg)] p-4.5 transition-all duration-300 glass-card glass-card-hover ${
+                deleting === w.id ? "opacity-0 scale-95" : ""
+              }`}
+              style={cardStyle}
+            >
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2.5 flex-wrap">
+                  <span class="font-bold text-text text-base">{w.word}</span>
+                  {w.phonetic && <span class="text-xs text-text-muted font-mono">{w.phonetic}</span>}
+                  {w.repetitions >= 5 && (
+                    <span class="rounded-full px-2.5 py-0.5 text-[10px] text-correct font-bold uppercase tracking-wider bg-correct-bg" style={{ border: "1px solid color-mix(in oklch, var(--correct) 20%, transparent)" }}>Mastered</span>
+                  )}
+                  {w.repetitions === 0 && w.nextReview <= Date.now() && (
+                    <span class="rounded-full px-2.5 py-0.5 text-[10px] text-warning font-bold uppercase tracking-wider bg-warning-bg" style={{ border: "1px solid color-mix(in oklch, var(--warning) 20%, transparent)" }}>New</span>
+                  )}
+                </div>
+                <p class="mt-1.5 text-sm text-text-secondary leading-relaxed line-clamp-2">{w.definition}</p>
+                {w.example && <p class="mt-1 text-xs italic text-text-muted truncate">"{w.example}"</p>}
+                <div class="mt-2.5 flex items-center gap-2 flex-wrap">
+                  <span class="rounded-full px-2.5 py-0.5 text-[10px] font-bold" style={{ background: `var(--${w.level}-bg)`, color: `var(--${w.level})` }}>
+                    {w.level.toUpperCase()}
+                  </span>
+                  {w.tags.map((t) => (
+                    <span key={t} class="rounded-full bg-surface-alt border border-border-light px-2.5 py-0.5 text-[10px] font-bold text-text-secondary">{t}</span>
+                  ))}
+                </div>
               </div>
-              <p class="mt-0.5 text-sm text-text-secondary line-clamp-1">{w.definition}</p>
-              {w.example && <p class="mt-0.5 text-xs italic text-text-muted truncate">"{w.example}"</p>}
-              <div class="mt-1.5 flex items-center gap-2">
-                <span class="rounded-full px-2 py-0.5 text-xs" style={{ background: `var(--${w.level}-bg)`, color: `var(--${w.level})` }}>
-                  {w.level.toUpperCase()}
-                </span>
-                {w.tags.map((t) => (
-                  <span key={t} class="rounded-full bg-surface-alt px-2 py-0.5 text-xs text-text-muted">{t}</span>
-                ))}
+              <div class="flex shrink-0 items-center gap-1.5 ml-4">
+                <button
+                  onClick={() => { setReviewing(w); setShowReview(true); }}
+                  class="rounded-lg p-2.5 text-text-secondary transition-all hover:bg-a2-bg hover:text-a2 active-scale min-h-11 min-w-11 flex items-center justify-center border border-transparent hover:border-border"
+                  aria-label="Review this word"
+                  title="Review"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => w.id && handleDelete(w.id)}
+                  class="rounded-lg p-2.5 text-text-muted transition-all hover:bg-incorrect/15 hover:text-incorrect active-scale min-h-11 min-w-11 flex items-center justify-center border border-transparent hover:border-border"
+                  aria-label="Delete word"
+                  title="Delete"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                  </svg>
+                </button>
               </div>
             </div>
-            <div class="flex shrink-0 items-center gap-1 ml-3">
-              <button
-                onClick={() => { setReviewing(w); setShowReview(true); }}
-                class="rounded-lg p-2 text-text-muted transition-colors hover:bg-surface-alt hover:text-text"
-                aria-label="Review this word"
-                title="Review"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-              </button>
-              <button
-                onClick={() => w.id && handleDelete(w.id)}
-                class="rounded-lg p-2 text-text-muted transition-colors hover:bg-incorrect/10 hover:text-incorrect"
-                aria-label="Delete word"
-                title="Delete"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="3 6 5 6 21 6" />
-                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
+  );
+}
+
+export default function VocabularyBuilder() {
+  return (
+    <ErrorBoundary fallbackTitle="Vocabulary Builder Error">
+      <VocabularyBuilderInner />
+    </ErrorBoundary>
   );
 }
