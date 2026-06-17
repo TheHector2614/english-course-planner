@@ -2,6 +2,12 @@ import { atom, map } from "nanostores";
 import { db, type SavedWord, sm2Schedule } from "./db";
 import { unlockAchievement } from "./achievements";
 import { updateChallengeProgress } from "./challenges";
+import {
+  INITIAL_EASE_FACTOR,
+  VOCAB_THRESHOLD_10,
+  VOCAB_THRESHOLD_50,
+  VOCAB_THRESHOLD_100,
+} from "../constants";
 
 export const vocabularyList = map<Record<number, SavedWord>>({});
 export const vocabularyLoading = atom<boolean>(true);
@@ -27,7 +33,7 @@ export async function saveWord(word: Omit<SavedWord, "id" | "savedAt" | "easeFac
   return await db.transaction("rw", [db.vocabulary, db.achievements, db.settings, db.challenges], async () => {
     const entry: Omit<SavedWord, "id"> = {
       ...word,
-      easeFactor: 2.5,
+      easeFactor: INITIAL_EASE_FACTOR,
       interval: 0,
       nextReview: Date.now(),
       repetitions: 0,
@@ -39,9 +45,9 @@ export async function saveWord(word: Omit<SavedWord, "id" | "savedAt" | "easeFac
       vocabularyList.set({ ...vocabularyList.get(), [id]: saved });
     }
     const count = await db.vocabulary.count();
-    if (count >= 10) await unlockAchievement("vocab_10");
-    if (count >= 50) await unlockAchievement("vocab_50");
-    if (count >= 100) await unlockAchievement("vocab_100");
+    if (count >= VOCAB_THRESHOLD_10) await unlockAchievement("vocab_10");
+    if (count >= VOCAB_THRESHOLD_50) await unlockAchievement("vocab_50");
+    if (count >= VOCAB_THRESHOLD_100) await unlockAchievement("vocab_100");
 
     await updateChallengeProgress("daily_save_words", 1);
     await updateChallengeProgress("weekly_words", 1);

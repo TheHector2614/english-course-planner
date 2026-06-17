@@ -1,6 +1,17 @@
 import { atom, map } from "nanostores";
 import { db, initSettings } from "./db";
 import { unlockAchievement } from "./achievements";
+import {
+  XP_PER_QUIZ,
+  XP_PER_WORD,
+  XP_PER_STORY,
+  XP_PER_EXERCISE,
+  XP_PER_STREAK_DAY,
+  XP_BONUS_PERFECT,
+  STREAK_THRESHOLD_3,
+  STREAK_THRESHOLD_7,
+  STREAK_THRESHOLD_30,
+} from "../constants";
 
 export type QuizResult = {
   score: number;
@@ -18,13 +29,6 @@ export const lastStudyDate = atom<string>("");
 export const xp = atom<number>(0);
 export const xpAnimating = atom<number>(0); // XP gained this session to animate
 export const settingsLoading = atom<boolean>(true);
-
-const XP_PER_QUIZ = 50;
-const XP_PER_WORD = 10;
-const XP_PER_STORY = 30;
-const XP_PER_EXERCISE = 15;
-const XP_PER_STREAK_DAY = 20;
-const XP_BONUS_PERFECT = 25;
 
 export async function loadFromStorage() {
   settingsLoading.set(true);
@@ -145,9 +149,9 @@ export async function updateStreak() {
   await addXP(XP_PER_STREAK_DAY, "streak");
 
   // Streak achievements
-  if (newStreak >= 3) await unlockAchievement("streak_3");
-  if (newStreak >= 7) await unlockAchievement("streak_7");
-  if (newStreak >= 30) await unlockAchievement("streak_30");
+  if (newStreak >= STREAK_THRESHOLD_3) await unlockAchievement("streak_3");
+  if (newStreak >= STREAK_THRESHOLD_7) await unlockAchievement("streak_7");
+  if (newStreak >= STREAK_THRESHOLD_30) await unlockAchievement("streak_30");
 }
 
 export function getXpForNextLevel(): number {
