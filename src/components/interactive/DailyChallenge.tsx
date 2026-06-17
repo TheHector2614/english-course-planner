@@ -41,30 +41,30 @@ function DailyChallengeInner() {
 
   if (!loaded) {
     return (
-      <div class="glass-card rounded-[var(--radius-lg)] p-5">
-        <div class="h-4 w-32 animate-pulse rounded bg-surface-alt" />
-        <div class="mt-4 space-y-3">
-          {[1, 2, 3].map(i => <div key={i} class="h-16 animate-pulse rounded-lg bg-surface-alt" />)}
+      <div className="glass-card rounded-[var(--radius-lg)] p-5">
+        <div className="h-4 w-32 animate-pulse rounded bg-surface-alt" />
+        <div className="mt-4 space-y-3">
+          {[1, 2, 3].map(i => <div key={i} className="h-16 animate-pulse rounded-lg bg-surface-alt" />)}
         </div>
       </div>
     );
   }
 
   return (
-    <div class="glass-card rounded-[var(--radius-lg)] p-5">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-sm font-bold uppercase tracking-wider text-text-muted">Challenges</h3>
+    <div className="glass-card rounded-[var(--radius-lg)] p-5">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-text-muted">Challenges</h3>
         {completedCount > 0 && (
-          <span class="rounded-full bg-correct-bg px-2.5 py-0.5 text-xs font-bold text-correct" style={{ border: "1px solid color-mix(in oklch, var(--correct) 20%, transparent)" }}>
+          <span className="rounded-full bg-correct-bg px-2.5 py-0.5 text-xs font-bold text-correct" style={{ border: "1px solid color-mix(in oklch, var(--correct) 20%, transparent)" }}>
             {completedCount} completed
           </span>
         )}
       </div>
 
       {daily.length > 0 && (
-        <div class="mb-5">
-          <p class="mb-2.5 text-xs font-bold uppercase tracking-wider text-text-secondary opacity-80">Daily Challenges</p>
-          <div class="space-y-3">
+        <div className="mb-5">
+          <p className="mb-2.5 text-xs font-bold uppercase tracking-wider text-text-secondary opacity-80">Daily Challenges</p>
+          <div className="space-y-3">
             {daily.map(c => <ChallengeCard key={c.id} challenge={c} />)}
           </div>
         </div>
@@ -72,8 +72,8 @@ function DailyChallengeInner() {
 
       {weekly.length > 0 && (
         <div>
-          <p class="mb-2.5 text-xs font-bold uppercase tracking-wider text-text-secondary opacity-80">Weekly Challenges</p>
-          <div class="space-y-3">
+          <p className="mb-2.5 text-xs font-bold uppercase tracking-wider text-text-secondary opacity-80">Weekly Challenges</p>
+          <div className="space-y-3">
             {weekly.map(c => <ChallengeCard key={c.id} challenge={c} />)}
           </div>
         </div>
@@ -98,12 +98,12 @@ function ChallengeCard({ challenge }: { challenge: ChallengeDef & { progress: nu
 
   return (
     <div
-      class={`rounded-[var(--radius-md)] p-4 transition-all duration-300 ease-out hover:shadow-md hover:border-text-muted ${challenge.completed ? "opacity-90" : ""}`}
+      className={`rounded-[var(--radius-md)] p-4 transition-all duration-300 ease-out hover:shadow-md hover:border-text-muted ${challenge.completed ? "opacity-90" : ""}`}
       style={cardStyle}
     >
-      <div class="flex items-start gap-4">
+      <div className="flex items-start gap-4">
         <span
-          class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
+          className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
           style={{ background: challenge.completed ? "var(--correct-bg)" : "var(--border-light)" }}
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
@@ -112,24 +112,24 @@ function ChallengeCard({ challenge }: { challenge: ChallengeDef & { progress: nu
             <path d={ICONS[challenge.icon] || ICONS.exercise} />
           </svg>
         </span>
-        <div class="min-w-0 flex-1">
-          <div class="flex items-center justify-between gap-2">
-            <p class="text-sm font-semibold truncate text-text">{challenge.title}</p>
-            <span class="shrink-0 text-xs font-bold" style={{ color: challenge.completed ? "var(--correct)" : "var(--focus-accent)" }}>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center justify-between gap-2">
+            <p className="text-sm font-semibold truncate text-text">{challenge.title}</p>
+            <span className="shrink-0 text-xs font-bold" style={{ color: challenge.completed ? "var(--correct)" : "var(--focus-accent)" }}>
               {challenge.completed ? "Done" : `+${challenge.xpReward} XP`}
             </span>
           </div>
-          <p class="text-xs text-text-secondary truncate mt-0.5">{challenge.desc}</p>
-          <div class="mt-2.5 h-1.5 w-full rounded-full overflow-hidden p-0.5 bg-surface-alt border border-border-light">
+          <p className="text-xs text-text-secondary truncate mt-0.5">{challenge.desc}</p>
+          <div className="mt-2.5 h-1.5 w-full rounded-full overflow-hidden p-0.5 bg-surface-alt border border-border-light">
             <div
-              class="h-full rounded-full transition-all duration-500 ease-out"
+              className="h-full rounded-full transition-all duration-500 ease-out"
               style={{
                 width: `${pct}%`,
                 background: challenge.completed ? "var(--correct)" : "var(--focus-accent)",
               }}
             />
           </div>
-          <p class="mt-1 text-right text-[10px] font-bold text-text-muted tabular-nums">{challenge.progress} / {challenge.goal}</p>
+          <p className="mt-1 text-right text-[10px] font-bold text-text-muted tabular-nums">{challenge.progress} / {challenge.goal}</p>
         </div>
       </div>
     </div>

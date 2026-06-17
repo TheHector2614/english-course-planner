@@ -11,20 +11,20 @@ export default function ProgressOverview() {
   const done = Object.entries($completed).filter(([,v]) => v).length;
 
   return (
-    <div class="mx-auto mt-8 max-w-xl">
-      <div class="mb-2 flex items-center justify-between text-sm">
-        <span class="font-medium">{done}/6 levels</span>
-        <span class="text-text-muted">{percent}%</span>
-        <span class="text-text-muted">🔥 {$streak} day streak</span>
+    <div className="mx-auto mt-8 max-w-xl">
+      <div className="mb-2 flex items-center justify-between text-sm">
+        <span className="font-medium">{done}/6 levels</span>
+        <span className="text-text-muted">{percent}%</span>
+        <span className="text-text-muted">🔥 {$streak} day streak</span>
       </div>
-      <div class="flex h-3 gap-1 rounded-full bg-surface-alt p-0.5" role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}>
+      <div className="flex h-3 gap-1 rounded-full bg-surface-alt p-0.5" role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}>
         {LEVELS.map((id, i) => {
           const colors = ["a1", "a2", "b1", "b1p", "b2", "b2p"];
           const complete = $completed[id];
           return (
             <div
               key={id}
-              class="h-full flex-1 rounded-full transition-all duration-500"
+              className="h-full flex-1 rounded-full transition-all duration-500"
               style={{
                   background: complete
                     ? `var(--${colors[i]})`

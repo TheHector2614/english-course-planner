@@ -84,19 +84,19 @@ function LevelSelectorInner() {
   const currentLevelInfo = levels.find((l) => l.id === currentLevel) || levels[0];
 
   return (
-    <div ref={containerRef} class="relative inline-block text-left">
+    <div ref={containerRef} className="relative inline-block text-left">
       <button
         ref={triggerRef}
         onClick={() => setIsOpen((prev) => !prev)}
         onKeyDown={handleTriggerKeyDown}
-        class="flex min-h-11 items-center gap-2 rounded-full border border-border bg-surface px-4 py-2.5 text-xs font-bold transition-all hover:bg-surface-alt active-scale focus-visible:ring-2 focus-visible:ring-a1"
+        className="flex min-h-11 items-center gap-2 rounded-full border border-border bg-surface px-4 py-2.5 text-xs font-bold transition-all hover:bg-surface-alt active-scale focus-visible:ring-2 focus-visible:ring-a1"
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-controls="level-listbox"
         aria-label={`Select level, current level is ${currentLevelInfo.label}`}
       >
         <span
-          class="inline-block h-2 w-2 rounded-full"
+          className="inline-block h-2 w-2 rounded-full"
           style={{ background: `var(--${currentLevelInfo.color})` }}
         />
         <span>Level: {currentLevelInfo.label}</span>
@@ -107,7 +107,7 @@ function LevelSelectorInner() {
           fill="none"
           stroke="currentColor"
           stroke-width="2.5"
-          class={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+          className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
         >
           <path d="M6 9l6 6 6-6" />
         </svg>
@@ -118,12 +118,12 @@ function LevelSelectorInner() {
           id="level-listbox"
           role="listbox"
           aria-label="Select CEFR Level"
-          class="absolute right-0 mt-2.5 z-50 w-64 rounded-xl border border-border bg-surface p-1.5 shadow-2xl animate-fade-in-scale"
+          className="absolute right-0 mt-2.5 z-50 w-64 rounded-xl border border-border bg-surface p-1.5 shadow-2xl animate-fade-in-scale"
         >
-          <p class="px-3 py-1.5 text-[10px] font-bold text-text-secondary uppercase tracking-wider">
+          <p className="px-3 py-1.5 text-[10px] font-bold text-text-secondary uppercase tracking-wider">
             Select Your Level
           </p>
-          <div class="space-y-0.5 max-h-72 overflow-y-auto">
+          <div className="space-y-0.5 max-h-72 overflow-y-auto">
             {levels.map((l, idx) => (
               <button
                 key={l.id}
@@ -135,20 +135,20 @@ function LevelSelectorInner() {
                 role="option"
                 aria-selected={currentLevel === l.id}
                 tabIndex={0}
-                class={`w-full flex items-center justify-between rounded-lg px-3 py-2.5 text-left text-xs font-bold transition-all outline-none focus:bg-surface-alt hover:bg-surface-alt ${
+                className={`w-full flex items-center justify-between rounded-lg px-3 py-2.5 text-left text-xs font-bold transition-all outline-none focus:bg-surface-alt hover:bg-surface-alt ${
                   currentLevel === l.id
                     ? "bg-surface-alt text-text"
                     : "text-text-secondary hover:text-text"
                 }`}
               >
-                <div class="flex items-center gap-2.5">
+                <div className="flex items-center gap-2.5">
                   <span
-                    class="inline-block h-2 w-2 rounded-full"
+                    className="inline-block h-2 w-2 rounded-full"
                     style={{ background: `var(--${l.color})` }}
                   />
                   <div>
-                    <p class="text-xs font-bold">{l.label}</p>
-                    <p class="text-[10px] font-medium text-text-muted">{l.desc}</p>
+                    <p className="text-xs font-bold">{l.label}</p>
+                    <p className="text-[10px] font-medium text-text-muted">{l.desc}</p>
                   </div>
                 </div>
                 {currentLevel === l.id && (
@@ -159,10 +159,10 @@ function LevelSelectorInner() {
               </button>
             ))}
           </div>
-          <div class="border-t border-border mt-1.5 pt-1.5 px-1.5">
+          <div className="border-t border-border mt-1.5 pt-1.5 px-1.5">
             <a
               href={`/level/${currentLevel}`}
-              class="flex w-full items-center justify-center min-h-9 gap-1 rounded-lg bg-text text-surface text-center py-2 text-xs font-bold hover:opacity-95 transition-opacity focus-visible:ring-2 focus-visible:ring-a1"
+              className="flex w-full items-center justify-center min-h-9 gap-1 rounded-lg bg-text text-surface text-center py-2 text-xs font-bold hover:opacity-95 transition-opacity focus-visible:ring-2 focus-visible:ring-a1"
             >
               Go to level page
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">

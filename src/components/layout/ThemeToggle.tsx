@@ -6,7 +6,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      class="rounded-full border border-border bg-surface px-3 py-1 text-sm transition-colors hover:bg-surface-alt"
+      className="min-h-11 rounded-full border border-border bg-surface px-4 py-2.5 text-sm transition-colors hover:bg-surface-alt active-scale"
       aria-label={`Switch to ${$theme === "light" ? "dark" : "light"} mode`}
     >
       {$theme === "light" ? "Dark" : "Light"}

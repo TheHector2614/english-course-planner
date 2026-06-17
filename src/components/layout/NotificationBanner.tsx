@@ -29,28 +29,28 @@ export default function NotificationBanner() {
 
   return (
     <div
-      class="fixed bottom-6 right-6 z-50 max-w-sm w-full animate-fade-in-up p-0.5"
+      className="fixed bottom-6 right-6 z-50 max-w-sm w-full animate-fade-in-up p-0.5"
       role="alert"
       aria-live="polite"
     >
       <div
-        class="flex items-start gap-3 rounded-xl border p-4 shadow-xl backdrop-blur-md"
+        className="flex items-start gap-3 rounded-xl border p-4 shadow-xl backdrop-blur-md"
         style={{
           background: bgColors[notification.type],
           borderColor: borderColors[notification.type],
         }}
       >
-        <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-lg" style={{ color: borderColors[notification.type] }}>
+        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-lg" style={{ color: borderColors[notification.type] }}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
             <path d={icons[notification.type]} />
           </svg>
         </div>
-        <div class="flex-1 min-w-0 pt-0.5">
-          <p class="text-sm font-bold text-text leading-tight">{notification.message}</p>
+        <div className="flex-1 min-w-0 pt-0.5">
+          <p className="text-sm font-bold text-text leading-tight">{notification.message}</p>
         </div>
         <button
           onClick={dismissNotification}
-          class="shrink-0 p-1 text-text-muted hover:text-text rounded-lg hover:bg-surface-alt transition-all"
+          className="shrink-0 p-1 text-text-muted hover:text-text rounded-lg hover:bg-surface-alt transition-all"
           aria-label="Dismiss alert"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">

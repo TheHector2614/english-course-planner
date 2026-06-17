@@ -71,14 +71,14 @@ function useIntersectionObserver(
 
 function ModeDots({ count, active, onChange }: { count: number; active: number; onChange: (i: number) => void }) {
   return (
-    <div class="flex justify-center gap-1.5 mt-3" role="tablist" aria-label="Carousel dots">
+    <div className="flex justify-center gap-1.5 mt-3" role="tablist" aria-label="Carousel dots">
       {Array.from({ length: count }, (_, i) => (
         <button
           key={i}
           role="tab"
           aria-selected={i === active}
           onClick={() => onChange(i)}
-          class={`h-2 rounded-full transition-all active-scale ${
+          className={`h-2 rounded-full transition-all active-scale ${
             i === active ? "w-6" : "w-2"
           }`}
           style={{
@@ -98,7 +98,7 @@ function LevelSlide({ level, isActive, onKeyDown }: { level: LevelMode; isActive
       onKeyDown={onKeyDown}
       role="tab"
       aria-selected={isActive}
-      class={`flex shrink-0 snap-start flex-col items-center justify-center gap-2 rounded-xl border-2 transition-all active-scale focus-visible:ring-2 focus-visible:ring-focus-accent ${
+      className={`flex shrink-0 snap-start flex-col items-center justify-center gap-2 rounded-xl border-2 transition-all active-scale focus-visible:ring-2 focus-visible:ring-focus-accent ${
         isActive
           ? "border-focus-accent shadow-sm"
           : "border-border hover:border-border-light"
@@ -109,15 +109,15 @@ function LevelSlide({ level, isActive, onKeyDown }: { level: LevelMode; isActive
         background: isActive ? "var(--focus-accent-bg)" : "var(--surface)",
       }}
     >
-      <span class="text-3xl">{LEVEL_IMAGES[level]}</span>
+      <span className="text-3xl">{LEVEL_IMAGES[level]}</span>
       <span
-        class="text-xl font-black font-display tracking-tight"
+        className="text-xl font-black font-display tracking-tight"
         style={{ color: `var(--${color})` }}
       >
         {level.toUpperCase()}
       </span>
       <span
-        class={`text-xs font-medium ${isActive ? "" : "text-text-muted"}`}
+        className={`text-xs font-medium ${isActive ? "" : "text-text-muted"}`}
         style={{ color: isActive ? "var(--focus-accent)" : undefined }}
       >
         {LEVEL_LABELS[level]}
@@ -133,7 +133,7 @@ function FocusSlide({ focus, isActive, onKeyDown }: { focus: FocusMode; isActive
       onKeyDown={onKeyDown}
       role="tab"
       aria-selected={isActive}
-      class={`flex shrink-0 snap-start flex-col items-center justify-center gap-2 rounded-xl border-2 transition-all active-scale focus-visible:ring-2 focus-visible:ring-focus-accent ${
+      className={`flex shrink-0 snap-start flex-col items-center justify-center gap-2 rounded-xl border-2 transition-all active-scale focus-visible:ring-2 focus-visible:ring-focus-accent ${
         isActive
           ? "border-focus-accent shadow-sm"
           : "border-border hover:border-border-light"
@@ -155,10 +155,10 @@ function FocusSlide({ focus, isActive, onKeyDown }: { focus: FocusMode; isActive
       >
         <path d={FOCUS_ICONS[focus]} />
       </svg>
-      <span class={`text-sm font-semibold ${isActive ? "" : "text-text-secondary"}`}>
+      <span className={`text-sm font-semibold ${isActive ? "" : "text-text-secondary"}`}>
         {FOCUS_LABELS[focus].split(" ")[0]}
       </span>
-      <span class="text-[10px] text-text-muted leading-tight px-2 text-center">
+      <span className="text-[10px] text-text-muted leading-tight px-2 text-center">
         {FOCUS_DESCS[focus]}
       </span>
     </button>
@@ -263,13 +263,13 @@ export default function ModeCarousel({ compact }: Props) {
   }, []);
 
   return (
-    <div class={compact ? "space-y-3" : "space-y-6"}>
+    <div className={compact ? "space-y-3" : "space-y-6"}>
       {/* Level Carousel */}
       <div>
         {!compact && (
-          <div class="flex items-center justify-between mb-3">
-            <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wider">Your Level</h3>
-            <span class="text-xs text-text-muted">Swipe or drag</span>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wider">Your Level</h3>
+            <span className="text-xs text-text-muted">Swipe or drag</span>
           </div>
         )}
         <div
@@ -278,7 +278,7 @@ export default function ModeCarousel({ compact }: Props) {
           onPointerMove={(e) => handlePointerMove(e, levelScroller)}
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerUp}
-          class="flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 select-none"
+          className="flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 select-none"
           style={{ scrollbarWidth: "none", cursor: dragging ? "grabbing" : "grab", touchAction: "pan-x pinch-zoom" }}
           role="tablist"
           aria-label="Select your level"
@@ -299,9 +299,9 @@ export default function ModeCarousel({ compact }: Props) {
       {/* Focus Carousel */}
       <div>
         {!compact && (
-          <div class="flex items-center justify-between mb-3">
-            <h3 class="text-sm font-semibold text-text-secondary uppercase tracking-wider">Your Focus</h3>
-            <span class="text-xs text-text-muted">Swipe or drag</span>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wider">Your Focus</h3>
+            <span className="text-xs text-text-muted">Swipe or drag</span>
           </div>
         )}
         <div
@@ -310,7 +310,7 @@ export default function ModeCarousel({ compact }: Props) {
           onPointerMove={(e) => handlePointerMove(e, focusScroller)}
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerUp}
-          class="flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 select-none"
+          className="flex gap-3 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 select-none"
           style={{ scrollbarWidth: "none", cursor: dragging ? "grabbing" : "grab", touchAction: "pan-x pinch-zoom" }}
           role="tablist"
           aria-label="Select your focus"

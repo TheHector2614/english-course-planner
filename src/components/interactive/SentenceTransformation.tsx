@@ -2,19 +2,21 @@ import { useState } from "react";
 import { addXP, XP_PER_EXERCISE } from "../../stores/progress";
 import { updateChallengeProgress } from "../../stores/challenges";
 
-interface ErrorQuestion {
-  incorrect: string;
-  correct: string;
+interface TransformationQuestion {
+  prompt: string;
+  startWith: string;
+  correct: string[];
+  hint: string;
   explanation: string;
 }
 
 interface Props {
   title?: string;
-  questions: ErrorQuestion[];
+  questions: TransformationQuestion[];
   level?: string;
 }
 
-export default function ErrorCorrection({ title, questions, level }: Props) {
+export default function SentenceTransformation({ title, questions, level }: Props) {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [showResults, setShowResults] = useState(false);
@@ -28,16 +30,22 @@ export default function ErrorCorrection({ title, questions, level }: Props) {
     setSubmitted(true);
     setShowResults(true);
     if (level) {
-      addXP(XP_PER_EXERCISE, "error_correction");
+      addXP(XP_PER_EXERCISE, "sentence_transformation");
       updateChallengeProgress("daily_complete_exercises", 1);
       updateChallengeProgress("weekly_exercises", 1);
     }
   };
 
-  const normalize = (s: string) => s.toLowerCase().replace(/[^\w\s]/g, "").replace(/\s+/g, " ").trim();
+  const normalize = (s: string) =>
+    s.toLowerCase().replace(/[^\w\s]/g, "").replace(/\s+/g, " ").trim();
+
+  const isAnswerCorrect = (idx: number) => {
+    const userAnswer = normalize(answers[idx] || "");
+    return questions[idx].correct.some((c) => normalize(c) === userAnswer);
+  };
 
   const score = showResults
-    ? questions.reduce((acc, q, i) => acc + (normalize(answers[i] || "") === normalize(q.correct) ? 1 : 0), 0)
+    ? questions.reduce((acc, _, i) => acc + (isAnswerCorrect(i) ? 1 : 0), 0)
     : 0;
 
   const allAnswered = questions.every((_, i) => answers[i]?.trim());
@@ -49,8 +57,9 @@ export default function ErrorCorrection({ title, questions, level }: Props) {
       <div className="space-y-5">
         {questions.map((q, i) => {
           const userAnswer = answers[i] || "";
-          const isCorrect = submitted && normalize(userAnswer) === normalize(q.correct);
-          const isWrong = submitted && userAnswer.trim() !== "" && !isCorrect;
+          const correct = isAnswerCorrect(i);
+          const isCorrect = submitted && correct;
+          const isWrong = submitted && userAnswer.trim() !== "" && !correct;
 
           return (
             <div
@@ -62,19 +71,22 @@ export default function ErrorCorrection({ title, questions, level }: Props) {
               }}
             >
               <p className="mb-1 text-sm font-medium">Question {i + 1}</p>
-              <div className="rounded-lg px-4 py-3 text-base" style={{ background: "color-mix(in oklch, var(--incorrect) 10%, transparent)", border: "1px solid color-mix(in oklch, var(--incorrect) 20%, transparent)" }}>
-                <span className="line-through decoration-2 decoration-incorrect">{q.incorrect}</span>
+
+              <div className="rounded-lg bg-surface-alt px-4 py-3 text-base border border-border">
+                <p>{q.prompt}</p>
               </div>
 
               <div className="mt-3">
-                <label htmlFor={`error-input-${i}`} className="text-xs font-medium text-text-secondary">Write the corrected version:</label>
+                <label htmlFor={`trans-input-${i}`} className="text-xs font-medium text-text-secondary">
+                  Rewrite starting with: <span className="font-semibold text-text">"{q.startWith}"</span>
+                </label>
                 <input
-                  id={`error-input-${i}`}
+                  id={`trans-input-${i}`}
                   type="text"
                   value={userAnswer}
                   onChange={(e) => handleChange(i, e.target.value)}
                   disabled={submitted}
-                  placeholder="Correct the sentence..."
+                  placeholder="Type your answer..."
                   className="mt-1 w-full min-h-11 rounded-lg border px-4 py-2.5 text-sm outline-none transition-colors disabled:opacity-60"
                   style={{
                     borderColor: isCorrect ? "var(--correct)" : isWrong ? "var(--incorrect)" : "var(--border)",
@@ -83,10 +95,14 @@ export default function ErrorCorrection({ title, questions, level }: Props) {
                 />
               </div>
 
+              {!submitted && q.hint && (
+                <p className="mt-1 text-xs text-text-muted italic">💡 {q.hint}</p>
+              )}
+
               {submitted && (
                 <div className="mt-2 space-y-1 animate-fade-in">
                   <p className="text-sm" style={{ color: isCorrect ? "var(--correct)" : "var(--incorrect)" }}>
-                    {isCorrect ? "Correct!" : `Answer: ${q.correct}`}
+                    {isCorrect ? "Correct!" : `Answer: ${q.correct[0]}`}
                   </p>
                   <p className="text-xs text-text-secondary">{q.explanation}</p>
                 </div>

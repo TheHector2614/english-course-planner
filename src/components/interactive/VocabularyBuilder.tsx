@@ -95,11 +95,11 @@ function VocabularyBuilderInner() {
 
   if (loading) {
     return (
-      <div class="space-y-4">
+      <div className="space-y-4">
         {[1, 2, 3].map((i) => (
-          <div key={i} class="animate-pulse rounded-xl shadow-border p-5">
-            <div class="h-5 w-1/4 rounded bg-surface-alt" />
-            <div class="mt-2 h-4 w-3/4 rounded bg-surface-alt" />
+          <div key={i} className="animate-pulse rounded-xl shadow-border p-5">
+            <div className="h-5 w-1/4 rounded bg-surface-alt" />
+            <div className="mt-2 h-4 w-3/4 rounded bg-surface-alt" />
           </div>
         ))}
       </div>
@@ -108,16 +108,16 @@ function VocabularyBuilderInner() {
 
   if (wordList.length === 0) {
     return (
-      <div class="rounded-xl shadow-border p-12 text-center">
-        <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-surface-alt">
+      <div className="rounded-xl shadow-border p-12 text-center">
+        <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-surface-alt">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
           </svg>
         </div>
-        <h3 class="text-lg font-semibold">No words saved yet</h3>
-        <p class="mt-1 text-sm text-text-secondary">Use the Dictionary to look up words and save them here.</p>
-        <a href="/dictionary" class="mt-4 inline-flex items-center gap-2 rounded-full bg-text px-5 py-2 text-sm font-semibold text-surface transition-opacity hover:opacity-90 active-scale">
+        <h3 className="text-lg font-semibold">No words saved yet</h3>
+        <p className="mt-1 text-sm text-text-secondary">Use the Dictionary to look up words and save them here.</p>
+        <a href="/dictionary" className="mt-4 inline-flex items-center gap-2 rounded-full bg-text px-5 py-2 text-sm font-semibold text-surface transition-opacity hover:opacity-90 active-scale">
           Go to Dictionary
         </a>
       </div>
@@ -125,9 +125,9 @@ function VocabularyBuilderInner() {
   }
 
   return (
-    <div class="space-y-6">
+    <div className="space-y-6">
       {/* Stats */}
-      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
         {[
           { label: "Total", value: stats.total, color: "a1" },
           { label: "Due for Review", value: stats.due, color: "incorrect" },
@@ -135,16 +135,16 @@ function VocabularyBuilderInner() {
           { label: "Learning", value: stats.learning, color: "warning" },
           { label: "New", value: stats.new, color: "a2" },
         ].map((s) => (
-          <div key={s.label} class="glass-card rounded-[var(--radius-lg)] p-4 text-center transition-all hover:-translate-y-0.5 duration-300" style={{ borderBottom: `3px solid var(--${s.color})` }}>
-            <p class="text-2xl font-black font-display tracking-tight tabular-nums" style={{ color: `var(--${s.color})` }}>{s.value}</p>
-            <p class="text-xs font-bold text-text-secondary uppercase tracking-wider mt-0.5">{s.label}</p>
+          <div key={s.label} className="glass-card rounded-[var(--radius-lg)] p-4 text-center transition-all hover:-translate-y-0.5 duration-300" style={{ borderBottom: `3px solid var(--${s.color})` }}>
+            <p className="text-2xl font-black font-display tracking-tight tabular-nums" style={{ color: `var(--${s.color})` }}>{s.value}</p>
+            <p className="text-xs font-bold text-text-secondary uppercase tracking-wider mt-0.5">{s.label}</p>
           </div>
         ))}
       </div>
 
       {/* Filters */}
-      <div class="flex flex-wrap items-center gap-4">
-        <div class="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap items-center gap-4">
+        <div className="flex flex-wrap gap-1.5">
           {[
             { id: "all", label: "All" },
             { id: "due", label: "Due" },
@@ -158,7 +158,7 @@ function VocabularyBuilderInner() {
             <button
               key={f.id}
               onClick={() => setFilter(f.id)}
-              class={`rounded-full px-4.5 py-1.5 text-xs font-bold transition-all active-scale ${
+              className={`rounded-full px-4.5 py-1.5 text-xs font-bold transition-all active-scale ${
                 filter === f.id ? "bg-text text-surface shadow-md" : "bg-surface-alt border border-border text-text-secondary hover:bg-border"
               }`}
             >
@@ -166,25 +166,25 @@ function VocabularyBuilderInner() {
             </button>
           ))}
         </div>
-        <div class="flex flex-wrap items-center gap-3 sm:ml-auto w-full sm:w-auto">
-          <div class="relative flex-1 sm:flex-initial">
-            <button onClick={() => setShowExport((v) => !v)} class="w-full min-h-11 rounded-lg border border-border bg-surface px-4 py-2 text-xs font-bold text-text-secondary hover:bg-surface-alt transition-all active-scale flex items-center justify-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-3 sm:ml-auto w-full sm:w-auto">
+          <div className="relative flex-1 sm:flex-initial">
+            <button onClick={() => setShowExport((v) => !v)} className="w-full min-h-11 rounded-lg border border-border bg-surface px-4 py-2 text-xs font-bold text-text-secondary hover:bg-surface-alt transition-all active-scale flex items-center justify-center gap-1.5">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               Export
             </button>
-            {showExport && <div class="fixed inset-0 z-20" onClick={() => setShowExport(false)} />}
+            {showExport && <div className="fixed inset-0 z-20" onClick={() => setShowExport(false)} />}
             {showExport && (
-              <div class="absolute right-0 top-full mt-2.5 z-30 min-w-[200px] rounded-xl border border-border bg-surface p-1.5 shadow-2xl animate-fade-in-scale">
-                <button onClick={() => { exportJSON(wordList); setShowExport(false); }} class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-xs font-bold text-text-secondary hover:bg-surface-alt transition-colors">
+              <div className="absolute right-0 top-full mt-2.5 z-30 min-w-[200px] rounded-xl border border-border bg-surface p-1.5 shadow-2xl animate-fade-in-scale">
+                <button onClick={() => { exportJSON(wordList); setShowExport(false); }} className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-xs font-bold text-text-secondary hover:bg-surface-alt transition-colors">
                   JSON
                 </button>
-                <button onClick={() => { exportCSV(wordList); setShowExport(false); }} class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-xs font-bold text-text-secondary hover:bg-surface-alt transition-colors">
+                <button onClick={() => { exportCSV(wordList); setShowExport(false); }} className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-xs font-bold text-text-secondary hover:bg-surface-alt transition-colors">
                   CSV
                 </button>
-                <button onClick={() => { exportHTMLFlashcards(wordList); setShowExport(false); }} class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-xs font-bold text-text-secondary hover:bg-surface-alt transition-colors">
+                <button onClick={() => { exportHTMLFlashcards(wordList); setShowExport(false); }} className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-xs font-bold text-text-secondary hover:bg-surface-alt transition-colors">
                   Flashcards (HTML)
                 </button>
-                <button onClick={() => { printVocabulary(wordList); setShowExport(false); }} class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-xs font-bold text-text-secondary hover:bg-surface-alt transition-colors">
+                <button onClick={() => { printVocabulary(wordList); setShowExport(false); }} className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-xs font-bold text-text-secondary hover:bg-surface-alt transition-colors">
                   Print List
                 </button>
               </div>
@@ -193,7 +193,7 @@ function VocabularyBuilderInner() {
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as any)}
-            class="flex-1 sm:flex-initial rounded-lg border border-border bg-surface p-2.5 text-xs font-semibold outline-none transition-all focus:border-a1 focus:ring-2 focus:ring-a1-bg min-h-11"
+            className="flex-1 sm:flex-initial rounded-lg border border-border bg-surface p-2.5 text-xs font-semibold outline-none transition-all focus:border-a1 focus:ring-2 focus:ring-a1-bg min-h-11"
             aria-label="Sort by"
           >
             <option value="recent">Most Recent</option>
@@ -205,20 +205,20 @@ function VocabularyBuilderInner() {
 
       {/* Review Modal */}
       {showReview && reviewing && (
-        <div class="fixed inset-0 z-40 flex items-center justify-center bg-surface/40 backdrop-blur-md" onClick={() => setShowReview(false)}>
-          <div class="mx-4 w-full max-w-md animate-fade-in-scale rounded-[var(--radius-lg)] border border-border bg-surface p-6 shadow-2xl relative" onClick={(e) => e.stopPropagation()}>
-            <div class="absolute top-4 right-4">
-              <button onClick={() => setShowReview(false)} class="text-text-muted hover:text-text p-1 transition-colors" aria-label="Close review">
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-surface/40 backdrop-blur-md" onClick={() => setShowReview(false)}>
+          <div className="mx-4 w-full max-w-md animate-fade-in-scale rounded-[var(--radius-lg)] border border-border bg-surface p-6 shadow-2xl relative" onClick={(e) => e.stopPropagation()}>
+            <div className="absolute top-4 right-4">
+              <button onClick={() => setShowReview(false)} className="text-text-muted hover:text-text p-1 transition-colors" aria-label="Close review">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
               </button>
             </div>
-            <span class="inline-block rounded-full bg-a2-bg px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-a2" style={{ border: "1px solid color-mix(in oklch, var(--a2) 20%, transparent)" }}>Review Card</span>
-            <h3 class="text-2xl font-black font-display mt-3 text-text tracking-tight">{reviewing.word}</h3>
-            {reviewing.phonetic && <p class="text-sm font-mono text-text-muted mt-1">{reviewing.phonetic}</p>}
-            <p class="mt-4 text-base text-text leading-relaxed font-medium">{reviewing.definition}</p>
-            {reviewing.example && <p class="mt-3 text-sm italic text-text-secondary border-l-2 border-border-light pl-3">"{reviewing.example}"</p>}
-            <p class="mt-6 text-xs font-bold text-text-muted uppercase tracking-wider">How well did you remember?</p>
-            <div class="mt-2.5 flex gap-2">
+            <span className="inline-block rounded-full bg-a2-bg px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-a2" style={{ border: "1px solid color-mix(in oklch, var(--a2) 20%, transparent)" }}>Review Card</span>
+            <h3 className="text-2xl font-black font-display mt-3 text-text tracking-tight">{reviewing.word}</h3>
+            {reviewing.phonetic && <p className="text-sm font-mono text-text-muted mt-1">{reviewing.phonetic}</p>}
+            <p className="mt-4 text-base text-text leading-relaxed font-medium">{reviewing.definition}</p>
+            {reviewing.example && <p className="mt-3 text-sm italic text-text-secondary border-l-2 border-border-light pl-3">"{reviewing.example}"</p>}
+            <p className="mt-6 text-xs font-bold text-text-muted uppercase tracking-wider">How well did you remember?</p>
+            <div className="mt-2.5 flex gap-2">
               {[
                 { label: "Forgot", quality: 1, color: "incorrect" },
                 { label: "Hard", quality: 2, color: "warning" },
@@ -228,7 +228,7 @@ function VocabularyBuilderInner() {
                 <button
                   key={opt.quality}
                   onClick={() => handleReview(reviewing, opt.quality)}
-                  class="min-h-11 flex-1 rounded-lg px-3 py-2.5 text-xs font-black uppercase tracking-wider transition-all hover:brightness-95 active-scale"
+                  className="min-h-11 flex-1 rounded-lg px-3 py-2.5 text-xs font-black uppercase tracking-wider transition-all hover:brightness-95 active-scale"
                   style={{ 
                     background: `color-mix(in oklch, var(--${opt.color}) 18%, transparent)`, 
                     color: `var(--${opt.color})`,
@@ -244,9 +244,9 @@ function VocabularyBuilderInner() {
       )}
 
       {/* Word List */}
-      <div class="space-y-3">
+      <div className="space-y-3">
         {filtered.length === 0 && (
-          <p class="py-8 text-center text-sm text-text-muted">No words match this filter.</p>
+          <p className="py-8 text-center text-sm text-text-muted">No words match this filter.</p>
         )}
         {filtered.map((w) => {
           const isDue = w.nextReview <= Date.now() && w.repetitions < 5;
@@ -261,37 +261,37 @@ function VocabularyBuilderInner() {
           return (
             <div
               key={w.id}
-              class={`animate-fade-in-up group flex items-start justify-between rounded-[var(--radius-lg)] p-4.5 transition-all duration-300 glass-card glass-card-hover ${
+              className={`animate-fade-in-up group flex items-start justify-between rounded-[var(--radius-lg)] p-4.5 transition-all duration-300 glass-card glass-card-hover ${
                 deleting === w.id ? "opacity-0 scale-95" : ""
               }`}
               style={cardStyle}
             >
-              <div class="flex-1 min-w-0">
-                <div class="flex items-center gap-2.5 flex-wrap">
-                  <span class="font-bold text-text text-base">{w.word}</span>
-                  {w.phonetic && <span class="text-xs text-text-muted font-mono">{w.phonetic}</span>}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <span className="font-bold text-text text-base">{w.word}</span>
+                  {w.phonetic && <span className="text-xs text-text-muted font-mono">{w.phonetic}</span>}
                   {w.repetitions >= 5 && (
-                    <span class="rounded-full px-2.5 py-0.5 text-[10px] text-correct font-bold uppercase tracking-wider bg-correct-bg" style={{ border: "1px solid color-mix(in oklch, var(--correct) 20%, transparent)" }}>Mastered</span>
+                    <span className="rounded-full px-2.5 py-0.5 text-[10px] text-correct font-bold uppercase tracking-wider bg-correct-bg" style={{ border: "1px solid color-mix(in oklch, var(--correct) 20%, transparent)" }}>Mastered</span>
                   )}
                   {w.repetitions === 0 && w.nextReview <= Date.now() && (
-                    <span class="rounded-full px-2.5 py-0.5 text-[10px] text-warning font-bold uppercase tracking-wider bg-warning-bg" style={{ border: "1px solid color-mix(in oklch, var(--warning) 20%, transparent)" }}>New</span>
+                    <span className="rounded-full px-2.5 py-0.5 text-[10px] text-warning font-bold uppercase tracking-wider bg-warning-bg" style={{ border: "1px solid color-mix(in oklch, var(--warning) 20%, transparent)" }}>New</span>
                   )}
                 </div>
-                <p class="mt-1.5 text-sm text-text-secondary leading-relaxed line-clamp-2">{w.definition}</p>
-                {w.example && <p class="mt-1 text-xs italic text-text-muted truncate">"{w.example}"</p>}
-                <div class="mt-2.5 flex items-center gap-2 flex-wrap">
-                  <span class="rounded-full px-2.5 py-0.5 text-[10px] font-bold" style={{ background: `var(--${w.level}-bg)`, color: `var(--${w.level})` }}>
+                <p className="mt-1.5 text-sm text-text-secondary leading-relaxed line-clamp-2">{w.definition}</p>
+                {w.example && <p className="mt-1 text-xs italic text-text-muted truncate">"{w.example}"</p>}
+                <div className="mt-2.5 flex items-center gap-2 flex-wrap">
+                  <span className="rounded-full px-2.5 py-0.5 text-[10px] font-bold" style={{ background: `var(--${w.level}-bg)`, color: `var(--${w.level})` }}>
                     {w.level.toUpperCase()}
                   </span>
                   {w.tags.map((t) => (
-                    <span key={t} class="rounded-full bg-surface-alt border border-border-light px-2.5 py-0.5 text-[10px] font-bold text-text-secondary">{t}</span>
+                    <span key={t} className="rounded-full bg-surface-alt border border-border-light px-2.5 py-0.5 text-[10px] font-bold text-text-secondary">{t}</span>
                   ))}
                 </div>
               </div>
-              <div class="flex shrink-0 items-center gap-1.5 ml-4">
+              <div className="flex shrink-0 items-center gap-1.5 ml-4">
                 <button
                   onClick={() => { setReviewing(w); setShowReview(true); }}
-                  class="rounded-lg p-2.5 text-text-secondary transition-all hover:bg-a2-bg hover:text-a2 active-scale min-h-11 min-w-11 flex items-center justify-center border border-transparent hover:border-border"
+                  className="rounded-lg p-2.5 text-text-secondary transition-all hover:bg-a2-bg hover:text-a2 active-scale min-h-11 min-w-11 flex items-center justify-center border border-transparent hover:border-border"
                   aria-label="Review this word"
                   title="Review"
                 >
@@ -302,7 +302,7 @@ function VocabularyBuilderInner() {
                 </button>
                 <button
                   onClick={() => w.id && handleDelete(w.id)}
-                  class="rounded-lg p-2.5 text-text-muted transition-all hover:bg-incorrect/15 hover:text-incorrect active-scale min-h-11 min-w-11 flex items-center justify-center border border-transparent hover:border-border"
+                  className="rounded-lg p-2.5 text-text-muted transition-all hover:bg-incorrect/15 hover:text-incorrect active-scale min-h-11 min-w-11 flex items-center justify-center border border-transparent hover:border-border"
                   aria-label="Delete word"
                   title="Delete"
                 >

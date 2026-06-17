@@ -163,25 +163,25 @@ function DailyPlanInner() {
 
   if (!loaded || isLoadingSettings) {
     return (
-      <div class="glass-card rounded-[var(--radius-lg)] p-5">
-        <div class="h-4 w-40 animate-pulse rounded bg-surface-alt" />
-        <div class="mt-4 space-y-3">
-          {[1, 2, 3].map(i => <div key={i} class="h-14 animate-pulse rounded-lg bg-surface-alt" />)}
+      <div className="glass-card rounded-[var(--radius-lg)] p-5">
+        <div className="h-4 w-40 animate-pulse rounded bg-surface-alt" />
+        <div className="mt-4 space-y-3">
+          {[1, 2, 3].map(i => <div key={i} className="h-14 animate-pulse rounded-lg bg-surface-alt" />)}
         </div>
       </div>
     );
   }
 
   return (
-    <div class="glass-card rounded-[var(--radius-lg)] p-5">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-sm font-bold uppercase tracking-wider text-text-muted">Plan</h3>
-        <span class="rounded-full px-2.5 py-0.5 text-xs font-bold text-focus-accent bg-focus-accent-bg" style={{ border: "1px solid color-mix(in oklch, var(--focus-accent) 20%, transparent)" }}>
+    <div className="glass-card rounded-[var(--radius-lg)] p-5">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-sm font-bold uppercase tracking-wider text-text-muted">Plan</h3>
+        <span className="rounded-full px-2.5 py-0.5 text-xs font-bold text-focus-accent bg-focus-accent-bg" style={{ border: "1px solid color-mix(in oklch, var(--focus-accent) 20%, transparent)" }}>
           {FOCUS_LABELS[currentFocus].split(" ")[0]} · {currentXp} XP
         </span>
       </div>
 
-      <div class="space-y-3">
+      <div className="space-y-3">
         {plan.map((item) => {
           const isPriority = item.id === "review-words";
           const cardStyle = isPriority
@@ -198,24 +198,24 @@ function DailyPlanInner() {
             <a
               key={item.id}
               href={item.href}
-              class="flex items-start gap-4 rounded-[var(--radius-md)] p-4 transition-all duration-300 ease-out hover:border-focus-accent hover:shadow-md active-scale"
+              className="flex items-start gap-4 rounded-[var(--radius-md)] p-4 transition-all duration-300 ease-out hover:border-focus-accent hover:shadow-md active-scale"
               style={cardStyle}
             >
-              <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full" style={{ background: isPriority ? "color-mix(in oklch, var(--incorrect) 15%, transparent)" : "var(--focus-accent-bg)" }}>
+              <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full" style={{ background: isPriority ? "color-mix(in oklch, var(--incorrect) 15%, transparent)" : "var(--focus-accent-bg)" }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={isPriority ? "var(--incorrect)" : "var(--focus-accent)"} stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d={ICONS[item.icon] || ICONS.star} />
                 </svg>
               </span>
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-2">
-                  <p class="text-sm font-semibold truncate text-text">{item.title}</p>
-                  <span class="shrink-0 text-xs font-bold" style={{ color: isPriority ? "var(--incorrect)" : "var(--focus-accent)" }}>+{item.xp} XP</span>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-sm font-semibold truncate text-text">{item.title}</p>
+                  <span className="shrink-0 text-xs font-bold" style={{ color: isPriority ? "var(--incorrect)" : "var(--focus-accent)" }}>+{item.xp} XP</span>
                 </div>
-                <p class="text-xs text-text-secondary truncate mt-0.5">{item.desc}</p>
+                <p className="text-xs text-text-secondary truncate mt-0.5">{item.desc}</p>
                 {item.badge && (
-                  <div class="mt-2.5 h-1.5 w-full rounded-full overflow-hidden p-0.5 bg-surface-alt border border-border-light">
+                  <div className="mt-2.5 h-1.5 w-full rounded-full overflow-hidden p-0.5 bg-surface-alt border border-border-light">
                     <div
-                      class="h-full rounded-full transition-[width] duration-500 ease-out"
+                      className="h-full rounded-full transition-[width] duration-500 ease-out"
                       style={{
                         width: `${Math.min((item.badge.current / item.badge.goal) * 100, 100)}%`,
                         opacity: item.badge.goal > 0 ? 1 : 0,
@@ -225,7 +225,7 @@ function DailyPlanInner() {
                   </div>
                 )}
               </div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2.5" class="mt-1 shrink-0 transition-transform hover:translate-x-0.5">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2.5" className="mt-1 shrink-0 transition-transform hover:translate-x-0.5">
                 <polyline points="9 18 15 12 9 6" />
               </svg>
             </a>

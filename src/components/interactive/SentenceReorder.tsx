@@ -32,14 +32,6 @@ export default function SentenceReorder({ title, questions, level }: Props) {
     }
   }, [currentIdx, currentQ]);
 
-  const addWord = (word: string) => {
-    if (submitted) return;
-    setSelected((prev) => [...prev, word]);
-    setShuffled((prev) => prev.filter((w) => w !== word || prev.indexOf(w) !== prev.lastIndexOf(w) ? 
-      (prev.indexOf(w) === prev.lastIndexOf(w) ? false : prev.indexOf(w) !== prev.indexOf(w)) : true));
-      // Simpler approach:
-  };
-
   const addWordSimple = (idx: number) => {
     if (submitted) return;
     const word = shuffled[idx];
@@ -76,14 +68,14 @@ export default function SentenceReorder({ title, questions, level }: Props) {
   if (showResults) {
     const correctCount = Object.values(results).filter(Boolean).length;
     return (
-      <div class="animate-fade-in-scale rounded-xl shadow-border bg-surface p-8 text-center">
-        <h3 class="text-xl font-bold font-display">Exercise Complete!</h3>
-        <p class="mt-2 text-text-secondary">
+      <div className="animate-fade-in-scale rounded-xl shadow-border bg-surface p-8 text-center">
+        <h3 className="text-xl font-bold font-display">Exercise Complete!</h3>
+        <p className="mt-2 text-text-secondary">
           {correctCount}/{questions.length} correct ({Math.round((correctCount / questions.length) * 100)}%)
         </p>
         <button
           onClick={() => { setCurrentIdx(0); setResults({}); setShowResults(false); }}
-          class="mt-4 rounded-full bg-text px-5 py-2 text-sm font-semibold text-surface"
+          className="mt-4 rounded-full bg-text px-5 py-2 text-sm font-semibold text-surface"
         >
           Try Again
         </button>
@@ -92,34 +84,34 @@ export default function SentenceReorder({ title, questions, level }: Props) {
   }
 
   return (
-    <div class="rounded-xl shadow-border bg-surface p-6">
-      {title && <h3 class="mb-4 text-lg font-semibold font-display">{title}</h3>}
+    <div className="rounded-xl shadow-border bg-surface p-6">
+      {title && <h3 className="mb-4 text-lg font-semibold font-display">{title}</h3>}
 
-      <div class="mb-4 flex items-center justify-between text-sm text-text-muted">
+      <div className="mb-4 flex items-center justify-between text-sm text-text-muted">
         <span>Question {currentIdx + 1} of {questions.length}</span>
         {currentQ.hint && <span>Hint: {currentQ.hint}</span>}
       </div>
 
-      <div class="mb-4 h-1.5 overflow-hidden rounded-full bg-surface-alt">
-        <div class="h-full rounded-full bg-text transition-all" style={{ width: `${((currentIdx) / questions.length) * 100}%` }} />
+      <div className="mb-4 h-1.5 overflow-hidden rounded-full bg-surface-alt">
+        <div className="h-full rounded-full bg-text transition-all" style={{ width: `${((currentIdx) / questions.length) * 100}%` }} />
       </div>
 
       {/* Answer area */}
-      <div class="min-h-[80px] rounded-xl border-2 border-dashed border-border bg-surface-alt p-4"
+      <div className="min-h-[80px] rounded-xl border-2 border-dashed border-border bg-surface-alt p-4"
         style={{
           borderColor: submitted ? (isCorrect ? "var(--correct)" : "var(--incorrect)") : "var(--border)",
         }}
       >
-        <div class="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2">
           {selected.length === 0 && !submitted && (
-            <span class="text-sm text-text-muted">Click words below to build the sentence...</span>
+            <span className="text-sm text-text-muted">Click words below to build the sentence...</span>
           )}
           {selected.map((word, i) => (
             <button
               key={i}
               onClick={() => removeWord(i)}
               disabled={submitted}
-              class="rounded-lg bg-a1-bg px-3 py-1.5 text-sm font-medium text-a1 transition-all hover:bg-a1-light disabled:cursor-default"
+              className="min-h-11 rounded-lg bg-a1-bg px-4 py-2.5 text-sm font-medium text-a1 transition-colors hover:bg-a1-light disabled:cursor-default"
             >
               {word}
             </button>
@@ -128,14 +120,14 @@ export default function SentenceReorder({ title, questions, level }: Props) {
       </div>
 
       {/* Options */}
-      <div class="mt-4">
-        <div class="flex flex-wrap gap-2">
+      <div className="mt-4">
+        <div className="flex flex-wrap gap-2">
           {shuffled.map((word, i) => (
             <button
               key={i}
               onClick={() => addWordSimple(i)}
               disabled={submitted}
-              class="rounded-lg border border-border bg-surface px-3 py-1.5 text-sm transition-all hover:bg-surface-alt hover:border-text-muted disabled:opacity-30 disabled:cursor-default"
+              className="min-h-11 rounded-lg border border-border bg-surface px-4 py-2.5 text-sm transition-colors hover:bg-surface-alt hover:border-text-muted disabled:opacity-30 disabled:cursor-default"
             >
               {word}
             </button>
@@ -145,8 +137,8 @@ export default function SentenceReorder({ title, questions, level }: Props) {
 
       {/* Feedback */}
       {submitted && (
-        <div class="mt-4 animate-fade-in rounded-lg p-4" style={{
-          background: isCorrect ? "oklch(0.95 0.05 150 / 0.3)" : "oklch(0.95 0.05 30 / 0.3)",
+        <div className="mt-4 animate-fade-in rounded-lg p-4" style={{
+          background: isCorrect ? "var(--correct-bg)" : "var(--incorrect-bg)",
         }}>
           <p style={{ color: isCorrect ? "var(--correct)" : "var(--incorrect)" }}>
             {isCorrect ? "Correct!" : `Answer: ${currentQ.correct}`}
@@ -154,11 +146,11 @@ export default function SentenceReorder({ title, questions, level }: Props) {
         </div>
       )}
 
-      <div class="mt-4 flex justify-between">
+      <div className="mt-4 flex justify-between">
         <button
           onClick={() => { setSelected([]); setShuffled([...currentQ.words].sort(() => Math.random() - 0.5)); }}
           disabled={submitted}
-          class="rounded-lg px-4 py-2 text-sm text-text-secondary transition-colors hover:bg-surface-alt disabled:opacity-30"
+          className="min-h-11 rounded-lg px-4 py-2.5 text-sm text-text-secondary transition-colors hover:bg-surface-alt disabled:opacity-30 active-scale"
         >
           Reset
         </button>
@@ -167,14 +159,14 @@ export default function SentenceReorder({ title, questions, level }: Props) {
           <button
             onClick={checkAnswer}
             disabled={selected.length === 0}
-            class="rounded-full bg-text px-6 py-2 text-sm font-semibold text-surface transition-all hover:opacity-90 disabled:opacity-40"
+            className="min-h-11 rounded-full bg-text px-6 py-2.5 text-sm font-semibold text-surface transition-opacity hover:opacity-90 disabled:opacity-40 active-scale"
           >
             Check
           </button>
         ) : (
           <button
             onClick={nextQuestion}
-            class="rounded-full bg-text px-6 py-2 text-sm font-semibold text-surface transition-all hover:opacity-90"
+            className="min-h-11 rounded-full bg-text px-6 py-2.5 text-sm font-semibold text-surface transition-opacity hover:opacity-90 active-scale"
           >
             {currentIdx < questions.length - 1 ? "Next Question" : "See Results"}
           </button>
