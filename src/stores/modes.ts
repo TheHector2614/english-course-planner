@@ -1,7 +1,7 @@
 import { atom } from "nanostores";
 import { db } from "./db";
 
-import { LEVEL_LABELS, LEVEL_COLORS } from "../data/levels";
+export { LEVEL_LABELS, LEVEL_COLORS } from "../data/levels";
 import type { CEFRLevel } from "../data/levels";
 
 export type LevelMode = CEFRLevel;

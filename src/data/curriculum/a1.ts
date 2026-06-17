@@ -1,0 +1,73 @@
+export default {
+  level: "a1", name: "A1", label: "Beginner", color: "a1", hue: 150,
+  units: [
+    { id: "a1-01", title: "Greetings & Introductions", desc: "Verb to be, questions, alphabet, numbers 1-100", tags: ["grammar", "vocabulary"] },
+    { id: "a1-02", title: "Family & Everyday Objects", desc: "Possessive 's, colors, plurals", tags: ["grammar", "vocabulary"] },
+    { id: "a1-03", title: "Daily Life & Time", desc: "Present simple, time expressions, adverbs", tags: ["grammar"] },
+    { id: "a1-04", title: "Places & Directions", desc: "There is/are, prepositions, basic directions", tags: ["grammar", "speaking"] },
+  ],
+  quiz: {
+    questions: [
+      { id: 1, question: "She ___ a teacher.", options: ["am", "is", "are", "be"], correct: 1, explanation: "'She' takes 'is' in present simple." },
+      { id: 2, question: "What ___ your name?", options: ["is", "am", "are", "be"], correct: 0, explanation: "'Your name' is singular, use 'is'." },
+      { id: 3, question: "They ___ from Spain.", options: ["is", "am", "are", "be"], correct: 2, explanation: "'They' takes 'are'." },
+      { id: 4, question: "I ___ twenty years old.", options: ["is", "am", "are", "be"], correct: 1, explanation: "'I' takes 'am'." },
+      { id: 5, question: "___ you like coffee?", options: ["Does", "Do", "Is", "Are"], correct: 1, explanation: "'You' takes 'do' in questions." },
+      { id: 6, question: "He ___ in London.", options: ["live", "lives", "living", "lived"], correct: 1, explanation: "Third person singular adds 's'." },
+      { id: 7, question: "We ___ two cats.", options: ["has", "have", "having", "had"], correct: 1, explanation: "'We' takes 'have'." },
+      { id: 8, question: "___ is your birthday?", options: ["What", "When", "Where", "Who"], correct: 1, explanation: "'When' asks about time." },
+    ]
+  },
+  flashcards: [
+    { front: "Hello", back: "Hola", example: "Hello, how are you?" },
+    { front: "Goodbye", back: "Adiós", example: "Goodbye, see you later." },
+    { front: "Please", back: "Por favor", example: "Please help me." },
+    { front: "Thank you", back: "Gracias", example: "Thank you very much." },
+    { front: "Yes", back: "Sí", example: "Yes, I understand." },
+    { front: "No", back: "No", example: "No, I don't know." },
+    { front: "My name is", back: "Me llamo", example: "My name is John." },
+    { front: "How are you?", back: "¿Cómo estás?", example: "How are you today?" },
+  ],
+  fillBlank: [
+    { sentence: "She ___ a teacher.", answer: "is", options: ["am", "is", "are"], explanation: "'She' takes 'is'." },
+    { sentence: "They ___ from Spain.", answer: "are", options: ["is", "am", "are"], explanation: "'They' takes 'are'." },
+    { sentence: "I ___ twenty years old.", answer: "am", options: ["is", "am", "are"], explanation: "'I' takes 'am'." },
+    { sentence: "He ___ in London.", answer: "lives", options: ["live", "lives", "living"], explanation: "Third person adds 's'." },
+    { sentence: "We ___ two cats.", answer: "have", options: ["has", "have", "having"], explanation: "'We' takes 'have'." },
+  ],
+  matchPairs: [
+    { left: "Hello", right: "Greeting" },
+    { left: "Teacher", right: "Person who teaches" },
+    { left: "Student", right: "Person who learns" },
+    { left: "Happy", right: "Feeling good" },
+    { left: "Sad", right: "Feeling bad" },
+    { left: "Big", right: "Not small" },
+  ],
+  reorder: [
+    { words: ["she", "is", "teacher", "a"], correct: "She is a teacher." },
+    { words: ["are", "they", "from", "Spain"], correct: "They are from Spain." },
+    { words: ["name", "my", "is", "John"], correct: "My name is John." },
+    { words: ["you", "how", "are"], correct: "How are you?" },
+    { words: ["I", "am", "old", "years", "twenty"], correct: "I am twenty years old." },
+  ],
+  speaking: [
+    { text: "Hello, how are you?", phonetic: "/həˈloʊ haʊ ɑːr juː/" },
+    { text: "My name is John.", phonetic: "/maɪ neɪm ɪz dʒɒn/" },
+    { text: "I am a student.", phonetic: "/aɪ æm ə ˈstjuːdənt/" },
+    { text: "Nice to meet you.", phonetic: "/naɪs tə miːt juː/" },
+    { text: "Thank you very much.", phonetic: "/θæŋk juː ˈveri mʌtʃ/" },
+  ],
+  dictation: [
+    { text: "I wake up at seven o'clock." },
+    { text: "She is a teacher." },
+    { text: "They are from Spain." },
+    { text: "The cat is white and black." },
+    { text: "We go to the park on Saturday." },
+  ],
+  listening: [
+    { text: "Hello, I am Maria. I am from Mexico. I speak Spanish and English.", question: "Where is Maria from?", options: ["Spain", "Mexico", "Argentina", "Colombia"], correct: 1 },
+    { text: "My favorite food is pizza. I eat pizza every Friday with my family.", question: "When does the person eat pizza?", options: ["Monday", "Wednesday", "Friday", "Sunday"], correct: 2 },
+    { text: "The school is next to the park. I walk there every morning with my friend.", question: "Where is the school?", options: ["Next to the library", "Next to the park", "Next to the hospital", "Next to the store"], correct: 1 },
+  ],
+  clozePassage: null,
+};

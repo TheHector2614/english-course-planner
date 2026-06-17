@@ -1,0 +1,82 @@
+export default {
+  level: "a2", name: "A2", label: "Elementary", color: "a2", hue: 220,
+  units: [
+    { id: "a2-01", title: "Past Events", desc: "Past simple, irregular verbs, time expressions", tags: ["grammar"] },
+    { id: "a2-02", title: "Present Continuous", desc: "Actions in progress, going to future", tags: ["grammar"] },
+    { id: "a2-03", title: "Comparatives & Superlatives", desc: "Adjectives, comparisons", tags: ["grammar"] },
+    { id: "a2-04", title: "Shopping & Food", desc: "Count/uncount nouns, some/any, food vocab", tags: ["vocabulary", "speaking"] },
+  ],
+  quiz: {
+    questions: [
+      { id: 1, question: "Yesterday I ___ to the park.", options: ["go", "went", "gone", "going"], correct: 1, explanation: "Past simple of 'go' is 'went'." },
+      { id: 2, question: "She ___ a book right now.", options: ["read", "reads", "is reading", "readed"], correct: 2, explanation: "Present continuous: is + verb-ing." },
+      { id: 3, question: "A car is ___ than a bicycle.", options: ["fast", "faster", "fastest", "more fast"], correct: 1, explanation: "One-syllable adjective: add -er." },
+      { id: 4, question: "There ___ some milk in the fridge.", options: ["is", "are", "have", "has"], correct: 0, explanation: "'Milk' is uncountable, use 'is'." },
+      { id: 5, question: "They ___ at home last night.", options: ["was", "were", "are", "is"], correct: 1, explanation: "'They' takes 'were' in past." },
+      { id: 6, question: "I ___ like spicy food.", options: ["doesn't", "don't", "isn't", "aren't"], correct: 1, explanation: "'I' takes 'don't'." },
+      { id: 7, question: "She is ___ than her brother.", options: ["tall", "taller", "tallest", "more tall"], correct: 1, explanation: "Comparative of 'tall' is 'taller'." },
+      { id: 8, question: "___ you like some tea?", options: ["Would", "Do", "Are", "Have"], correct: 0, explanation: "'Would you like' is a polite offer." },
+    ]
+  },
+  flashcards: [
+    { front: "Yesterday", back: "Ayer", example: "Yesterday I went to school." },
+    { front: "Today", back: "Hoy", example: "Today is sunny." },
+    { front: "Tomorrow", back: "Mañana", example: "Tomorrow I will travel." },
+    { front: "Always", back: "Siempre", example: "I always drink coffee." },
+    { front: "Sometimes", back: "A veces", example: "Sometimes I read books." },
+    { front: "Never", back: "Nunca", example: "I never smoke." },
+    { front: "Big", back: "Grande", example: "That is a big house." },
+    { front: "Small", back: "Pequeño", example: "The cat is small." },
+  ],
+  fillBlank: [
+    { sentence: "Yesterday I ___ to the park.", answer: "went", options: ["go", "went", "gone"], explanation: "Past simple of 'go' is 'went'." },
+    { sentence: "She ___ a book right now.", answer: "is reading", options: ["reads", "is reading", "read"], explanation: "Present continuous: is + verb-ing." },
+    { sentence: "A car is ___ than a bicycle.", answer: "faster", options: ["fast", "faster", "fastest"], explanation: "One-syllable adjective: add -er." },
+    { sentence: "There ___ some milk in the fridge.", answer: "is", options: ["is", "are", "have"], explanation: "'Milk' is uncountable, use 'is'." },
+    { sentence: "They ___ at home last night.", answer: "were", options: ["was", "were", "are"], explanation: "'They' takes 'were' in past." },
+  ],
+  matchPairs: [
+    { left: "Go", right: "Went" },
+    { left: "Eat", right: "Ate" },
+    { left: "Buy", right: "Bought" },
+    { left: "See", right: "Saw" },
+    { left: "Take", right: "Took" },
+    { left: "Drink", right: "Drank" },
+  ],
+  reorder: [
+    { words: ["yesterday", "I", "to", "the", "park", "went"], correct: "I went to the park yesterday." },
+    { words: ["is", "she", "reading", "book", "a"], correct: "She is reading a book." },
+    { words: ["than", "faster", "a car", "a bicycle", "is"], correct: "A car is faster than a bicycle." },
+    { words: ["last", "they", "home", "at", "night", "were"], correct: "They were at home last night." },
+    { words: ["some", "there", "fridge", "milk", "in", "is", "the"], correct: "There is some milk in the fridge." },
+  ],
+  speaking: [
+    { text: "I went to the store yesterday.", phonetic: "/aɪ wɛnt tə ðə stɔːr ˈjɛstərdeɪ/" },
+    { text: "She is reading a book right now.", phonetic: "/ʃiː ɪz ˈriːdɪŋ ə bʊk raɪt naʊ/" },
+    { text: "A car is faster than a bicycle.", phonetic: "/ə kɑːr ɪz ˈfæstər ðæn ə ˈbaɪsɪkəl/" },
+    { text: "Would you like some tea?", phonetic: "/wʊd juː laɪk sʌm tiː/" },
+    { text: "They were at home last night.", phonetic: "/ðeɪ wɜːr æt hoʊm læst naɪt/" },
+  ],
+  dictation: [
+    { text: "My sister is older than me." },
+    { text: "We are watching a movie right now." },
+    { text: "I bought some apples at the store." },
+    { text: "There is a bank next to the post office." },
+    { text: "She was happy with her birthday present." },
+  ],
+  listening: [
+    { text: "Last weekend, we went to the beach. The weather was beautiful and we swam in the sea. We also had lunch at a small restaurant near the beach.", question: "What did they do last weekend?", options: ["Visited a museum", "Went to the beach", "Went shopping", "Stayed home"], correct: 1 },
+    { text: "I usually wake up at six thirty. First I take a shower, then I have breakfast. I leave home at seven fifteen and walk to the bus stop.", question: "What time does the person leave home?", options: ["Six thirty", "Seven o'clock", "Seven fifteen", "Eight o'clock"], correct: 2 },
+    { text: "Sarah went to the library after school. She needed to find a book for her science project. She stayed there for two hours.", question: "Why did Sarah go to the library?", options: ["To meet a friend", "To study for an exam", "To find a book for a project", "To use the computer"], correct: 2 },
+  ],
+  clozePassage: {
+    text: "Yesterday, I {0} to the park with my friend Tom. While we {1} football, it started to rain. We {2} under a tree for a few minutes, but the rain got stronger. Finally, we {3} to run home. When we arrived, we {4} completely wet!",
+    blanks: [
+      { correct: "went", options: ["go", "went", "gone"], explanation: "Past simple of 'go' is 'went'." },
+      { correct: "were playing", options: ["played", "were playing", "play"], explanation: "Use past continuous for an action in progress when another event happened." },
+      { correct: "stayed", options: ["stay", "stayed", "staying"], explanation: "Past simple for completed action." },
+      { correct: "decided", options: ["decide", "decided", "deciding"], explanation: "Past simple of 'decide' is 'decided'." },
+      { correct: "were", options: ["was", "were", "are"], explanation: "'We' takes 'were' in past simple." },
+    ],
+  },
+};
