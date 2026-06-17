@@ -1,6 +1,9 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { saveWord } from "../../stores/vocabulary";
+import { ErrorBoundary } from "./ErrorBoundary";
 import { addXP, XP_PER_STORY } from "../../stores/progress";
+import { unlockAchievement } from "../../stores/achievements";
+import { updateChallengeProgress } from "../../stores/challenges";
 import { db } from "../../stores/db";
 
 interface Story {
@@ -13,7 +16,7 @@ interface Story {
   vocabulary: { word: string; definition: string; example?: string }[];
 }
 
-export default function ReadingViewer({ story }: { story: Story }) {
+function ReadingViewerInner({ story }: { story: Story }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [showTranslation, setShowTranslation] = useState(false);
   const [selectedWord, setSelectedWord] = useState<{ word: string; def: string; example?: string } | null>(null);
@@ -83,6 +86,15 @@ export default function ReadingViewer({ story }: { story: Story }) {
       vocabularySaved: [],
       completedAt: Date.now(),
     });
+
+    // Reading achievements
+    const allStories = await db.stories.toArray();
+    const completedStories = allStories.filter(s => s.completed).length;
+    if (completedStories >= 5) await unlockAchievement("reading_5");
+    if (completedStories >= 20) await unlockAchievement("reading_20");
+
+    updateChallengeProgress("daily_read_stories", 1);
+    updateChallengeProgress("weekly_stories", 1);
   };
 
   const speakWord = (text: string) => {
@@ -138,16 +150,16 @@ export default function ReadingViewer({ story }: { story: Story }) {
       >
         <p>
           {pages[currentPage].split(" ").map((w, i) => {
+            const clean = w.replace(/^[^a-zA-Z'-]+|[^a-zA-Z'-]+$/g, "");
             const isVocab = story.vocabulary.some(
-              (v) => v.word.toLowerCase() === w.replace(/[^a-zA-Z]/g, "").toLowerCase()
+              (v) => v.word.toLowerCase() === clean.toLowerCase()
             );
-            const clean = w.replace(/[^a-zA-Z]/g, "");
             return (
               <span
                 key={i}
                 data-word={clean}
                 class={isVocab ? "cursor-pointer border-b-2 border-dotted border-a1 transition-colors hover:bg-a1-bg" : ""}
-                onClick={() => isVocab && speakWord(w)}
+                onClick={() => isVocab && speakWord(clean)}
               >
                 {w}{" "}
               </span>
@@ -167,13 +179,13 @@ export default function ReadingViewer({ story }: { story: Story }) {
           Previous
         </button>
 
-        <div class="flex gap-1">
+        <div class="flex gap-1.5">
           {Array.from({ length: totalPages }, (_, i) => (
             <button
               key={i}
               onClick={() => setCurrentPage(i)}
-              class={`h-2 w-2 rounded-full transition-all ${
-                i === currentPage ? "w-6 bg-text" : "bg-border hover:bg-text-muted"
+              class={`flex items-center justify-center rounded-full transition-all ${
+                i === currentPage ? "h-3 w-7 bg-text" : "h-3 w-3 bg-border hover:bg-text-muted"
               }`}
               aria-label={`Go to page ${i + 1}`}
             />
@@ -192,7 +204,7 @@ export default function ReadingViewer({ story }: { story: Story }) {
           !completed && (
             <button
               onClick={() => setCompleting(true)}
-              class="rounded-lg bg-text px-5 py-2 text-sm font-semibold text-surface transition-all hover:opacity-90"
+              class="rounded-lg bg-text px-5 py-2 text-sm font-semibold text-surface transition-opacity hover:opacity-90 active-scale"
             >
               Complete Reading
             </button>
@@ -224,7 +236,7 @@ export default function ReadingViewer({ story }: { story: Story }) {
             </div>
             <button
               onClick={handleSaveFromStory}
-              class="shrink-0 rounded-lg bg-text px-3 py-1.5 text-xs font-medium text-surface transition-all hover:opacity-90"
+              class="shrink-0 rounded-lg bg-text px-3 py-1.5 text-xs font-medium text-surface transition-opacity hover:opacity-90 active-scale"
             >
               Save
             </button>
@@ -250,9 +262,10 @@ export default function ReadingViewer({ story }: { story: Story }) {
                     }}
                     class={`w-full rounded-lg border px-4 py-2 text-left text-sm transition-all ${
                       answers[qi] === oi
-                        ? "border-text bg-text/5 font-medium"
+                        ? "border-text font-medium"
                         : "border-border hover:bg-surface-alt"
                     }`}
+                    style={answers[qi] === oi ? { background: "color-mix(in oklch, var(--text) 5%, transparent)" } : undefined}
                   >
                     {opt}
                   </button>
@@ -262,8 +275,8 @@ export default function ReadingViewer({ story }: { story: Story }) {
           ))}
           <button
             onClick={handleComplete}
-            disabled={answers.length < story.comprehensionQs.length}
-            class="w-full rounded-xl bg-text px-5 py-3 text-sm font-semibold text-surface transition-all hover:opacity-90 disabled:opacity-40"
+            disabled={story.comprehensionQs.some((_, i) => answers[i] === undefined)}
+            class="w-full rounded-xl bg-text px-5 py-3 text-sm font-semibold text-surface transition-opacity hover:opacity-90 disabled:opacity-40 active-scale"
           >
             Submit Answers
           </button>
@@ -289,5 +302,13 @@ export default function ReadingViewer({ story }: { story: Story }) {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ReadingViewer(props: { story: Story }) {
+  return (
+    <ErrorBoundary fallbackTitle="Reading Viewer Error">
+      <ReadingViewerInner {...props} />
+    </ErrorBoundary>
   );
 }
