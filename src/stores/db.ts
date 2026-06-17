@@ -107,6 +107,12 @@ export const ACHIEVEMENT_DEFS: Record<string, { title: string; desc: string }> =
   challenge_50:  { title: "Challenge Legend",   desc: "Complete 50 daily challenges" },
 };
 
+export interface DictionaryCacheEntry {
+  word: string;
+  definitionData: any;
+  timestamp: number;
+}
+
 export class CourseDB extends Dexie {
   vocabulary!: Table<SavedWord, number>;
   levelProgress!: Table<LevelProgress, string>;
@@ -115,6 +121,7 @@ export class CourseDB extends Dexie {
   stories!: Table<StoryProgress, string>;
   settings!: Table<UserSettings, string>;
   challenges!: Table<Challenge, string>;
+  dictionaryCache!: Table<DictionaryCacheEntry, string>;
 
   constructor() {
     super("EnglishCourseDB");
@@ -136,6 +143,18 @@ export class CourseDB extends Dexie {
       challenges: "id, seed, type",
     }).upgrade(async (tx) => {
       // Dexie version 2 upgrade path. The new challenges table is created automatically.
+    });
+    this.version(3).stores({
+      vocabulary: "++id, word, level, nextReview, tags",
+      levelProgress: "levelId",
+      sessions: "++id, date",
+      achievements: "id",
+      stories: "storyId",
+      settings: "id",
+      challenges: "id, seed, type",
+      dictionaryCache: "word",
+    }).upgrade(async (tx) => {
+      // Dexie version 3 upgrade path. The new dictionaryCache table is created automatically.
     });
   }
 }
