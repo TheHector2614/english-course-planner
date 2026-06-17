@@ -23,29 +23,31 @@ export async function loadVocabulary() {
   }
 }
 
-export async function saveWord(word: Omit<SavedWord, "id" | "savedAt" | "easeFactor" | "interval" | "nextReview" | "repetitions">) {
-  const entry: Omit<SavedWord, "id"> = {
-    ...word,
-    easeFactor: 2.5,
-    interval: 0,
-    nextReview: Date.now(),
-    repetitions: 0,
-    savedAt: Date.now(),
-  };
-  const id = await db.vocabulary.add(entry as SavedWord);
-  const saved = await db.vocabulary.get(id);
-  if (saved) {
-    vocabularyList.set({ ...vocabularyList.get(), [id]: saved });
-  }
-  const count = await db.vocabulary.count();
-  if (count >= 10) await unlockAchievement("vocab_10");
-  if (count >= 50) await unlockAchievement("vocab_50");
-  if (count >= 100) await unlockAchievement("vocab_100");
+export async function saveWord(word: Omit<SavedWord, "id" | "savedAt" | "easeFactor" | "interval" | "repetitions" | "nextReview">) {
+  return await db.transaction("rw", [db.vocabulary, db.achievements, db.settings, db.challenges], async () => {
+    const entry: Omit<SavedWord, "id"> = {
+      ...word,
+      easeFactor: 2.5,
+      interval: 0,
+      nextReview: Date.now(),
+      repetitions: 0,
+      savedAt: Date.now(),
+    };
+    const id = await db.vocabulary.add(entry as SavedWord);
+    const saved = await db.vocabulary.get(id);
+    if (saved) {
+      vocabularyList.set({ ...vocabularyList.get(), [id]: saved });
+    }
+    const count = await db.vocabulary.count();
+    if (count >= 10) await unlockAchievement("vocab_10");
+    if (count >= 50) await unlockAchievement("vocab_50");
+    if (count >= 100) await unlockAchievement("vocab_100");
 
-  updateChallengeProgress("daily_save_words", 1);
-  updateChallengeProgress("weekly_words", 1);
+    await updateChallengeProgress("daily_save_words", 1);
+    await updateChallengeProgress("weekly_words", 1);
 
-  return id;
+    return id;
+  });
 }
 
 export async function updateWord(id: number, updates: Partial<SavedWord>) {
