@@ -153,18 +153,21 @@ export async function updateStreak() {
 export function getXpForNextLevel(): number {
   const currentXp = xp.get();
   if (currentXp < 500) return 500;
-  if (currentXp < 2000) return 2000;
+  if (currentXp < 1500) return 1500;
+  if (currentXp < 3000) return 3000;
   if (currentXp < 5000) return 5000;
-  return 10000;
+  if (currentXp < 8000) return 8000;
+  return 12000;
 }
 
 export function getLevelFromXp(): number {
   const currentXp = xp.get();
   if (currentXp < 500) return 1;
-  if (currentXp < 2000) return 2;
-  if (currentXp < 5000) return 3;
-  if (currentXp < 10000) return 4;
-  return 5;
+  if (currentXp < 1500) return 2;
+  if (currentXp < 3000) return 3;
+  if (currentXp < 5000) return 4;
+  if (currentXp < 8000) return 5;
+  return 6;
 }
 
 export { XP_PER_QUIZ, XP_PER_WORD, XP_PER_STORY, XP_PER_EXERCISE, XP_PER_STREAK_DAY, XP_BONUS_PERFECT };
