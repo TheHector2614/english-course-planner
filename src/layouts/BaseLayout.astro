@@ -12,7 +12,8 @@ const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="light" data-level="a1" data-focus="general">
+  <script is:inline src="/scripts/theme-preloader.js"></script>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,10 +21,14 @@ const { title, description } = Astro.props;
     <meta property="og:title" content={`${title} — English Course Planner`} />
     <meta property="og:description" content={description ?? "Interactive English course from A1 to B2+ following the CEFR framework. 6 levels, 24 units, quizzes, flashcards, vocabulary builder, reading comprehension, and writing exercises."} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://TheHector2614.github.io/english-course-planner" />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site).href} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self' https://api.dictionaryapi.dev; base-uri 'self'; form-action 'self'; frame-ancestors 'none';" />
-    <link rel="canonical" href={`https://TheHector2614.github.io/english-course-planner${Astro.url.pathname.replace(/^\/english-course-planner/, "")}`} />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self' https://api.dictionaryapi.dev https://api.unsplash.com; worker-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="English A1-B2+" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -33,7 +38,7 @@ const { title, description } = Astro.props;
         "provider": {
           "@type": "Organization",
           "name": "English Course Planner",
-          "url": "https://TheHector2614.github.io/english-course-planner"
+          "url": Astro.site.href
         },
         "educationalLevel": ["Beginner", "Intermediate", "Advanced"],
         "teaches": ["English grammar", "English vocabulary", "English writing", "English reading comprehension", "English speaking"]
@@ -41,7 +46,7 @@ const { title, description } = Astro.props;
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
     <script type="speculationrules">
       {
         "prerender": [{
@@ -59,17 +64,6 @@ const { title, description } = Astro.props;
       <slot />
     </main>
     <Footer />
-    <script>
-      import { loadTheme } from "../stores/theme";
-      import { loadLang } from "../stores/lang";
-      import { loadFromStorage } from "../stores/progress";
-      import { loadVocabulary } from "../stores/vocabulary";
-      import { loadAchievements } from "../stores/achievements";
-      loadTheme();
-      loadLang();
-      loadFromStorage();
-      loadVocabulary();
-      loadAchievements();
-    </script>
+    <script src="../scripts/base-layout.ts"></script>
   </body>
 </html>

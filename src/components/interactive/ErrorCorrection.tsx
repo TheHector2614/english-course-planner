@@ -41,7 +41,7 @@ export default function ErrorCorrection({ title, questions, level }: Props) {
   const allAnswered = questions.every((_, i) => answers[i]?.trim());
 
   return (
-    <div class="rounded-xl border border-border bg-surface p-6 shadow-sm">
+    <div class="rounded-xl shadow-border bg-surface p-6">
       {title && <h3 class="mb-4 text-lg font-semibold font-display">{title}</h3>}
 
       <div class="space-y-5">

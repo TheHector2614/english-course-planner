@@ -76,7 +76,7 @@ export default function SentenceReorder({ title, questions, level }: Props) {
   if (showResults) {
     const correctCount = Object.values(results).filter(Boolean).length;
     return (
-      <div class="animate-fade-in-scale rounded-xl border border-border bg-surface p-8 text-center">
+      <div class="animate-fade-in-scale rounded-xl shadow-border bg-surface p-8 text-center">
         <h3 class="text-xl font-bold font-display">Exercise Complete!</h3>
         <p class="mt-2 text-text-secondary">
           {correctCount}/{questions.length} correct ({Math.round((correctCount / questions.length) * 100)}%)
@@ -92,7 +92,7 @@ export default function SentenceReorder({ title, questions, level }: Props) {
   }
 
   return (
-    <div class="rounded-xl border border-border bg-surface p-6 shadow-sm">
+    <div class="rounded-xl shadow-border bg-surface p-6">
       {title && <h3 class="mb-4 text-lg font-semibold font-display">{title}</h3>}
 
       <div class="mb-4 flex items-center justify-between text-sm text-text-muted">

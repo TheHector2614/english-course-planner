@@ -123,18 +123,18 @@ const { story } = Astro.props;
 ---
 
 <BaseLayout title={story.title} description={`Read "${story.title}" \u2014 a level ${story.level} story with comprehension questions.`}>
-  <section class="mx-auto max-w-3xl px-4 py-12">
-    <div class="mb-6">
+  <section class="mx-auto max-w-3xl px-4 sm:px-4 py-8 sm:py-12">
+    <div class="mb-4 sm:mb-6">
       <a href="/reading" class="inline-flex items-center gap-1 text-sm text-text-muted hover:text-text transition-colors">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
         Back to Library
       </a>
     </div>
-    <div class="mb-8 text-center">
+    <div class="mb-6 sm:mb-8 text-center">
       <span class="inline-block rounded-full px-3 py-1 text-sm font-medium" style={{ background: `var(--${story.level}-bg)`, color: `var(--${story.level})` }}>
         {story.level.toUpperCase()}
       </span>
-      <h1 class="mt-3 text-3xl font-bold font-display">{story.title}</h1>
+      <h1 class="mt-3 text-2xl sm:text-3xl font-bold font-display">{story.title}</h1>
       <p class="mt-1 text-sm text-text-muted">{story.words} words</p>
     </div>
     <ReadingViewer story={story} client:load />

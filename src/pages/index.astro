@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ProgressOverview from "../components/dynamics/ProgressOverview";
 import AchievementModal from "../components/interactive/AchievementModal";
+import ModeCarousel from "../components/interactive/ModeCarousel";
 
 const levels = [
   { id: "a1", name: "A1", label: "Beginner", hours: 8, units: 4, color: "a1", hue: 150, desc: "Fundamentals: greetings, family, daily routine, directions" },
@@ -12,7 +13,7 @@ const levels = [
   { id: "b2+", name: "B2+", label: "Pre-Advanced", hours: 14, units: 4, color: "b2p", hue: 185, desc: "Participle clauses, wish, business English" },
 ];
 
-const features = [
+const genericFeatures = [
   { icon: "search", label: "Dictionary", href: "/dictionary", desc: "Look up words with definitions, examples, and phonetics. Save to your vocabulary.", color: "a2" },
   { icon: "book", label: "Vocabulary", href: "/vocabulary", desc: "Review saved words with spaced repetition. Track mastered and due words.", color: "a1" },
   { icon: "file-text", label: "Reading", href: "/reading", desc: "Leveled stories with comprehension questions and vocabulary support.", color: "b1" },
@@ -21,81 +22,141 @@ const features = [
 ---
 
 <BaseLayout title="English Course Planner">
-  <section class="mx-auto max-w-6xl px-4 py-16">
-    <div class="text-center">
-      <span class="inline-block rounded-full bg-a1-bg px-4 py-1 text-sm font-semibold text-a1">CEFR 2026 · A1 → B2+</span>
-      <h1 class="mt-4 text-4xl font-extrabold font-display md:text-5xl tracking-tight">
-        English Course Planner
-      </h1>
-      <p class="mx-auto mt-3 max-w-2xl text-lg text-text-secondary">
-        Interactive learning path from beginner to pre-advanced. 6 levels, 24 units, ~70 hours of content.
-      </p>
+  <section class="mx-auto max-w-6xl px-4 sm:px-4 py-8 sm:py-12">
+    <!-- Hero (Overhauled to Split Screen Layout) -->
+    <div class="grid gap-8 lg:grid-cols-12 items-center mb-12 lg:mb-16">
+      <div class="lg:col-span-7 text-left">
+        <span class="inline-block rounded-full px-4.5 py-1.5 text-xs font-semibold glass-blur tracking-wider uppercase border border-border" style="color: var(--focus-accent);">CEFR 2026 · A1 → B2+</span>
+        <h1 class="mt-4 text-4xl font-black font-display sm:text-5xl md:text-6xl tracking-tight leading-[1.08]">
+          English Course <span class="bg-gradient-to-r from-focus-accent to-a2 bg-clip-text text-transparent">Planner</span>
+        </h1>
+        <p class="mt-4 max-w-xl text-base sm:text-lg text-text-secondary leading-relaxed">
+          Interactive learning path from beginner to pre-advanced. 6 levels, 24 units, ~70 hours of content.
+        </p>
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="/dashboard" class="min-h-11 rounded-full px-7 py-3 text-sm font-semibold text-white transition-all duration-300 hover:shadow-lg active-scale" style="background: var(--focus-accent); box-shadow: 0 4px 14px -4px var(--focus-accent);">
+            Start Learning
+          </a>
+          <a href="#learning-path-section" class="min-h-11 rounded-full border border-border px-7 py-3 text-sm font-semibold text-text-secondary transition-colors hover:bg-surface-alt active-scale">
+            Explore Levels
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero Interactive Mini-Dashboard Card (Right side) -->
+      <div class="lg:col-span-5 relative flex justify-center items-center">
+        <div class="absolute -inset-4 rounded-3xl bg-radial-gradient from-focus-accent-light/10 to-transparent blur-xl pointer-events-none"></div>
+        <div class="relative w-full max-w-sm glass-card rounded-2xl p-6 shadow-xl space-y-4 hover:-translate-y-1 transition-all duration-300">
+          <div class="flex items-center justify-between border-b border-border pb-3">
+            <div class="flex items-center gap-2">
+              <div class="h-3 w-3 rounded-full bg-correct animate-pulse"></div>
+              <span class="text-xs font-bold uppercase tracking-wider text-text-secondary">Active Session</span>
+            </div>
+            <span id="hero-progress-pct" class="text-xs font-mono font-bold text-focus-accent bg-focus-accent-bg px-2.5 py-0.5 rounded-full">A1 LEVEL</span>
+          </div>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="rounded-xl bg-surface-alt/60 p-4 border border-border-light">
+              <span class="text-xs text-text-muted">Total XP</span>
+              <p class="text-2xl font-black font-display mt-0.5 tabular-nums" id="hero-xp">0</p>
+            </div>
+            <div class="rounded-xl bg-surface-alt/60 p-4 border border-border-light">
+              <span class="text-xs text-text-muted">Daily Streak</span>
+              <p class="text-2xl font-black font-display mt-0.5 tabular-nums" id="hero-streak">0 days</p>
+            </div>
+          </div>
+          <div class="rounded-xl bg-surface-alt/60 p-4 border border-border-light flex items-center justify-between">
+            <div>
+              <span class="text-xs text-text-muted">Saved Vocabulary</span>
+              <p class="text-lg font-bold mt-0.5 tabular-nums" id="hero-vocab">0 words</p>
+            </div>
+            <span class="text-2xl" aria-hidden="true">📚</span>
+          </div>
+          <div class="pt-2">
+            <a href="/dashboard" class="w-full inline-flex justify-center items-center gap-1.5 min-h-11 rounded-xl bg-text text-surface text-xs font-bold transition-opacity hover:opacity-90 active-scale">
+              Go to Dashboard
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mode Carousel -->
+    <div class="mb-10 rounded-xl glass-card p-5 sm:p-6">
+      <ModeCarousel client:load />
     </div>
 
     <ProgressOverview client:load />
 
-    <!-- Feature Quick Links -->
-    <div class="mb-12 grid gap-4 md:grid-cols-2">
-      {features.map((f) => (
-        <a
-          href={f.href}
-          class="group flex items-start gap-4 rounded-xl shadow-border bg-surface p-5 transition-shadow transition-transform hover:shadow-border-hover hover:-translate-y-0.5"
-        >
-          <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg" style={{ background: `var(--${f.color}-bg)` }}>
-            {f.icon === "search" && (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={`var(--${f.color})`} stroke-width="2" stroke-linecap="round">
-                <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
-              </svg>
-            )}
-            {f.icon === "book" && (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={`var(--${f.color})`} stroke-width="2">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
-              </svg>
-            )}
-            {f.icon === "file-text" && (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={`var(--${f.color})`} stroke-width="2">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" />
-              </svg>
-            )}
-            {f.icon === "external-link" && (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={`var(--${f.color})`} stroke-width="2">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
-              </svg>
-            )}
-          </div>
-          <div class="flex-1">
-            <h3 class="font-semibold">{f.label}</h3>
-            <p class="mt-0.5 text-sm text-text-secondary">{f.desc}</p>
-          </div>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2" class="mt-1 shrink-0 transition-transform group-hover:translate-x-0.5">
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
-        </a>
-      ))}
+    <!-- Focus-Based Quick Links (Redesigned as Glass Bento Cards) -->
+    <div class="mb-12">
+      <h2 class="mb-5 text-lg font-semibold font-display" style="color: var(--focus-accent);">Quick Tools</h2>
+      <div class="grid gap-4 md:grid-cols-2" id="feature-grid" data-focus-features="">
+        {genericFeatures.map((f, i) => (
+          <a
+            href={f.href}
+            class="feature-link glass-card glass-card-hover group flex items-start gap-4 rounded-xl p-5 no-underline active-scale animate-fade-in-up"
+            style={`animation-delay: ${i * 100}ms; transition: all 0.3s var(--ease-out);`}
+          >
+            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg" style={{ background: `var(--${f.color}-bg)` }}>
+              {f.icon === "search" && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={`var(--${f.color})`} stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+              )}
+              {f.icon === "book" && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={`var(--${f.color})`} stroke-width="2" aria-hidden="true">
+                  <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+                </svg>
+              )}
+              {f.icon === "file-text" && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={`var(--${f.color})`} stroke-width="2" aria-hidden="true">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" />
+                </svg>
+              )}
+              {f.icon === "external-link" && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={`var(--${f.color})`} stroke-width="2" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+              )}
+            </div>
+            <div class="flex-1">
+              <h3 class="font-semibold">{f.label}</h3>
+              <p class="mt-0.5 text-sm text-text-secondary">{f.desc}</p>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2" class="mt-1 shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
-  <!-- Level Cards -->
-  <section class="mx-auto max-w-6xl px-4 pb-16">
-    <h2 class="mb-6 text-2xl font-bold font-display">Learning Path</h2>
+  <!-- Level Path -->
+  <section class="mx-auto max-w-6xl px-4 sm:px-4 pb-12 sm:pb-16" id="learning-path-section">
+    <div class="flex items-center justify-between mb-5 sm:mb-6">
+      <h2 class="text-xl sm:text-2xl font-bold font-display">Learning Path</h2>
+      <span class="text-xs text-text-muted">6 levels · 24 units</span>
+    </div>
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {levels.map((l) => (
+      {levels.map((l, i) => (
         <a
           href={`/level/${l.id}`}
-          class="group block rounded-xl shadow-border bg-surface p-6 no-underline transition-shadow transition-transform hover:shadow-border-hover hover:-translate-y-0.5"
-          style={`--level-h: ${l.hue};`}
+          class="level-card group block rounded-xl border border-border bg-surface p-6 no-underline hover:-translate-y-1 active-scale animate-fade-in-up"
+          style={`animation-delay: ${i * 80}ms; --hover-color: var(--${l.color}); --hover-shadow: color-mix(in oklch, var(--${l.color}) 22%, transparent);`}
         >
           <div class="flex items-center justify-between">
             <span class="text-3xl font-black font-display tracking-tight" style={`color: var(--${l.color});`}>
               {l.name}
             </span>
-            <span class="rounded-full px-2p5 py-0p5 text-xs font-medium" style={`background: var(--${l.color}-bg); color: var(--${l.color});`}>
+            <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold" style={`background: var(--${l.color}-bg); color: var(--${l.color});`}>
               {l.hours}h
             </span>
           </div>
-          <p class="mt-1 text-sm font-medium text-text-secondary">{l.label}</p>
-          <p class="mt-2 text-sm text-text-muted">{l.desc}</p>
-          <div class="mt-3 flex gap-1">
+          <p class="mt-1 text-sm font-semibold text-text-secondary">{l.label}</p>
+          <p class="mt-2 text-sm text-text-muted leading-relaxed">{l.desc}</p>
+          <div class="mt-4 flex gap-1">
             {Array.from({ length: l.units }, (_, i) => (
               <span class="h-1.5 flex-1 rounded-full" style={`background: var(--${l.color}-light);`} key={i} />
             ))}
@@ -104,5 +165,18 @@ const features = [
       ))}
     </div>
   </section>
+
   <AchievementModal client:load />
+
+  <style>
+    .level-card {
+      transition: border-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+    }
+    .level-card:hover {
+      border-color: var(--hover-color);
+      box-shadow: 0 12px 32px -8px var(--hover-shadow);
+    }
+  </style>
+
+  <script src="../scripts/index-hero.ts"></script>
 </BaseLayout>

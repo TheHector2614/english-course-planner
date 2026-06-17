@@ -42,7 +42,7 @@ export default function Quiz({ level, questions }: Props) {
   const allAnswered = questions.every((q) => answers[q.id] !== undefined);
 
   return (
-    <div class="rounded-xl border border-border bg-surface p-6 shadow-sm">
+    <div class="rounded-xl shadow-border bg-surface p-6">
       <div class="space-y-6">
         {questions.map((q) => {
           const selected = answers[q.id];
@@ -54,7 +54,7 @@ export default function Quiz({ level, questions }: Props) {
               class="rounded-lg border p-4 transition-colors"
               style={{
                 borderColor: isCorrect ? "var(--correct)" : isWrong ? "var(--incorrect)" : "var(--border)",
-                background: isCorrect ? "oklch(0.95 0.05 150 / 0.3)" : isWrong ? "oklch(0.95 0.05 30 / 0.3)" : "transparent",
+                background: isCorrect ? "var(--correct-bg)" : isWrong ? "var(--incorrect-bg)" : "transparent",
               }}
             >
               <p class="mb-3 font-medium">{q.id}. {q.question}</p>
@@ -70,7 +70,7 @@ export default function Quiz({ level, questions }: Props) {
                       class="flex items-center gap-3 rounded-lg border px-4 py-2 text-left text-sm transition-all disabled:cursor-default"
                       style={{
                         borderColor: isCorrectOpt ? "var(--correct)" : isSelected && !submitted ? "var(--a1)" : "var(--border)",
-                        background: isCorrectOpt ? "oklch(0.95 0.05 150 / 0.3)" : isSelected && !submitted ? "var(--a1-bg)" : "transparent",
+                        background: isCorrectOpt ? "var(--correct-bg)" : isSelected && !submitted ? "var(--a1-bg)" : "transparent",
                       }}
                     >
                       <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border text-xs"
@@ -107,7 +107,7 @@ export default function Quiz({ level, questions }: Props) {
           {allAnswered ? "Check Answers" : "Answer all questions first"}
         </button>
       ) : (
-        <div class="mt-6 rounded-lg p-4 text-center" style={{ background: score >= 7 ? "oklch(0.95 0.05 150 / 0.3)" : "oklch(0.95 0.05 30 / 0.3)" }}>
+        <div class="mt-6 rounded-lg p-4 text-center" style={{ background: score >= 7 ? "var(--correct-bg)" : "var(--incorrect-bg)" }}>
           <p class="text-xl font-bold">
             {score}/{questions.length} correct ({Math.round((score / questions.length) * 100)}%)
           </p>

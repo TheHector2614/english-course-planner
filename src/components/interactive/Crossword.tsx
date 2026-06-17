@@ -278,7 +278,7 @@ export default function Crossword({ puzzle, level }: Props) {
   const progressPct = totalCells > 0 ? Math.round((correctCount / totalCells) * 100) : 0;
 
   return (
-    <div class="rounded-xl border border-border bg-surface p-6 shadow-sm">
+    <div class="rounded-xl shadow-border bg-surface p-6">
       <div class="mb-4 flex items-center justify-between">
         <h3 class="text-lg font-semibold font-display">{title}</h3>
         <div class="flex items-center gap-2">

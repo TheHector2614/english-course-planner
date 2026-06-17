@@ -12,7 +12,7 @@ export default function WritingExercise({ prompt, minWords, maxWords }: Props) {
   const isValid = wordCount >= minWords && wordCount <= maxWords;
 
   return (
-    <div class="rounded-xl border border-border bg-surface p-6 shadow-sm">
+    <div class="rounded-xl shadow-border bg-surface p-6">
       <p class="mb-4 text-sm font-medium text-text-secondary">{prompt}</p>
       <textarea
         value={text}

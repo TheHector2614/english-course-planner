@@ -159,7 +159,7 @@ export default function DictionaryLookup() {
 
       {/* Loading skeleton */}
       {loading && (
-        <div class="animate-pulse space-y-3 rounded-xl border border-border p-6">
+        <div class="animate-pulse space-y-3 rounded-xl shadow-border p-6">
           <div class="h-6 w-1/3 rounded bg-surface-alt" />
           <div class="h-4 w-1/4 rounded bg-surface-alt" />
           <div class="h-4 w-full rounded bg-surface-alt" />
@@ -170,7 +170,7 @@ export default function DictionaryLookup() {
       {/* Result */}
       {result && !loading && (
         <div class="animate-fade-in-up space-y-6">
-          <div class="rounded-xl border border-border bg-surface p-6">
+          <div class="rounded-xl shadow-border bg-surface p-6">
             <div class="flex items-start justify-between gap-4">
               <div>
                 <h2 class="text-3xl font-bold font-display tracking-tight">{result.word}</h2>
@@ -223,7 +223,7 @@ export default function DictionaryLookup() {
 
           {/* Meanings */}
           {result.meanings.map((m, mi) => (
-            <div key={mi} class="rounded-xl border border-border bg-surface p-5">
+            <div key={mi} class="rounded-xl shadow-border bg-surface p-5">
               <span class="inline-block rounded-full bg-surface-alt px-3 py-1 text-xs font-semibold text-text-secondary">
                 {m.partOfSpeech}
               </span>

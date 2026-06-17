@@ -86,7 +86,7 @@ export default function Matching({ title, pairs, level }: Props) {
   };
 
   return (
-    <div class={`rounded-xl border border-border bg-surface p-6 shadow-sm ${shake ? "animate-shake" : ""}`}>
+    <div class={`rounded-xl shadow-border bg-surface p-6 ${shake ? "animate-shake" : ""}`}>
       {title && <h3 class="mb-4 text-lg font-semibold font-display">{title}</h3>}
       <p class="mb-4 text-sm text-text-secondary">Click a left item, then click its match on the right.</p>
 
@@ -109,7 +109,7 @@ export default function Matching({ title, pairs, level }: Props) {
                 class="w-full rounded-lg border px-4 py-3 text-left text-sm transition-all disabled:cursor-default"
                 style={{
                   borderColor: isCorrect ? "var(--correct)" : isWrong ? "var(--incorrect)" : isSelected ? "var(--a1)" : isMatched ? "var(--a1-light)" : "var(--border)",
-                  background: isCorrect ? "oklch(0.95 0.05 150 / 0.3)" : isWrong ? "oklch(0.95 0.05 30 / 0.3)" : isSelected ? "var(--a1-bg)" : isMatched ? "var(--a1-bg)" : "transparent",
+                  background: isCorrect ? "var(--correct-bg)" : isWrong ? "var(--incorrect-bg)" : isSelected ? "var(--a1-bg)" : isMatched ? "var(--a1-bg)" : "transparent",
                 }}
               >
                 {item.text}
@@ -153,7 +153,7 @@ export default function Matching({ title, pairs, level }: Props) {
                 class="w-full rounded-lg border px-4 py-3 text-left text-sm transition-all disabled:cursor-default"
                 style={{
                   borderColor: isCorrect ? "var(--correct)" : isWrong ? "var(--incorrect)" : isMatched ? "var(--a1-light)" : "var(--border)",
-                  background: isCorrect ? "oklch(0.95 0.05 150 / 0.3)" : isWrong ? "oklch(0.95 0.05 30 / 0.3)" : isMatched ? "var(--a1-bg)" : selectedLeft !== null && !isMatched ? "var(--surface-alt)" : "transparent",
+                  background: isCorrect ? "var(--correct-bg)" : isWrong ? "var(--incorrect-bg)" : isMatched ? "var(--a1-bg)" : selectedLeft !== null && !isMatched ? "var(--surface-alt)" : "transparent",
                   opacity: isMatched && !isCorrect && !submitted ? 0.5 : 1,
                 }}
               >
@@ -174,7 +174,7 @@ export default function Matching({ title, pairs, level }: Props) {
           {allMatched ? "Check Answers" : `Match all pairs (${Object.keys(matches).length}/${pairs.length})`}
         </button>
       ) : (
-        <div class="mt-6 rounded-lg p-4 text-center" style={{ background: score >= pairs.length * 0.7 ? "oklch(0.95 0.05 150 / 0.3)" : "oklch(0.95 0.05 30 / 0.3)" }}>
+        <div class="mt-6 rounded-lg p-4 text-center" style={{ background: score >= pairs.length * 0.7 ? "var(--correct-bg)" : "var(--incorrect-bg)" }}>
           <p class="text-xl font-bold">{score}/{pairs.length} correct ({Math.round((score / pairs.length) * 100)}%)</p>
         </div>
       )}

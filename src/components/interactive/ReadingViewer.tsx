@@ -96,7 +96,7 @@ export default function ReadingViewer({ story }: { story: Story }) {
   return (
     <div class="space-y-6">
       {/* Controls */}
-      <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border p-4">
+      <div class="flex flex-wrap items-center justify-between gap-3 rounded-xl shadow-border p-4">
         <div class="flex items-center gap-2">
           <button
             onClick={() => setFontSize((f) => Math.max(14, f - 2))}
@@ -132,7 +132,7 @@ export default function ReadingViewer({ story }: { story: Story }) {
       {/* Content */}
       <div
         ref={contentRef}
-        class="prose prose-sm max-w-none rounded-xl border border-border bg-surface p-6 md:p-8"
+        class="prose prose-sm max-w-none rounded-xl shadow-border bg-surface p-6 md:p-8"
         style={{ fontSize: `${fontSize}px`, lineHeight: 1.8 }}
         onClick={handleWordClick}
       >
@@ -202,7 +202,7 @@ export default function ReadingViewer({ story }: { story: Story }) {
 
       {/* Word Tooltip */}
       {selectedWord && (
-        <div class="animate-fade-in-up rounded-xl border border-border bg-surface-raised p-4 shadow-md">
+        <div class="animate-fade-in-up rounded-xl shadow-border bg-surface-raised p-4">
           <div class="flex items-start justify-between gap-3">
             <div>
               <div class="flex items-center gap-2">
@@ -234,7 +234,7 @@ export default function ReadingViewer({ story }: { story: Story }) {
 
       {/* Comprehension Questions */}
       {completing && !showResults && (
-        <div class="animate-fade-in-up space-y-5 rounded-xl border border-border p-6">
+        <div class="animate-fade-in-up space-y-5 rounded-xl shadow-border p-6">
           <h3 class="text-lg font-semibold font-display">Comprehension Check</h3>
           {story.comprehensionQs.map((q, qi) => (
             <div key={qi}>
@@ -272,7 +272,7 @@ export default function ReadingViewer({ story }: { story: Story }) {
 
       {/* Results */}
       {showResults && (
-        <div class="animate-fade-in-scale rounded-xl border border-border p-6 text-center">
+        <div class="animate-fade-in-scale rounded-xl shadow-border p-6 text-center">
           <div class="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full" style={{
             background: score >= story.comprehensionQs.length / 2 ? "var(--correct)" : "var(--incorrect)",
             opacity: 0.1,

@@ -69,7 +69,7 @@ export default function VocabularyBuilder() {
     return (
       <div class="space-y-4">
         {[1, 2, 3].map((i) => (
-          <div key={i} class="animate-pulse rounded-xl border border-border p-5">
+          <div key={i} class="animate-pulse rounded-xl shadow-border p-5">
             <div class="h-5 w-1/4 rounded bg-surface-alt" />
             <div class="mt-2 h-4 w-3/4 rounded bg-surface-alt" />
           </div>
@@ -80,7 +80,7 @@ export default function VocabularyBuilder() {
 
   if (wordList.length === 0) {
     return (
-      <div class="rounded-xl border border-border p-12 text-center">
+      <div class="rounded-xl shadow-border p-12 text-center">
         <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-surface-alt">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
@@ -99,7 +99,7 @@ export default function VocabularyBuilder() {
   return (
     <div class="space-y-6">
       {/* Stats */}
-      <div class="grid grid-cols-2 gap-3 md:grid-cols-5">
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
         {[
           { label: "Total", value: stats.total, color: "a1" },
           { label: "Due for Review", value: stats.due, color: "incorrect" },
@@ -107,7 +107,7 @@ export default function VocabularyBuilder() {
           { label: "Learning", value: stats.learning, color: "warning" },
           { label: "New", value: stats.new, color: "a2" },
         ].map((s) => (
-          <div key={s.label} class="rounded-xl border border-border p-4 text-center" style={{ borderColor: `var(--${s.color})` }}>
+          <div key={s.label} class="rounded-xl shadow-border p-4 text-center" style={{ borderColor: `var(--${s.color})` }}>
             <p class="text-2xl font-bold font-display" style={{ color: `var(--${s.color})` }}>{s.value}</p>
             <p class="text-xs text-text-secondary">{s.label}</p>
           </div>
@@ -189,9 +189,9 @@ export default function VocabularyBuilder() {
         {filtered.map((w) => (
           <div
             key={w.id}
-            class={`animate-fade-in-up group flex items-start justify-between rounded-xl border p-4 transition-all hover:shadow-sm ${
+            class={`animate-fade-in-up group flex items-start justify-between rounded-xl p-4 transition-all ${
               deleting === w.id ? "opacity-0 scale-95" : ""
-            } ${w.nextReview <= Date.now() && w.repetitions < 5 ? "border-warning/30 bg-warning/5" : "border-border"}`}
+            } ${w.nextReview <= Date.now() && w.repetitions < 5 ? "border border-warning/30 bg-warning/5" : "shadow-border"}`}
           >
             <div class="flex-1">
               <div class="flex items-center gap-2">
