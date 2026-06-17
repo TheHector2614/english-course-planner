@@ -134,6 +134,8 @@ export class CourseDB extends Dexie {
       stories: "storyId",
       settings: "id",
       challenges: "id, seed, type",
+    }).upgrade(async (tx) => {
+      // Dexie version 2 upgrade path. The new challenges table is created automatically.
     });
   }
 }
