@@ -1,22 +1,51 @@
-<footer class="border-t border-border py-8 text-center text-sm text-text-muted">
+<footer class="mt-16 border-t border-border-light bg-surface-alt/50 py-12 text-sm text-text-secondary">
   <div class="mx-auto max-w-6xl px-4">
-    <div class="mb-4 flex flex-wrap items-center justify-center gap-4">
-      <a href="/" class="transition-colors hover:text-text">Home</a>
-      <a href="/dictionary" class="transition-colors hover:text-text">Dictionary</a>
-      <a href="/vocabulary" class="transition-colors hover:text-text">Vocabulary</a>
-      <a href="/reading" class="transition-colors hover:text-text">Reading</a>
-      <a href="/crossword" class="transition-colors hover:text-text">Crossword</a>
-      <a href="/resources" class="transition-colors hover:text-text">Resources</a>
-      <a href="/dashboard" class="transition-colors hover:text-text">Dashboard</a>
-      <span class="hidden md:inline">&middot;</span>
-      <a href="/level/a1" class="transition-colors hover:text-text">A1</a>
-      <a href="/level/a2" class="transition-colors hover:text-text">A2</a>
-      <a href="/level/b1" class="transition-colors hover:text-text">B1</a>
-      <a href="/level/b1+" class="transition-colors hover:text-text">B1+</a>
-      <a href="/level/b2" class="transition-colors hover:text-text">B2</a>
-      <a href="/level/b2+" class="transition-colors hover:text-text">B2+</a>
+    <div class="grid gap-8 md:grid-cols-4 mb-8">
+      <div class="md:col-span-2 space-y-3">
+        <a href="/" class="flex items-center gap-2 text-base font-bold font-display text-text no-underline">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+          </svg>
+          <span>English Course Planner</span>
+        </a>
+        <p class="max-w-xs text-xs text-text-muted leading-relaxed">
+          An interactive, CEFR-aligned learning path designed to guide you step-by-step from beginner (A1) to advanced (B2+) language proficiency.
+        </p>
+      </div>
+      
+      <div>
+        <h4 class="font-bold text-xs uppercase tracking-wider text-text mb-3">Quick Tools</h4>
+        <div class="flex flex-col gap-2 text-xs">
+          <a href="/dictionary" class="hover:text-text transition-colors">Dictionary</a>
+          <a href="/vocabulary" class="hover:text-text transition-colors">Vocabulary List</a>
+          <a href="/reading" class="hover:text-text transition-colors">Reading Library</a>
+          <a href="/crossword" class="hover:text-text transition-colors">Crossword Puzzles</a>
+          <a href="/resources" class="hover:text-text transition-colors">Resources Center</a>
+          <a href="/dashboard" class="hover:text-text transition-colors">Student Dashboard</a>
+        </div>
+      </div>
+      
+      <div>
+        <h4 class="font-bold text-xs uppercase tracking-wider text-text mb-3">CEFR Levels</h4>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <a href="/level/a1" class="hover:text-a1 transition-colors font-medium">A1 Beginner</a>
+          <a href="/level/a2" class="hover:text-a2 transition-colors font-medium">A2 Elementary</a>
+          <a href="/level/b1" class="hover:text-b1 transition-colors font-medium">B1 Intermediate</a>
+          <a href="/level/b1+" class="hover:text-b1p transition-colors font-medium">B1+ Upper-Int</a>
+          <a href="/level/b2" class="hover:text-b2 transition-colors font-medium">B2 Advanced</a>
+          <a href="/level/b2+" class="hover:text-b2p transition-colors font-medium">B2+ Pre-Adv</a>
+        </div>
+      </div>
     </div>
-    <p>English Course Planner — A1 to B2+ Interactive Learning</p>
-    <p class="mt-1">Built with Astro + React &middot; CEFR-aligned &middot; Free & Open</p>
+    
+    <div class="border-t border-border-light pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-text-muted">
+      <p>&copy; {new Date().getFullYear()} English Course Planner. CEFR-aligned learning system.</p>
+      <p class="flex items-center gap-3">
+        <span>Astro + React + nanostores</span>
+        <span>&middot;</span>
+        <span>Offline-first PWA Cache</span>
+      </p>
+    </div>
   </div>
 </footer>

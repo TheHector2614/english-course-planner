@@ -20,8 +20,23 @@ export const FOCUS_DESCS: Record<FocusMode, string> = {
   technology: "Tech docs, code reviews, standups, conferences",
 };
 
-export const levelMode = atom<LevelMode>("a1");
-export const focusMode = atom<FocusMode>("general");
+function initLevel(): LevelMode {
+  if (typeof localStorage !== "undefined") {
+    const saved = localStorage.getItem("course-level-mode") as LevelMode | null;
+    if (saved && LEVEL_LABELS[saved]) return saved;
+  }
+  return "a1";
+}
+function initFocus(): FocusMode {
+  if (typeof localStorage !== "undefined") {
+    const saved = localStorage.getItem("course-focus-mode") as FocusMode | null;
+    if (saved && FOCUS_LABELS[saved]) return saved;
+  }
+  return "general";
+}
+
+export const levelMode = atom<LevelMode>(initLevel());
+export const focusMode = atom<FocusMode>(initFocus());
 
 
 

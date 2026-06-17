@@ -202,7 +202,7 @@ function DailyPlanInner() {
               style={cardStyle}
             >
               <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full" style={{ background: isPriority ? "color-mix(in oklch, var(--incorrect) 15%, transparent)" : "var(--focus-accent-bg)" }}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={isPriority ? "var(--incorrect)" : "var(--focus-accent)"} stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={isPriority ? "var(--incorrect)" : "var(--focus-accent)"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d={ICONS[item.icon] || ICONS.star} />
                 </svg>
               </span>
@@ -225,7 +225,7 @@ function DailyPlanInner() {
                   </div>
                 )}
               </div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2.5" className="mt-1 shrink-0 transition-transform hover:translate-x-0.5">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" strokeWidth="2.5" className="mt-1 shrink-0 transition-transform hover:translate-x-0.5">
                 <polyline points="9 18 15 12 9 6" />
               </svg>
             </a>

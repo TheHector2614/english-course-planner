@@ -2,121 +2,16 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ReadingViewer from "../../components/interactive/ReadingViewer";
 import AchievementModal from "../../components/interactive/AchievementModal";
+import { getStoryById, storiesByLevel } from "../../data/stories";
 
 export function getStaticPaths() {
-  const library: Record<string, any> = {
-  "a1-my-day": {
-    id: "a1-my-day", title: "My Day", level: "a1", words: 145,
-    content: "Every day I wake up at seven o'clock. First, I brush my teeth and wash my face. Then I eat breakfast. I usually have bread and milk. At eight o'clock, I go to school. I walk to school with my friend. School starts at nine. I have four classes in the morning. At twelve o'clock, I eat lunch. In the afternoon, I have two more classes. School finishes at three. I go home and do my homework. In the evening, I have dinner with my family. I watch TV or read a book. I go to bed at ten o'clock.",
-    comprehensionQs: [
-      { question: "What time does the person wake up?", options: ["At six o'clock", "At seven o'clock", "At eight o'clock", "At nine o'clock"], correct: 1 },
-      { question: "How does the person go to school?", options: ["By bus", "By car", "By bike", "Walks"], correct: 3 },
-      { question: "How many classes does the person have in the morning?", options: ["Two", "Three", "Four", "Five"], correct: 2 },
-      { question: "What does the person do in the evening?", options: ["Play video games", "Watch TV or read", "Go to the park", "Visit friends"], correct: 1 },
-    ],
-    vocabulary: [
-      { word: "wake up", definition: "To stop sleeping", example: "I wake up at seven every day." },
-      { word: "brush", definition: "To clean teeth with a brush" },
-      { word: "breakfast", definition: "The first meal of the day", example: "I eat breakfast at seven." },
-      { word: "usually", definition: "Normally; most of the time", example: "I usually walk to school." },
-      { word: "finish", definition: "To come to an end; complete", example: "School finishes at three." },
-      { word: "homework", definition: "School work done at home", example: "I do my homework after school." },
-      { word: "dinner", definition: "The main meal of the day, in the evening", example: "We have dinner at seven." },
-    ],
-  },
-  "a1-toms-pet": {
-    id: "a1-toms-pet", title: "Tom's Pet Cat", level: "a1", words: 130,
-    content: "Tom has a cat. The cat's name is Whiskers. Whiskers is very friendly. She is white and black. Tom's cat likes to play with a red ball. Every morning, Whiskers wakes Tom up. She sits on his bed. Tom gives Whiskers food and water. In the afternoon, Whiskers sleeps on the sofa. Tom plays with Whiskers after school. Whiskers likes to chase the ball. Tom loves his cat very much.",
-    comprehensionQs: [
-      { question: "What is the cat's name?", options: ["Tom", "Whiskers", "Snowball", "Mittens"], correct: 1 },
-      { question: "What color is the cat?", options: ["White only", "Black only", "White and black", "White and brown"], correct: 2 },
-      { question: "Where does the cat sleep?", options: ["On the bed", "On the sofa", "On the floor", "Outside"], correct: 1 },
-      { question: "What does the cat like to chase?", options: ["A mouse", "A ball", "A bird", "A string"], correct: 1 },
-    ],
-    vocabulary: [
-      { word: "pet", definition: "An animal that lives with you", example: "Tom has a pet cat." },
-      { word: "friendly", definition: "Nice and kind", example: "Whiskers is friendly." },
-      { word: "chase", definition: "To run after something", example: "The cat likes to chase the ball." },
-      { word: "loves", definition: "To like very much", example: "Tom loves his cat." },
-    ],
-  },
-  "a1-the-park": {
-    id: "a1-the-park", title: "A Day at the Park", level: "a1", words: 155,
-    content: "It is Saturday. Sarah and Ben go to the park. The park is big and green. There are many trees and flowers. Sarah brings a book. Ben brings a ball. Sarah sits under a tree and reads. Ben plays football with his friends. The weather is sunny and warm. A dog runs in the park. Some birds sing in the trees. At twelve o'clock, they eat sandwiches for lunch. They are very happy. They go home at four o'clock.",
-    comprehensionQs: [
-      { question: "What day is it?", options: ["Sunday", "Saturday", "Monday", "Friday"], correct: 1 },
-      { question: "What does Sarah bring?", options: ["A ball", "A book", "A dog", "A sandwich"], correct: 1 },
-      { question: "What is the weather like?", options: ["Rainy", "Cold", "Sunny and warm", "Cloudy"], correct: 2 },
-      { question: "When do they go home?", options: ["At two", "At three", "At four", "At five"], correct: 2 },
-    ],
-    vocabulary: [
-      { word: "park", definition: "A public area with grass and trees", example: "We play at the park." },
-      { word: "bring", definition: "To carry something with you", example: "Sarah brings a book." },
-      { word: "weather", definition: "The condition of the air outside", example: "The weather is sunny." },
-      { word: "happy", definition: "Feeling good or pleased", example: "They are very happy." },
-    ],
-  },
-  "a2-weekend-trip": {
-    id: "a2-weekend-trip", title: "A Weekend Trip", level: "a2", words: 220,
-    content: "Last weekend, Maria went to the beach with her family. They drove for two hours. The weather was beautiful. The sun was shining and the water was warm. Maria swam in the sea for an hour. Her brother built a big sandcastle. Her parents read books under an umbrella. At noon, they had a picnic. They ate sandwiches, fruit, and drank cold lemonade. In the afternoon, they played volleyball on the sand. Maria took many photos. They returned home at eight in the evening. Everyone was tired but very happy. Maria said, 'This was the best weekend ever.'",
-    comprehensionQs: [
-      { question: "Where did Maria go last weekend?", options: ["To the mountains", "To the beach", "To the city", "To the countryside"], correct: 1 },
-      { question: "How long did they drive?", options: ["One hour", "Two hours", "Three hours", "Four hours"], correct: 1 },
-      { question: "What did Maria's brother do?", options: ["Swam in the sea", "Built a sandcastle", "Read a book", "Played volleyball"], correct: 1 },
-      { question: "How did everyone feel at the end?", options: ["Angry", "Bored", "Tired but happy", "Sad"], correct: 2 },
-    ],
-    vocabulary: [
-      { word: "beach", definition: "A sandy area by the sea", example: "We went to the beach." },
-      { word: "sandcastle", definition: "A small castle made of sand", example: "The boy built a sandcastle." },
-      { word: "picnic", definition: "An outdoor meal", example: "We had a picnic on the beach." },
-      { word: "lemonade", definition: "A cold drink made from lemons", example: "We drank lemonade." },
-      { word: "volleyball", definition: "A game where you hit a ball over a net", example: "They played volleyball." },
-    ],
-  },
-  "b1-travel-story": {
-    id: "b1-travel-story", title: "A Journey Abroad", level: "b1", words: 340,
-    content: "Alex had always dreamed of visiting Japan. After saving money for two years, he finally booked his flight. He arrived at Narita Airport early in the morning. Everything looked different: the signs, the people, even the air smelled different. Alex felt excited but also a little nervous. He took a train to Tokyo. The city was huge and full of lights. During his first week, he visited temples, tried sushi for the first time, and got lost in the busy streets. He met a local named Yuki who spoke some English. Yuki showed him a small restaurant where they served the best ramen in the city. Alex learned a few Japanese phrases: 'arigato' for thank you and 'sumimasen' for excuse me. By the end of his trip, Alex felt more confident about traveling alone. He realized that making mistakes was part of the adventure. He promised himself he would visit again someday.",
-    comprehensionQs: [
-      { question: "How long did Alex save money for the trip?", options: ["One year", "Two years", "Three years", "Six months"], correct: 1 },
-      { question: "How did Alex feel when he arrived?", options: ["Only excited", "Only nervous", "Excited but nervous", "Sad"], correct: 2 },
-      { question: "Who showed Alex the best ramen restaurant?", options: ["A hotel worker", "A local named Yuki", "Another tourist", "His friend"], correct: 1 },
-      { question: "What did Alex learn from his trip?", options: ["Japan is too expensive", "Making mistakes is part of the adventure", "Traveling alone is dangerous", "He doesn't like Japanese food"], correct: 1 },
-    ],
-    vocabulary: [
-      { word: "abroad", definition: "In or to a foreign country", example: "She traveled abroad for the first time." },
-      { word: "booked", definition: "Reserved in advance", example: "He booked his flight online." },
-      { word: "nervous", definition: "Worried or anxious", example: "She felt nervous before the exam." },
-      { word: "temple", definition: "A building for religious worship", example: "They visited ancient temples." },
-      { word: "phrases", definition: "Short groups of words", example: "I learned a few phrases in Japanese." },
-      { word: "confident", definition: "Feeling sure about yourself", example: "He felt more confident after practice." },
-      { word: "adventure", definition: "An exciting experience", example: "Traveling is an adventure." },
-    ],
-  },
-  "b2-innovation": {
-    id: "b2-innovation", title: "The Age of Innovation", level: "b2", words: 480,
-    content: "We live in an era of unprecedented technological change. In the past twenty years, innovations have transformed nearly every aspect of our daily lives. Smartphones put the world's information in our pockets. Artificial intelligence can now diagnose diseases, compose music, and drive cars. Renewable energy technologies are reshaping how we power our homes and industries. However, with this rapid progress come significant challenges. Privacy concerns have become increasingly urgent as data collection grows more pervasive. The digital divide means not everyone benefits equally from these advances. Many workers face the prospect of automation replacing their jobs. Despite these challenges, human creativity continues to push boundaries. Scientists are developing quantum computers that could revolutionize medicine and materials science. Entrepreneurs are finding ways to combine profit with environmental sustainability. The question is not whether innovation will continue, but whether we can direct it wisely for the benefit of all humanity.",
-    comprehensionQs: [
-      { question: "What is the main topic of the text?", options: ["Environmental problems", "Technological innovation and its impacts", "Economic systems", "Medical advances"], correct: 1 },
-      { question: "Which challenge of innovation is mentioned?", options: ["It is too expensive", "Privacy concerns and digital divide", "It moves too slowly", "People don't want new technology"], correct: 1 },
-      { question: "What could quantum computers revolutionize?", options: ["Transportation", "Medicine and materials science", "Education", "Agriculture"], correct: 1 },
-      { question: "What does the author suggest about the future of innovation?", options: ["It should be stopped", "It should be directed wisely", "It only benefits rich countries", "It is too dangerous"], correct: 1 },
-    ],
-    vocabulary: [
-      { word: "unprecedented", definition: "Never done or known before", example: "The change was unprecedented." },
-      { word: "transformed", definition: "Changed completely", example: "Technology transformed our lives." },
-      { word: "artificial intelligence", definition: "Computer systems that can perform human-like tasks", example: "AI is used in many fields." },
-      { word: "renewable", definition: "Can be replaced naturally", example: "Solar energy is renewable." },
-      { word: "pervasive", definition: "Widespread; present everywhere", example: "Data collection is pervasive." },
-      { word: "digital divide", definition: "The gap between those with and without access to technology", example: "The digital divide affects education." },
-      { word: "revolutionize", definition: "Change something completely", example: "The internet revolutionized communication." },
-      { word: "sustainability", definition: "Ability to maintain over time without harming the environment", example: "Companies focus on sustainability." },
-    ],
-  },
-  };
-  return Object.values(library).map((story: any) => ({
-    params: { story: story.id },
-    props: { story },
-  }));
+  const paths: { params: { story: string }; props: { story: any } }[] = [];
+  for (const stories of Object.values(storiesByLevel)) {
+    for (const s of stories) {
+      paths.push({ params: { story: s.id }, props: { story: s } });
+    }
+  }
+  return paths;
 }
 
 const { story } = Astro.props;

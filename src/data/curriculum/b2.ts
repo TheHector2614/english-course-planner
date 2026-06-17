@@ -1,10 +1,14 @@
 export default {
   level: "b2", name: "B2", label: "Advanced", color: "b2", hue: 250,
   units: [
-    { id: "b2-01", title: "Third & Mixed Conditionals", desc: "Regret, hypothetical past", tags: ["grammar"] },
-    { id: "b2-02", title: "Inversion & Emphasis", desc: "Cleft structures", tags: ["grammar"] },
-    { id: "b2-03", title: "Modal Perfects & Speculation", desc: "Deduction", tags: ["grammar"] },
-    { id: "b2-04", title: "Argumentation & Essays", desc: "Discourse markers, hedging", tags: ["writing"] },
+    { id: "b2-01", title: "Narrative Tenses", desc: "Combine Past Simple, Continuous, Perfect, and Perfect Continuous for storytelling.", tags: ["grammar"] },
+    { id: "b2-02", title: "Mixed Conditionals", desc: "Combine past hypothesis with present results, and vice versa.", tags: ["grammar"] },
+    { id: "b2-03", title: "Modal Perfects", desc: "Speculate and deduce about past events using must/might/should have.", tags: ["grammar"] },
+    { id: "b2-04", title: "Inversion", desc: "Use negative adverbials like 'under no circumstances' for formal emphasis.", tags: ["grammar"] },
+    { id: "b2-05", title: "Cleft Sentences", desc: "Structure sentences with What/It-clefts to add rhetorical emphasis.", tags: ["grammar"] },
+    { id: "b2-06", title: "Sensory Perception Verbs", desc: "Use look, sound, taste, feel, and smell with adjectives, like, or as if.", tags: ["grammar"] },
+    { id: "b2-07", title: "Passive reporting", desc: "Advanced reporting structures such as 'It is said that...' and 'He is believed to...'", tags: ["grammar"] },
+    { id: "b2-08", title: "Discourse Markers", desc: "Use formal contrast and addition markers like nevertheless and whereas.", tags: ["grammar", "writing"] },
   ],
   quiz: {
     questions: [

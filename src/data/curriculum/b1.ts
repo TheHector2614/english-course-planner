@@ -1,10 +1,18 @@
 export default {
   level: "b1", name: "B1", label: "Intermediate", color: "b1", hue: 275,
   units: [
-    { id: "b1-01", title: "Present Perfect", desc: "Ever/never, just/already/yet", tags: ["grammar"] },
-    { id: "b1-02", title: "First Conditional & Modals", desc: "Should, might, could, must/have to", tags: ["grammar"] },
-    { id: "b1-03", title: "Passive Voice Basic", desc: "Present/past passive, agent", tags: ["grammar"] },
-    { id: "b1-04", title: "Travel & Work", desc: "Phrasal verbs, opinions", tags: ["vocabulary", "speaking"] },
+    { id: "b1-01", title: "Present Perfect vs. Past Simple", desc: "Contrast specified past times vs. unspecified times, and for/since.", tags: ["grammar"] },
+    { id: "b1-02", title: "Present Perfect Markers", desc: "Use just, already, yet, and still to talk about recent actions.", tags: ["grammar"] },
+    { id: "b1-03", title: "Defining Relative Clauses", desc: "Describe people, things, and places using who, which, that, and whose.", tags: ["grammar"] },
+    { id: "b1-04", title: "Conditionals (0, 1 & 2)", desc: "Real conditions, future probabilities, and imaginary present/future situations.", tags: ["grammar"] },
+    { id: "b1-05", title: "Passive Voice Basic", desc: "Shift focus to actions and objects using the present and past passive.", tags: ["grammar"] },
+    { id: "b1-06", title: "Past Ability & Achievement", desc: "Express past ability and success with could, was able to, and managed to.", tags: ["grammar"] },
+    { id: "b1-07", title: "Gerunds vs. Infinitives", desc: "Verbs followed by -ing or to-infinitive, and verbs that change meaning.", tags: ["grammar"] },
+    { id: "b1-08", title: "Past Habits: Used to & Would", desc: "Describe how things were different in the past using used to and would.", tags: ["grammar"] },
+    { id: "b1-09", title: "Adverbs of Manner & Degree", desc: "Describe actions and modify adjectives with advanced adverbs.", tags: ["grammar"] },
+    { id: "b1-10", title: "Present Probability Modals", desc: "Deduce and speculate about the present using must, might, could, and can't.", tags: ["grammar"] },
+    { id: "b1-11", title: "Agreement & Disagreement", desc: "Express agreement and disagreement using so/neither structures.", tags: ["grammar"] },
+    { id: "b1-12", title: "Past Perfect Simple", desc: "Sequence two past events clearly using had + past participle.", tags: ["grammar"] },
   ],
   quiz: {
     questions: [

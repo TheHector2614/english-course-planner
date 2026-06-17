@@ -3,11 +3,9 @@ import { loadLang } from "../stores/lang";
 import { loadFromStorage } from "../stores/progress";
 import { loadVocabulary } from "../stores/vocabulary";
 import { loadAchievements } from "../stores/achievements";
-import { loadMode } from "../stores/modes";
 
 loadTheme();
 loadLang();
-loadMode();
 loadFromStorage();
 loadVocabulary();
 loadAchievements();

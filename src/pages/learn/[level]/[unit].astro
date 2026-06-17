@@ -1,0 +1,89 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import LearningUnit from "../../../components/learn/LearningUnit";
+import "../../../styles/learn.css";
+
+export async function getStaticPaths() {
+  const levels = ["a1", "a2", "b1", "b1+", "b2", "b2+"];
+  const paths = [];
+
+  for (const lvl of levels) {
+    const fileId = lvl === "b1+" ? "b1p" : lvl === "b2+" ? "b2p" : lvl;
+    const module = await import(`../../../data/curriculum/${fileId}.ts`);
+    const curriculum = module.default;
+    for (const unit of curriculum.units) {
+      paths.push({
+        params: { level: lvl, unit: unit.id },
+      });
+    }
+  }
+  return paths;
+}
+
+const { level, unit } = Astro.params;
+let unitData: any = null;
+let error = false;
+
+try {
+  unitData = (await import(`../../../data/units/${unit}.ts`)).default;
+} catch {
+  error = true;
+}
+---
+
+<BaseLayout title={`Unit — ${level.toUpperCase()}`}>
+  <section class="min-h-screen">
+    {error ? (
+      <div class="mx-auto max-w-2xl px-4 py-20 text-center">
+        <span class="text-4xl mb-4 block">📚</span>
+        <h1 class="text-2xl font-bold font-display mb-2">Unit not available yet</h1>
+        <p class="text-text-secondary mb-6">This unit is being prepared. Check back soon!</p>
+        <a href={`/level/${level}`} class="inline-flex rounded-full px-6 py-3 text-sm font-semibold" style="background: var(--a1); color: white;">
+          ← Back to {level.toUpperCase()}
+        </a>
+      </div>
+    ) : (
+      <LearningUnit unit={unitData} client:only="react" />
+    )}
+  </section>
+</BaseLayout>
+
+<style>
+  :global(.unit-page) {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px 16px 64px;
+  }
+  :global(.unit-header) { margin-bottom: 32px; }
+  :global(.unit-level) {
+    display: inline-block; background: var(--a1-bg); color: var(--a1);
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 3px 10px; border-radius: 999px; margin-bottom: 8px;
+  }
+  :global(.unit-title) {
+    font-size: 1.6rem; font-weight: 800; font-family: var(--font-display);
+    color: var(--text); margin: 0 0 8px;
+  }
+  :global(.unit-description) { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.5; }
+  :global(#section-theory) { scroll-margin-top: 120px; }
+  :global(.theory-section) { margin-bottom: 36px; }
+  :global(.theory-section-title) {
+    font-size: 1.1rem; font-weight: 700; color: var(--text);
+    margin: 0 0 12px; padding-bottom: 6px; border-bottom: 2px solid var(--a1);
+  }
+  :global(.theory-paragraph) { margin: 0 0 10px; font-size: 0.92rem; color: var(--text); line-height: 1.7; }
+  :global(.theory-paragraph:empty) { display: none; }
+  :global(.exercise-section) { margin-bottom: 36px; padding-top: 8px; scroll-margin-top: 120px; }
+  :global(.exercise-section-title) { font-size: 1.1rem; font-weight: 700; color: var(--text); margin: 0 0 4px; }
+  :global(.exercise-instruction) { font-size: 0.82rem; color: var(--text-muted); margin: 0 0 14px; }
+  :global(.section-divider) { height: 1px; background: var(--border-light); border: none; margin: 36px 0; scroll-margin-top: 120px; }
+  :global(.saved-words-sidebar) { position: fixed; top: 64px; right: 0; width: 240px; height: calc(100vh - 64px); background: var(--surface); border-left: 1px solid var(--border-light); padding: 16px; overflow-y: auto; transform: translateX(100%); transition: transform 0.3s var(--ease-out); z-index: 30; }
+  :global(.saved-words-sidebar.open) { transform: translateX(0); }
+  :global(.saved-words-toggle) { position: fixed; bottom: 24px; right: 24px; z-index: 35; width: 48px; height: 48px; border-radius: 50%; border: none; background: var(--a1); color: white; font-size: 1.2rem; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; transition: transform 0.15s; }
+  :global(.saved-words-toggle:hover) { transform: scale(1.05); }
+  :global(.saved-words-badge) { position: absolute; top: -4px; right: -4px; width: 20px; height: 20px; border-radius: 50%; background: var(--incorrect); color: white; font-size: 0.65rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  :global(.saved-words-title) { font-size: 0.85rem; font-weight: 700; margin: 0 0 12px; color: var(--text); }
+  :global(.saved-word-item) { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--border-light); font-size: 0.82rem; color: var(--text); }
+  :global(.saved-word-word) { font-weight: 600; }
+  :global(.saved-word-translation) { font-size: 0.72rem; color: var(--text-muted); }
+</style>

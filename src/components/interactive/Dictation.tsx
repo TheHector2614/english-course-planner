@@ -94,9 +94,9 @@ export default function Dictation({ title, items, level }: Props) {
       {/* Audio controls */}
       <div className="rounded-xl bg-surface-alt p-6 text-center">
         <div className="mb-4">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="1.5" className="mx-auto">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" strokeWidth="1.5" className="mx-auto">
             <path d="M3 9v6h4l5 5V4L7 9H3z" />
-            <path d="M16 7.5a6.5 6.5 0 0 1 0 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            <path d="M16 7.5a6.5 6.5 0 0 1 0 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
         </div>
         <p className="text-sm text-text-secondary mb-4">

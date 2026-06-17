@@ -1,10 +1,17 @@
 export default {
   level: "a2", name: "A2", label: "Elementary", color: "a2", hue: 220,
   units: [
-    { id: "a2-01", title: "Past Events", desc: "Past simple, irregular verbs, time expressions", tags: ["grammar"] },
-    { id: "a2-02", title: "Present Continuous", desc: "Actions in progress, going to future", tags: ["grammar"] },
-    { id: "a2-03", title: "Comparatives & Superlatives", desc: "Adjectives, comparisons", tags: ["grammar"] },
-    { id: "a2-04", title: "Shopping & Food", desc: "Count/uncount nouns, some/any, food vocab", tags: ["vocabulary", "speaking"] },
+    { id: "a2-01", title: "Past Simple: Verb 'to be'", desc: "Learn to use was and were in statements, questions, and negative forms.", tags: ["grammar"] },
+    { id: "a2-02", title: "Past Simple: Common Verbs", desc: "Regular -ed endings, key irregular verbs, and past time expressions.", tags: ["grammar"] },
+    { id: "a2-03", title: "Future Plans & Going to", desc: "Talk about your intentions, plans, and predictions with evidence.", tags: ["grammar"] },
+    { id: "a2-04", title: "Comparative Adjectives", desc: "Compare cities, transport, and items using -er, more, and as...as.", tags: ["grammar"] },
+    { id: "a2-05", title: "Superlative Adjectives", desc: "Talk about world records and extremes using the -est and the most.", tags: ["grammar"] },
+    { id: "a2-06", title: "Present Perfect: Experiences", desc: "Introduce life experiences using ever and never.", tags: ["grammar"] },
+    { id: "a2-07", title: "Obligation & Advice", desc: "Rules and recommendations using have to, don't have to, and should.", tags: ["grammar"] },
+    { id: "a2-08", title: "Prepositions of Time & Movement", desc: "Specify times (in, on, at) and describe direction (into, through, across).", tags: ["grammar"] },
+    { id: "a2-09", title: "Quantifiers", desc: "Express quantities with too, enough, a little, and a few.", tags: ["grammar"] },
+    { id: "a2-10", title: "Past Continuous vs. Simple", desc: "Narrate stories and events using actions in progress interrupted by past events.", tags: ["grammar"] },
+    { id: "a2-11", title: "Future Simple: Will", desc: "Spontaneous decisions, promises, offers, and future predictions.", tags: ["grammar"] },
   ],
   quiz: {
     questions: [

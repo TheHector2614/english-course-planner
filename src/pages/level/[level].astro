@@ -63,22 +63,25 @@ export async function getStaticPaths() {
 
     <!-- Units Grid -->
     <div class="mb-12 grid gap-4 md:grid-cols-2">
-      {units.map((u, i) => (
-        <div 
-          class="unit-card glass-card rounded-[var(--radius-lg)] p-5 animate-fade-in-up" 
-          style={`animation-delay: ${i * 80}ms; --hover-color: var(--${color}); --hover-shadow: color-mix(in oklch, var(--${color}) 18%, transparent);`}
-        >
-          <h3 class="text-lg font-bold font-display text-text">{u.title}</h3>
-          <p class="mt-1 text-sm text-text-secondary leading-relaxed">{u.desc}</p>
-          <div class="mt-4 flex gap-2">
-            {u.tags.map((t) => (
-              <span class="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider" style={`background: var(--${color}-bg); color: var(--${color}); border: 1px solid color-mix(in oklch, var(--${color}) 15%, transparent)`}>
-                {t}
-              </span>
-            ))}
-          </div>
-        </div>
-      ))}
+      {units.map((u, i) => {
+        const href = `/learn/${level}/${u.id}`;
+        return (
+          <a href={href}
+            class="unit-card glass-card rounded-[var(--radius-lg)] p-5 animate-fade-in-up block no-underline"
+            style={`animation-delay: ${i * 80}ms; --hover-color: var(--${color}); --hover-shadow: color-mix(in oklch, var(--${color}) 18%, transparent);`}
+          >
+            <h3 class="text-lg font-bold font-display text-text">{u.title}</h3>
+            <p class="mt-1 text-sm text-text-secondary leading-relaxed">{u.desc}</p>
+            <div class="mt-4 flex gap-2">
+              {u.tags.map((t) => (
+                <span class="rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider" style={`background: var(--${color}-bg); color: var(--${color}); border: 1px solid color-mix(in oklch, var(--${color}) 15%, transparent)`}>
+                  {t}
+                </span>
+              ))}
+            </div>
+          </a>
+        );
+      })}
     </div>
 
     <!-- Tab Bar (client-side) -->

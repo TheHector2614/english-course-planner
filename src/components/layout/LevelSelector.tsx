@@ -106,7 +106,7 @@ function LevelSelectorInner() {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2.5"
+          strokeWidth="2.5"
           className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
         >
           <path d="M6 9l6 6 6-6" />
@@ -152,7 +152,7 @@ function LevelSelectorInner() {
                   </div>
                 </div>
                 {currentLevel === l.id && (
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={`var(--${l.color})`} stroke-width="3" stroke-linecap="round">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={`var(--${l.color})`} strokeWidth="3" strokeLinecap="round">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                 )}
@@ -165,7 +165,7 @@ function LevelSelectorInner() {
               className="flex w-full items-center justify-center min-h-9 gap-1 rounded-lg bg-text text-surface text-center py-2 text-xs font-bold hover:opacity-95 transition-opacity focus-visible:ring-2 focus-visible:ring-a1"
             >
               Go to level page
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
               </svg>

@@ -41,7 +41,7 @@ export default function NotificationBanner() {
         }}
       >
         <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-lg" style={{ color: borderColors[notification.type] }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
             <path d={icons[notification.type]} />
           </svg>
         </div>
@@ -53,7 +53,7 @@ export default function NotificationBanner() {
           className="shrink-0 p-1 text-text-muted hover:text-text rounded-lg hover:bg-surface-alt transition-all"
           aria-label="Dismiss alert"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>

@@ -24,7 +24,7 @@ const { title, description } = Astro.props;
     <meta property="og:type" content="website" />
     <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site).href} />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self' https://api.dictionaryapi.dev https://api.unsplash.com; worker-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self' https://api.dictionaryapi.dev https://api.unsplash.com https://translate.googleapis.com https://api.mymemory.translated.net https://corsproxy.io; worker-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';" />
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
     <link rel="manifest" href="/manifest.json" />
     <meta name="apple-mobile-web-app-capable" content="yes" />

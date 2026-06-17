@@ -156,6 +156,16 @@ export class CourseDB extends Dexie {
     }).upgrade(async (tx) => {
       // Dexie version 3 upgrade path. The new dictionaryCache table is created automatically.
     });
+    this.version(4).stores({
+      vocabulary: "++id, word, level, nextReview, tags, savedAt",
+      levelProgress: "levelId",
+      sessions: "++id, date",
+      achievements: "id",
+      stories: "storyId",
+      settings: "id",
+      challenges: "id, seed, type",
+      dictionaryCache: "word",
+    });
   }
 }
 

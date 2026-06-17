@@ -5,11 +5,14 @@ import AchievementModal from "../components/interactive/AchievementModal";
 ---
 
 <BaseLayout title="Dictionary" description="Look up English words, see definitions, examples, phonetics, and save them to your vocabulary list.">
-  <section class="mx-auto max-w-3xl px-4 sm:px-4 py-8 sm:py-12">
-    <div class="mb-6 sm:mb-8 text-center">
-      <span class="inline-block rounded-full bg-a2-bg px-4 py-1 text-sm font-semibold text-a2">Dictionary</span>
-      <h1 class="mt-3 text-3xl sm:text-4xl font-bold font-display">Look Up Any Word</h1>
-      <p class="mx-auto mt-2 max-w-lg text-text-secondary">
+  <section class="mx-auto max-w-3xl px-4 py-8 sm:py-12">
+    <div class="mb-8 sm:mb-12 text-center relative">
+      <div class="absolute -inset-10 rounded-full bg-radial-gradient from-a2-bg/30 to-transparent blur-2xl pointer-events-none -z-10"></div>
+      <span class="inline-block rounded-full px-4.5 py-1.5 text-xs font-bold glass-blur tracking-wider uppercase border border-border" style="color: var(--a2)">Dictionary</span>
+      <h1 class="mt-4 text-4xl sm:text-5xl font-black font-display tracking-tight">
+        Look Up <span class="bg-gradient-to-r from-a2 to-b1 bg-clip-text text-transparent">Any Word</span>
+      </h1>
+      <p class="mx-auto mt-4 max-w-xl text-base sm:text-lg text-text-secondary leading-relaxed">
         Search for definitions, phonetics, examples, and synonyms. Save words to your personal vocabulary list for spaced-repetition review.
       </p>
     </div>

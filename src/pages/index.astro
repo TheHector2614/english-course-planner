@@ -78,10 +78,10 @@ const genericFeatures = [
 
     <!-- Mode Carousel -->
     <div class="mb-10 rounded-xl glass-card p-5 sm:p-6">
-      <ModeCarousel client:load />
+      <ModeCarousel client:only="react" />
     </div>
 
-    <ProgressOverview client:load />
+    <ProgressOverview client:only="react" />
 
     <!-- Focus-Based Quick Links (Redesigned as Glass Bento Cards) -->
     <div class="mb-12">
@@ -161,7 +161,7 @@ const genericFeatures = [
     </div>
   </section>
 
-  <AchievementModal client:load />
+  <AchievementModal client:only="react" />
 
   <style>
     .level-card {

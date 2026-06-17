@@ -5,11 +5,14 @@ import AchievementModal from "../components/interactive/AchievementModal";
 ---
 
 <BaseLayout title="Vocabulary" description="Your personal vocabulary list with spaced-repetition review. Track mastered words and due reviews.">
-  <section class="mx-auto max-w-4xl px-4 sm:px-4 py-8 sm:py-12">
-    <div class="mb-6 sm:mb-8">
-      <span class="inline-block rounded-full bg-a1-bg px-4 py-1 text-sm font-semibold text-a1">Vocabulary</span>
-      <h1 class="mt-3 text-3xl sm:text-4xl font-bold font-display">Your Words</h1>
-      <p class="mt-2 text-text-secondary">
+  <section class="mx-auto max-w-4xl px-4 py-8 sm:py-12">
+    <div class="mb-8 sm:mb-12 relative">
+      <div class="absolute -inset-10 rounded-full bg-radial-gradient from-a1-bg/30 to-transparent blur-2xl pointer-events-none -z-10"></div>
+      <span class="inline-block rounded-full px-4.5 py-1.5 text-xs font-bold glass-blur tracking-wider uppercase border border-border" style="color: var(--a1)">Vocabulary</span>
+      <h1 class="mt-4 text-4xl sm:text-5xl font-black font-display tracking-tight">
+        Your <span class="bg-gradient-to-r from-a1 to-a2 bg-clip-text text-transparent">Personal Words</span>
+      </h1>
+      <p class="mt-4 max-w-2xl text-base sm:text-lg text-text-secondary leading-relaxed">
         Words you've saved from the dictionary and readings. Review them with spaced repetition to build long-term memory.
       </p>
     </div>

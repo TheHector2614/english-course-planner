@@ -175,7 +175,7 @@ function ReadingViewerInner({ story }: { story: Story }) {
           disabled={currentPage === 0}
           className="flex items-center gap-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors hover:bg-surface-alt disabled:opacity-30"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="15 18 9 12 15 6"/></svg>
           Previous
         </button>
 
@@ -198,7 +198,7 @@ function ReadingViewerInner({ story }: { story: Story }) {
             className="flex items-center gap-1 rounded-lg px-4 py-2 text-sm font-medium transition-colors hover:bg-surface-alt"
           >
             Next
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
         ) : (
           !completed && (

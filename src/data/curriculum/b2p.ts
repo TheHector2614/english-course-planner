@@ -1,10 +1,14 @@
 export default {
   level: "b2+", name: "B2+", label: "Pre-Advanced", color: "b2p", hue: 185,
   units: [
-    { id: "b2p-01", title: "Participle Clauses & Fronting", desc: "Formal/literary structures", tags: ["grammar", "writing"] },
-    { id: "b2p-02", title: "Wish, If Only & Hypotheticals", desc: "Would rather, it's time", tags: ["grammar"] },
-    { id: "b2p-03", title: "Business English Essentials", desc: "Meetings, negotiations, emails", tags: ["vocabulary", "speaking"] },
-    { id: "b2p-04", title: "Debate, Persuasion & Register", desc: "Idioms, formal register", tags: ["speaking", "writing"] },
+    { id: "b2p-01", title: "Participle Clauses", desc: "Use -ing, -ed, and having -ed clauses to write fluid, descriptive sentences.", tags: ["grammar", "writing"] },
+    { id: "b2p-02", title: "Wish & If Only", desc: "Express wishes, regrets, and annoyances about the present and past.", tags: ["grammar"] },
+    { id: "b2p-03", title: "Preference & Urgency", desc: "Would rather, had better, and it's high time + past subjunctive.", tags: ["grammar"] },
+    { id: "b2p-04", title: "Future in the Past", desc: "Talk about plans that changed using was going to, would, or was about to.", tags: ["grammar"] },
+    { id: "b2p-05", title: "Subjunctive Mood", desc: "Formal recommendations and demands using subjunctive structures.", tags: ["grammar"] },
+    { id: "b2p-06", title: "Advanced Relatives & Fronting", desc: "Prepositions in relative clauses and fronting structures for formal writing.", tags: ["grammar"] },
+    { id: "b2p-07", title: "Nominal Clauses", desc: "Noun clauses with what, that, or whether as subjects and objects.", tags: ["grammar"] },
+    { id: "b2p-08", title: "Hedging & Register", desc: "Academic hedging techniques and registers for formal essays.", tags: ["grammar", "writing"] },
   ],
   quiz: {
     questions: [

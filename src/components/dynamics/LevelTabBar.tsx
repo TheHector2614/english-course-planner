@@ -54,7 +54,7 @@ export default function LevelTabBar() {
           }`}
           aria-selected={tab.id === activeTab}
         >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <path d={tab.icon} />
           </svg>
           {tab.label}

@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "plugin": ["C:\\Users\\HP 14\\AppData\\Local\\Temp\\opencode\\ponytail\\.opencode\\plugins\\ponytail.mjs"],
   "default_agent": "english-teacher",
   "agent": {
     "english-teacher-designer": {

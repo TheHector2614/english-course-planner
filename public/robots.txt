@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://TheHector2614.github.io/english-course-planner/sitemap-index.xml
+Sitemap: https://TheHector2614.github.io/sitemap-index.xml

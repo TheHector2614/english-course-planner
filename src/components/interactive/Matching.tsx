@@ -125,7 +125,7 @@ export default function Matching({ title, pairs, level }: Props) {
             return (
               <div key={idx} className="flex h-10 items-center justify-center">
                 {matched !== undefined ? (
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--a1)" stroke-width="2">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--a1)" strokeWidth="2">
                     <polyline points="9 18 15 12 9 6" />
                   </svg>
                 ) : (

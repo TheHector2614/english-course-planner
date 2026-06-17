@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SettingsClient from "../components/interactive/SettingsClient";
+import ModeCarousel from "../components/interactive/ModeCarousel";
+import AchievementModal from "../components/interactive/AchievementModal";
+---
+
+<BaseLayout title="Settings" description="Manage your profile, appearance, and data.">
+  <section class="mx-auto max-w-2xl px-4 sm:px-4 py-8 sm:py-12">
+    <div class="mb-6 sm:mb-8">
+      <span class="inline-block rounded-full bg-b2-bg px-4 py-1 text-sm font-semibold text-b2">Settings</span>
+      <h1 class="mt-3 text-3xl sm:text-4xl font-bold font-display">Settings</h1>
+      <p class="mt-2 text-text-secondary">Manage your profile, appearance preferences, and data.</p>
+    </div>
+    <SettingsClient client:load />
+
+    <div class="mt-8 rounded-xl shadow-border bg-surface p-6">
+      <h2 class="text-lg font-semibold font-display mb-4">Learning Mode</h2>
+      <p class="mb-4 text-sm text-text-secondary">Choose your level and focus to personalize your learning path.</p>
+      <ModeCarousel client:only="react" />
+    </div>
+  </section>
+  <AchievementModal client:only="react" />
+</BaseLayout>

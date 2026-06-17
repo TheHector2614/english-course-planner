@@ -150,8 +150,8 @@ function FocusSlide({ focus, isActive, onKeyDown }: { focus: FocusMode; isActive
         viewBox="0 0 24 24"
         fill="none"
         stroke={isActive ? "var(--focus-accent)" : "var(--text-muted)"}
-        stroke-width="1.5"
-        stroke-linecap="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
       >
         <path d={FOCUS_ICONS[focus]} />
       </svg>
@@ -241,7 +241,6 @@ export default function ModeCarousel({ compact }: Props) {
     (e: React.PointerEvent, scroller: React.RefObject<HTMLDivElement | null>) => {
       const el = scroller.current;
       if (!el) return;
-      el.setPointerCapture(e.pointerId);
       setDragging(true);
       setDragStart({ x: e.clientX, scrollLeft: el.scrollLeft });
     },
@@ -253,7 +252,9 @@ export default function ModeCarousel({ compact }: Props) {
       if (!dragging) return;
       const el = scroller.current;
       if (!el) return;
-      el.scrollLeft = dragStart.scrollLeft - (e.clientX - dragStart.x);
+      const dx = e.clientX - dragStart.x;
+      if (Math.abs(dx) < 5) return;
+      el.scrollLeft = dragStart.scrollLeft - dx;
     },
     [dragging, dragStart]
   );

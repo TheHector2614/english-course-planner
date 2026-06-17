@@ -106,7 +106,7 @@ function ChallengeCard({ challenge }: { challenge: ChallengeDef & { progress: nu
           className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full"
           style={{ background: challenge.completed ? "var(--correct-bg)" : "var(--border-light)" }}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
             style={{ color: challenge.completed ? "var(--correct)" : "var(--text-secondary)" }}
           >
             <path d={ICONS[challenge.icon] || ICONS.exercise} />

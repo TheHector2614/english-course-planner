@@ -1,10 +1,15 @@
 export default {
   level: "b1+", name: "B1+", label: "Upper Intermediate", color: "b1p", hue: 15,
   units: [
-    { id: "b1p-01", title: "Present Perfect Continuous", desc: "Duration, for/since", tags: ["grammar"] },
-    { id: "b1p-02", title: "Second Conditional", desc: "Hypothetical, would/could", tags: ["grammar"] },
-    { id: "b1p-03", title: "Passive All Tenses", desc: "Causative, formal register", tags: ["grammar"] },
-    { id: "b1p-04", title: "Reported Speech", desc: "Say/tell, backshift", tags: ["grammar"] },
+    { id: "b1p-01", title: "Present Perfect Continuous", desc: "Focus on the duration of actions connected to the present.", tags: ["grammar"] },
+    { id: "b1p-02", title: "Third Conditional", desc: "Express past regrets and hypothetical outcomes using would have.", tags: ["grammar"] },
+    { id: "b1p-03", title: "Passive All Tenses", desc: "Voz pasiva continua, perfecta y en futuro para redacción formal.", tags: ["grammar"] },
+    { id: "b1p-04", title: "Reported Speech", desc: "Report statements, questions, and commands with tense backshifting.", tags: ["grammar"] },
+    { id: "b1p-05", title: "Non-Defining Relative Clauses", desc: "Provide extra, non-essential information using commas.", tags: ["grammar"] },
+    { id: "b1p-06", title: "Advanced Obligation Modals", desc: "Contrast must/have to with needn't, don't have to, and ought to.", tags: ["grammar"] },
+    { id: "b1p-07", title: "Advanced Future Tenses", desc: "Talk about future actions in progress or completed using Future Continuous/Perfect.", tags: ["grammar"] },
+    { id: "b1p-08", title: "Causatives", desc: "Get/have things done and convince others using make, let, and have.", tags: ["grammar"] },
+    { id: "b1p-09", title: "Subject Questions & Tag Questions", desc: "Ask subject vs. object questions and use tags to confirm facts.", tags: ["grammar"] },
   ],
   quiz: {
     questions: [

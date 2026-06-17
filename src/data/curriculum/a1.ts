@@ -1,10 +1,17 @@
 export default {
   level: "a1", name: "A1", label: "Beginner", color: "a1", hue: 150,
   units: [
-    { id: "a1-01", title: "Greetings & Introductions", desc: "Verb to be, questions, alphabet, numbers 1-100", tags: ["grammar", "vocabulary"] },
-    { id: "a1-02", title: "Family & Everyday Objects", desc: "Possessive 's, colors, plurals", tags: ["grammar", "vocabulary"] },
-    { id: "a1-03", title: "Daily Life & Time", desc: "Present simple, time expressions, adverbs", tags: ["grammar"] },
-    { id: "a1-04", title: "Places & Directions", desc: "There is/are, prepositions, basic directions", tags: ["grammar", "speaking"] },
+    { id: "a1-unit-01", title: "Verb 'to be'", desc: "Complete theory, exercises, and evaluation. Clickable words with translations.", tags: ["grammar", "interactive"] },
+    { id: "a1-02", title: "Present Simple", desc: "Learn third person singular rules and how to talk about routines and habits.", tags: ["grammar"] },
+    { id: "a1-03", title: "Articles & Nouns", desc: "Master a, an, the, and zero article. Singular and basic plural nouns.", tags: ["grammar"] },
+    { id: "a1-04", title: "Regular & Irregular Plurals", desc: "Spelling rules for plurals (-s, -es, -ies, -ves) and key irregular plurals.", tags: ["grammar"] },
+    { id: "a1-05", title: "Possessives", desc: "Talk about belongings using my, mine, and the possessive 's.", tags: ["grammar"] },
+    { id: "a1-06", title: "Demonstratives & Object Pronouns", desc: "This, that, these, those, and object pronouns like me, you, him, her.", tags: ["grammar"] },
+    { id: "a1-07", title: "There is & There are", desc: "Describe rooms, locations, and place prepositions (in, on, at, under).", tags: ["grammar"] },
+    { id: "a1-08", title: "Countable & Uncountable Nouns", desc: "Understand food, drinks, and the usage of some and any.", tags: ["grammar", "vocabulary"] },
+    { id: "a1-09", title: "Ability & Frequency", desc: "Express what you can do and how often you do it with adverbs of frequency.", tags: ["grammar"] },
+    { id: "a1-10", title: "Present Continuous", desc: "Talk about what is happening right now and contrast it with Present Simple.", tags: ["grammar"] },
+    { id: "a1-11", title: "Word Order (SVO)", desc: "Sentence structure in English: Subject-Verb-Object and question syntax.", tags: ["grammar"] },
   ],
   quiz: {
     questions: [

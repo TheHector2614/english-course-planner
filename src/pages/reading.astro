@@ -1,45 +1,60 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import AchievementModal from "../components/interactive/AchievementModal";
+import { storiesByLevel as allStories } from "../data/stories";
 
-const storiesByLevel: Record<string, { id: string; title: string; level: string; words: number; difficulty: string; desc: string }[]> = {
-  "a1": [
-    { id: "a1-my-day", title: "My Day", level: "A1", words: 145, difficulty: "Easy", desc: "A simple story about daily routines." },
-    { id: "a1-toms-pet", title: "Tom\u2019s Pet Cat", level: "A1", words: 130, difficulty: "Easy", desc: "Tom has a friendly cat named Whiskers." },
-    { id: "a1-the-park", title: "A Day at the Park", level: "A1", words: 155, difficulty: "Easy", desc: "Sarah and Ben play at the park." },
-    { id: "a1-my-family", title: "My Family", level: "A1", words: 120, difficulty: "Easy", desc: "Introducing family members." },
-    { id: "a1-school", title: "School Life", level: "A1", words: 140, difficulty: "Easy", desc: "A day at school." },
-    { id: "a1-food", title: "What I Like to Eat", level: "A1", words: 135, difficulty: "Easy", desc: "Favorite foods and meals." },
-  ],
-  "a2": [
-    { id: "a2-weekend-trip", title: "A Weekend Trip", level: "A2", words: 220, difficulty: "Easy", desc: "Maria\u2019s weekend trip to the beach." },
-    { id: "a2-shopping", title: "Shopping for Clothes", level: "A2", words: 200, difficulty: "Easy", desc: "Choosing clothes at a store." },
-    { id: "a2-restaurant", title: "The New Restaurant", level: "A2", words: 210, difficulty: "Easy", desc: "Trying a new place to eat." },
-    { id: "a2-weather", title: "Four Seasons", level: "A2", words: 195, difficulty: "Easy", desc: "Weather and seasons description." },
-    { id: "a2-hobbies", title: "My Hobbies", level: "A2", words: 205, difficulty: "Easy", desc: "Different hobbies and activities." },
-    { id: "a2-city", title: "Living in the City", level: "A2", words: 215, difficulty: "Easy", desc: "City life compared to the countryside." },
-  ],
-  "b1": [
-    { id: "b1-travel-story", title: "A Journey Abroad", level: "B1", words: 340, difficulty: "Medium", desc: "Alex\u2019s first trip abroad." },
-    { id: "b1-environment", title: "Protecting Our Planet", level: "B1", words: 360, difficulty: "Medium", desc: "Environmental awareness." },
-    { id: "b1-job-interview", title: "The Job Interview", level: "B1", words: 320, difficulty: "Medium", desc: "Preparing for and doing a job interview." },
-    { id: "b1-health", title: "Healthy Living", level: "B1", words: 350, difficulty: "Medium", desc: "Health and fitness habits." },
-    { id: "b1-tech", title: "Technology in Our Lives", level: "B1", words: 370, difficulty: "Medium", desc: "How technology affects daily life." },
-    { id: "b1-culture", title: "Festivals Around the World", level: "B1", words: 340, difficulty: "Medium", desc: "Different cultural celebrations." },
-  ],
-  "b2": [
-    { id: "b2-innovation", title: "The Age of Innovation", level: "B2", words: 480, difficulty: "Hard", desc: "Technological breakthroughs and society." },
-    { id: "b2-psychology", title: "Understanding Behavior", level: "B2", words: 500, difficulty: "Hard", desc: "Basic psychology concepts." },
-    { id: "b2-economics", title: "The Global Economy", level: "B2", words: 490, difficulty: "Hard", desc: "Economic systems explained." },
-    { id: "b2-science", title: "Scientific Discoveries", level: "B2", words: 510, difficulty: "Hard", desc: "Important scientific findings." },
-    { id: "b2-art", title: "The World of Art", level: "B2", words: 470, difficulty: "Hard", desc: "Art movements and their impact." },
-    { id: "b2-society", title: "Changing Societies", level: "B2", words: 495, difficulty: "Hard", desc: "Social changes in modern times." },
-  ],
+const levelMeta: Record<string, { label: string; color: string }> = {
+  "a1": { label: "A1 \u2014 Beginner", color: "a1" },
+  "a2": { label: "A2 \u2014 Elementary", color: "a2" },
+  "b1": { label: "B1 \u2014 Intermediate", color: "b1" },
+  "b1+": { label: "B1+ \u2014 Upper Intermediate", color: "b1p" },
+  "b2": { label: "B2 \u2014 Advanced", color: "b2" },
+  "b2+": { label: "B2+ \u2014 Pre-Advanced", color: "b2p" },
 };
 
-const levels = ["a1", "a2", "b1", "b2"];
-const levelLabels: Record<string, string> = { a1: "A1 \u2014 Beginner", a2: "A2 \u2014 Elementary", b1: "B1 \u2014 Intermediate", b2: "B2 \u2014 Advanced" };
-const levelColors: Record<string, string> = { a1: "a1", a2: "a2", b1: "b1", b2: "b2" };
+const levels = ["a1", "a2", "b1", "b1+", "b2", "b2+"];
+
+function shortDesc(level: string, words: number, id: string): string {
+  const descs: Record<string, string> = {
+    "a1-my-family": "Introducing family members.",
+    "a1-school": "A day at school.",
+    "a1-food": "Favorite foods and meals.",
+    "a2-shopping": "Choosing clothes at a store.",
+    "a2-restaurant": "Trying a new place to eat.",
+    "a2-weather": "Weather and seasons description.",
+    "a2-hobbies": "Different hobbies and activities.",
+    "a2-city": "City life compared to the countryside.",
+    "b1-environment": "Environmental awareness.",
+    "b1-job-interview": "Preparing for and doing a job interview.",
+    "b1-health": "Health and fitness habits.",
+    "b1-tech": "How technology affects daily life.",
+    "b1-culture": "Different cultural celebrations.",
+    "b1p-relationships": "Navigating modern relationships.",
+    "b1p-city-life": "Life in a modern city.",
+    "b1p-traditions": "Cultural traditions around the world.",
+    "b1p-environment": "Facing environmental challenges.",
+    "b1p-social-media": "The impact of social media.",
+    "b1p-learning": "The journey of learning a language.",
+    "b2-psychology": "Basic psychology concepts.",
+    "b2-economics": "Economic systems explained.",
+    "b2-science": "Important scientific findings.",
+    "b2-art": "Art movements and their impact.",
+    "b2-society": "Social changes in modern times.",
+    "b2p-business": "Modern business strategies.",
+    "b2p-politics": "Understanding political systems.",
+    "b2p-philosophy": "Introducing philosophical ideas.",
+    "b2p-literature": "The power of literature.",
+    "b2p-persuasion": "The art of persuasion.",
+    "b2p-leadership": "What makes a great leader?",
+    "a1-my-day": "A simple story about daily routines.",
+    "a1-toms-pet": "Tom has a friendly cat named Whiskers.",
+    "a1-the-park": "Sarah and Ben play at the park.",
+    "a2-weekend-trip": "Maria\u2019s weekend trip to the beach.",
+    "b1-travel-story": "Alex\u2019s first trip abroad.",
+    "b2-innovation": "Technological breakthroughs and society.",
+  };
+  return descs[id] || `A level ${level} story.`;
+}
 ---
 
 <BaseLayout title="Reading" description="Leveled reading comprehension stories with vocabulary support. Practice reading at your CEFR level.">
@@ -54,29 +69,31 @@ const levelColors: Record<string, string> = { a1: "a1", a2: "a2", b1: "b1", b2: 
 
     <div class="space-y-12">
       {levels.map((level) => {
-        const stories = storiesByLevel[level] || [];
-        const color = levelColors[level];
+        const stories = allStories[level] || [];
+        const meta = levelMeta[level];
+        const difficulty = level === "a1" || level === "a2" ? "Easy" : level === "b1" || level === "b1+" ? "Medium" : "Hard";
         return (
           <div key={level}>
-            <h2 class="mb-4 text-2xl font-bold font-display" style={{ color: `var(--${color})` }}>
-              {levelLabels[level]}
+            <h2 class="mb-4 text-2xl font-bold font-display" style={{ color: `var(--${meta.color})` }}>
+              {meta.label}
             </h2>
             <div class="grid gap-4 md:grid-cols-2">
-              {stories.map((s) => (
+              {stories.map((s, i) => (
                 <a
                   href={`/reading/${s.id}`}
-                  class="group block rounded-xl shadow-border bg-surface p-5 transition-shadow transition-transform hover:shadow-border-hover hover:-translate-y-0.5"
+                  class="group block rounded-xl shadow-border bg-surface p-5 transition-shadow transition-transform hover:shadow-border-hover hover:-translate-y-0.5 active-scale animate-fade-in-up"
+                  style={`animation-delay: ${i * 80}ms`}
                 >
                   <div class="flex items-start justify-between gap-3">
                     <h3 class="font-semibold group-hover:text-text">{s.title}</h3>
-                    <span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium" style={{ background: `var(--${color}-bg)`, color: `var(--${color})` }}>
-                      {s.level}
+                    <span class="shrink-0 rounded-full px-2 py-0.5 text-xs font-medium" style={{ background: `var(--${meta.color}-bg)`, color: `var(--${meta.color})` }}>
+                      {s.level.toUpperCase()}
                     </span>
                   </div>
-                  <p class="mt-1 text-sm text-text-secondary">{s.desc}</p>
+                  <p class="mt-1 text-sm text-text-secondary">{shortDesc(level, s.words, s.id)}</p>
                   <div class="mt-3 flex items-center gap-3 text-xs text-text-muted">
                     <span>{s.words} words</span>
-                    <span>{s.difficulty}</span>
+                    <span>{difficulty}</span>
                   </div>
                 </a>
               ))}
