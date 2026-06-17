@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { saveQuizResult } from "../../stores/progress";
+import { updateChallengeProgress } from "../../stores/challenges";
+import { ErrorBoundary } from "./ErrorBoundary";
 
 interface Question {
   id: number;
@@ -14,7 +16,7 @@ interface Props {
   questions: Question[];
 }
 
-export default function Quiz({ level, questions }: Props) {
+function QuizInner({ level, questions }: Props) {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [submitted, setSubmitted] = useState(false);
   const [showResults, setShowResults] = useState(false);
@@ -36,6 +38,10 @@ export default function Quiz({ level, questions }: Props) {
       answers: questions.map((q) => answers[q.id] ?? -1),
       timestamp: Date.now(),
     });
+    const pct = score / questions.length;
+    if (pct >= 0.8) updateChallengeProgress("daily_score_quiz", 1);
+    if (pct === 1) updateChallengeProgress("daily_perfect_quiz", 1);
+    if (pct >= 0.9) updateChallengeProgress("weekly_quizzes", 1);
   };
 
   const score = showResults ? questions.reduce((acc, q) => acc + (answers[q.id] === q.correct ? 1 : 0), 0) : 0;
@@ -67,7 +73,12 @@ export default function Quiz({ level, questions }: Props) {
                       key={i}
                       onClick={() => handleSelect(q.id, i)}
                       disabled={submitted}
-                      class="flex items-center gap-3 rounded-lg border px-4 py-2 text-left text-sm transition-all disabled:cursor-default"
+                      role="radio"
+                      aria-checked={isSelected}
+                      aria-label={`${String.fromCharCode(65 + i)}: ${opt}${
+                        submitted && isCorrectOpt ? " (Correct Answer)" : ""
+                      }${submitted && isSelected && !isCorrectOpt ? " (Incorrect Selection)" : ""}`}
+                      class="flex items-center gap-3 rounded-lg border px-4 py-3 text-left text-sm transition-all disabled:cursor-default sm:py-2 focus-visible:ring-2 focus-visible:ring-a1 outline-none"
                       style={{
                         borderColor: isCorrectOpt ? "var(--correct)" : isSelected && !submitted ? "var(--a1)" : "var(--border)",
                         background: isCorrectOpt ? "var(--correct-bg)" : isSelected && !submitted ? "var(--a1-bg)" : "transparent",
@@ -77,7 +88,7 @@ export default function Quiz({ level, questions }: Props) {
                         style={{
                           borderColor: isCorrectOpt ? "var(--correct)" : isSelected ? "var(--a1)" : "var(--border)",
                           background: isCorrectOpt ? "var(--correct)" : isSelected && !submitted ? "var(--a1)" : "transparent",
-                          color: isCorrectOpt || (isSelected && !submitted) ? "#fff" : undefined,
+                          color: isCorrectOpt || (isSelected && !submitted) ? "var(--surface)" : undefined,
                         }}
                       >
                         {String.fromCharCode(65 + i)}
@@ -107,7 +118,7 @@ export default function Quiz({ level, questions }: Props) {
           {allAnswered ? "Check Answers" : "Answer all questions first"}
         </button>
       ) : (
-        <div class="mt-6 rounded-lg p-4 text-center" style={{ background: score >= 7 ? "var(--correct-bg)" : "var(--incorrect-bg)" }}>
+        <div class="mt-6 rounded-lg p-4 text-center" style={{ background: score / questions.length >= 0.7 ? "var(--correct-bg)" : "var(--incorrect-bg)" }}>
           <p class="text-xl font-bold">
             {score}/{questions.length} correct ({Math.round((score / questions.length) * 100)}%)
           </p>
@@ -117,5 +128,13 @@ export default function Quiz({ level, questions }: Props) {
         </div>
       )}
     </div>
+  );
+}
+
+export default function Quiz(props: Props) {
+  return (
+    <ErrorBoundary fallbackTitle="Quiz Error">
+      <QuizInner {...props} />
+    </ErrorBoundary>
   );
 }

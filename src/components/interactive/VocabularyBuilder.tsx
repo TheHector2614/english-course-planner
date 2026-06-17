@@ -37,6 +37,25 @@ function VocabularyBuilderInner() {
     };
   }, [words]);
 
+  useEffect(() => {
+    if (!showReview || !reviewing) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setShowReview(false);
+      } else if (e.key === "1") {
+        handleReview(reviewing, 1);
+      } else if (e.key === "2") {
+        handleReview(reviewing, 2);
+      } else if (e.key === "3") {
+        handleReview(reviewing, 3);
+      } else if (e.key === "4" || e.key === "5") {
+        handleReview(reviewing, 5);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [showReview, reviewing]);
+
   const wordList = Object.values(words);
 
   const filtered = wordList
