@@ -17,6 +17,10 @@ function LevelSelectorInner() {
     color: l.color,
   }));
 
+  const [focusedIndex, setFocusedIndex] = useState(-1);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const optionsRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
@@ -26,6 +30,21 @@ function LevelSelectorInner() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      const currentIdx = levels.findIndex((l) => l.id === currentLevel);
+      setFocusedIndex(currentIdx >= 0 ? currentIdx : 0);
+    } else {
+      setFocusedIndex(-1);
+    }
+  }, [isOpen, currentLevel, levels]);
+
+  useEffect(() => {
+    if (focusedIndex >= 0 && optionsRefs.current[focusedIndex]) {
+      optionsRefs.current[focusedIndex]?.focus();
+    }
+  }, [focusedIndex]);
 
   const handleLevelSelect = (levelId: LevelMode) => {
     setLevelMode(levelId);
@@ -37,15 +56,44 @@ function LevelSelectorInner() {
     }
   };
 
+  const handleTriggerKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp" || e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setIsOpen(true);
+    }
+  };
+
+  const handleOptionKeyDown = (e: React.KeyboardEvent, index: number) => {
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setFocusedIndex((prev) => (prev + 1) % levels.length);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setFocusedIndex((prev) => (prev - 1 + levels.length) % levels.length);
+    } else if (e.key === "Escape") {
+      e.preventDefault();
+      setIsOpen(false);
+      triggerRef.current?.focus();
+    } else if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleLevelSelect(levels[index].id);
+      triggerRef.current?.focus();
+    }
+  };
+
   const currentLevelInfo = levels.find((l) => l.id === currentLevel) || levels[0];
 
   return (
     <div ref={containerRef} class="relative inline-block text-left">
       <button
+        ref={triggerRef}
         onClick={() => setIsOpen((prev) => !prev)}
-        class="flex min-h-11 items-center gap-2 rounded-full border border-border bg-surface px-4 py-2.5 text-xs font-bold transition-all hover:bg-surface-alt active-scale"
-        aria-haspopup="true"
+        onKeyDown={handleTriggerKeyDown}
+        class="flex min-h-11 items-center gap-2 rounded-full border border-border bg-surface px-4 py-2.5 text-xs font-bold transition-all hover:bg-surface-alt active-scale focus-visible:ring-2 focus-visible:ring-a1"
+        aria-haspopup="listbox"
         aria-expanded={isOpen}
+        aria-controls="level-listbox"
+        aria-label={`Select level, current level is ${currentLevelInfo.label}`}
       >
         <span
           class="inline-block h-2 w-2 rounded-full"
@@ -66,19 +114,31 @@ function LevelSelectorInner() {
       </button>
 
       {isOpen && (
-        <div class="absolute right-0 mt-2.5 z-50 w-64 rounded-xl border border-border bg-surface p-1.5 shadow-2xl animate-fade-in-scale">
+        <div
+          id="level-listbox"
+          role="listbox"
+          aria-label="Select CEFR Level"
+          class="absolute right-0 mt-2.5 z-50 w-64 rounded-xl border border-border bg-surface p-1.5 shadow-2xl animate-fade-in-scale"
+        >
           <p class="px-3 py-1.5 text-[10px] font-bold text-text-secondary uppercase tracking-wider">
             Select Your Level
           </p>
           <div class="space-y-0.5 max-h-72 overflow-y-auto">
-            {levels.map((l) => (
+            {levels.map((l, idx) => (
               <button
                 key={l.id}
+                ref={(el) => {
+                  optionsRefs.current[idx] = el;
+                }}
                 onClick={() => handleLevelSelect(l.id)}
-                class={`w-full flex items-center justify-between rounded-lg px-3 py-2.5 text-left text-xs font-bold transition-all ${
+                onKeyDown={(e) => handleOptionKeyDown(e, idx)}
+                role="option"
+                aria-selected={currentLevel === l.id}
+                tabIndex={0}
+                class={`w-full flex items-center justify-between rounded-lg px-3 py-2.5 text-left text-xs font-bold transition-all outline-none focus:bg-surface-alt hover:bg-surface-alt ${
                   currentLevel === l.id
                     ? "bg-surface-alt text-text"
-                    : "text-text-secondary hover:bg-surface-alt hover:text-text"
+                    : "text-text-secondary hover:text-text"
                 }`}
               >
                 <div class="flex items-center gap-2.5">
@@ -102,7 +162,7 @@ function LevelSelectorInner() {
           <div class="border-t border-border mt-1.5 pt-1.5 px-1.5">
             <a
               href={`/level/${currentLevel}`}
-              class="flex w-full items-center justify-center min-h-9 gap-1 rounded-lg bg-text text-surface text-center py-2 text-xs font-bold hover:opacity-95 transition-opacity"
+              class="flex w-full items-center justify-center min-h-9 gap-1 rounded-lg bg-text text-surface text-center py-2 text-xs font-bold hover:opacity-95 transition-opacity focus-visible:ring-2 focus-visible:ring-a1"
             >
               Go to level page
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
