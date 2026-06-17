@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useStore } from "@nanostores/react";
 import { ErrorBoundary } from "./ErrorBoundary";
-import { xp, completedLevels, streak, lastStudyDate, getProgressPercent } from "../../stores/progress";
+import { xp, completedLevels, streak, lastStudyDate, getProgressPercent, settingsLoading } from "../../stores/progress";
 import { activeChallenges } from "../../stores/challenges";
 import { unlockedAchievements } from "../../stores/achievements";
 import { getDueWords } from "../../stores/vocabulary";
@@ -44,6 +44,7 @@ function DailyPlanInner() {
   const challenges = useStore(activeChallenges);
   const achievements = useStore(unlockedAchievements);
   const currentFocus = useStore(focusMode);
+  const isLoadingSettings = useStore(settingsLoading);
   const [dueWords, setDueWords] = useState<SavedWord[]>([]);
   const [plan, setPlan] = useState<PlanItem[]>([]);
   const [loaded, setLoaded] = useState(false);
@@ -160,7 +161,7 @@ function DailyPlanInner() {
     setLoaded(true);
   }, [dueWords, levels, challenges, achievements]);
 
-  if (!loaded) {
+  if (!loaded || isLoadingSettings) {
     return (
       <div class="glass-card rounded-[var(--radius-lg)] p-5">
         <div class="h-4 w-40 animate-pulse rounded bg-surface-alt" />

@@ -17,6 +17,7 @@ export const streak = atom<number>(0);
 export const lastStudyDate = atom<string>("");
 export const xp = atom<number>(0);
 export const xpAnimating = atom<number>(0); // XP gained this session to animate
+export const settingsLoading = atom<boolean>(true);
 
 const XP_PER_QUIZ = 50;
 const XP_PER_WORD = 10;
@@ -26,21 +27,24 @@ const XP_PER_STREAK_DAY = 20;
 const XP_BONUS_PERFECT = 25;
 
 export async function loadFromStorage() {
-  if (typeof localStorage === "undefined") return;
+  settingsLoading.set(true);
+  try {
+    await initSettings();
+  } catch (e) {
+    console.error("Failed to initialize settings:", e);
+  }
   try {
     const saved = localStorage.getItem("course-progress");
     if (saved) {
       const data = JSON.parse(saved);
       if (data.completed) completedLevels.set(data.completed);
       if (data.results) quizResults.set(data.results);
-      if (data.streak) streak.set(data.streak);
-      if (data.lastDate) lastStudyDate.set(data.lastDate);
     }
     const level = localStorage.getItem("course-level");
     if (level) currentLevel.set(level);
   } catch {}
 
-  // Load XP from IndexedDB
+  // IndexedDB is the source of truth for XP, streak, and lastStudyDate
   try {
     const settings = await db.settings.get("default");
     if (settings) {
@@ -48,7 +52,9 @@ export async function loadFromStorage() {
       streak.set(settings.streak);
       lastStudyDate.set(settings.lastStudyDate);
     }
-  } catch {}
+  } catch {} finally {
+    settingsLoading.set(false);
+  }
 }
 
 export function saveToStorage() {
