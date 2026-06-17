@@ -64,6 +64,16 @@ export interface StoryProgress {
   completedAt?: number;
 }
 
+export interface Challenge {
+  id: string;
+  seed: string;
+  challengeId: string;
+  type: "daily" | "weekly";
+  progress: number;
+  completed: boolean;
+  completedAt?: number;
+}
+
 export interface UserSettings {
   id: string;
   name: string;
@@ -72,6 +82,7 @@ export interface UserSettings {
   xp: number;
   streak: number;
   lastStudyDate: string;
+  focus: "general" | "business" | "technology";
   created: number;
 }
 
@@ -88,6 +99,12 @@ export const ACHIEVEMENT_DEFS: Record<string, { title: string; desc: string }> =
   crossword_1:   { title: "Word Detective",     desc: "Complete your first crossword" },
   reading_5:     { title: "Bookworm",           desc: "Read 5 stories" },
   reading_20:    { title: "Avid Reader",        desc: "Read 20 stories" },
+  xp_500:        { title: "Dedicated",          desc: "Earn 500 XP" },
+  xp_2000:       { title: "Committed",          desc: "Earn 2,000 XP" },
+  xp_5000:       { title: "XP Legend",           desc: "Earn 5,000 XP" },
+  challenge_1:   { title: "Challenge Accepted",  desc: "Complete your first daily challenge" },
+  challenge_10:  { title: "Challenge Hunter",   desc: "Complete 10 daily challenges" },
+  challenge_50:  { title: "Challenge Legend",   desc: "Complete 50 daily challenges" },
 };
 
 export class CourseDB extends Dexie {
@@ -97,6 +114,7 @@ export class CourseDB extends Dexie {
   achievements!: Table<Achievement, string>;
   stories!: Table<StoryProgress, string>;
   settings!: Table<UserSettings, string>;
+  challenges!: Table<Challenge, string>;
 
   constructor() {
     super("EnglishCourseDB");
@@ -107,6 +125,15 @@ export class CourseDB extends Dexie {
       achievements: "id",
       stories: "storyId",
       settings: "id",
+    });
+    this.version(2).stores({
+      vocabulary: "++id, word, level, nextReview, tags",
+      levelProgress: "levelId",
+      sessions: "++id, date",
+      achievements: "id",
+      stories: "storyId",
+      settings: "id",
+      challenges: "id, seed, type",
     });
   }
 }
@@ -124,6 +151,7 @@ export async function initSettings(): Promise<UserSettings> {
     xp: 0,
     streak: 0,
     lastStudyDate: "",
+    focus: "general",
     created: Date.now(),
   };
   await db.settings.put(settings);
@@ -135,7 +163,8 @@ export function sm2Schedule(
   quality: number,
   prevEaseFactor: number,
   prevInterval: number,
-  prevRepetitions: number
+  prevRepetitions: number,
+  prevNextReview?: number
 ): { easeFactor: number; interval: number; repetitions: number; nextReview: number } {
   let easeFactor = prevEaseFactor;
   let interval: number;
@@ -158,7 +187,8 @@ export function sm2Schedule(
   easeFactor = easeFactor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
   if (easeFactor < 1.3) easeFactor = 1.3;
 
-  const nextReview = Date.now() + interval * 86400000;
+  const baseDate = (prevRepetitions > 0 && prevNextReview) ? prevNextReview : Date.now();
+  const nextReview = baseDate + interval * 86400000;
 
   return { easeFactor, interval, repetitions, nextReview };
 }

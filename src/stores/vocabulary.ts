@@ -1,5 +1,7 @@
 import { atom, map } from "nanostores";
 import { db, type SavedWord, sm2Schedule } from "./db";
+import { unlockAchievement } from "./achievements";
+import { updateChallengeProgress } from "./challenges";
 
 export const vocabularyList = map<Record<number, SavedWord>>({});
 export const vocabularyLoading = atom<boolean>(true);
@@ -35,6 +37,14 @@ export async function saveWord(word: Omit<SavedWord, "id" | "savedAt" | "easeFac
   if (saved) {
     vocabularyList.set({ ...vocabularyList.get(), [id]: saved });
   }
+  const count = await db.vocabulary.count();
+  if (count >= 10) await unlockAchievement("vocab_10");
+  if (count >= 50) await unlockAchievement("vocab_50");
+  if (count >= 100) await unlockAchievement("vocab_100");
+
+  updateChallengeProgress("daily_save_words", 1);
+  updateChallengeProgress("weekly_words", 1);
+
   return id;
 }
 
@@ -53,7 +63,8 @@ export async function reviewWord(id: number, quality: number) {
     quality,
     word.easeFactor,
     word.interval,
-    word.repetitions
+    word.repetitions,
+    word.nextReview
   );
   await db.vocabulary.update(id, {
     easeFactor,
