@@ -1,9 +1,16 @@
 import { useState, useRef, useEffect } from "react";
-import { useStore } from "@nanostores/react";
 import { levelMode, setLevelMode } from "../../stores/modes";
 import type { LevelMode } from "../../stores/modes";
 import { LEVELS } from "../../data/levels";
 import { ErrorBoundary } from "../interactive/ErrorBoundary";
+
+function useStore<T>(store: { get: () => T; subscribe: (cb: (val: T) => void) => () => void }): T {
+  const [value, setValue] = useState(store.get());
+  useEffect(() => {
+    return store.subscribe((v) => setValue(v));
+  }, [store]);
+  return value;
+}
 
 function LevelSelectorInner() {
   const currentLevel = useStore(levelMode);

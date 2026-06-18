@@ -39,7 +39,7 @@ const features = [
           </a>
         ))}
         <span class="mx-1 h-5 w-px bg-border" role="separator"></span>
-        <LevelSelector client:only="react" />
+        <LevelSelector client:load />
       </div>
 
       <button id="header-mode-badge" type="button" class="hidden lg:flex items-center gap-1 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors cursor-pointer" style="background: var(--focus-accent-bg); color: var(--focus-accent);" title="Click to cycle focus mode · Shift+click to cycle level" aria-label="Current mode">
@@ -54,8 +54,8 @@ const features = [
       <a href="/settings" class="hidden lg:flex rounded-full bg-surface-alt px-2 py-1.5 text-xs text-text-secondary transition-colors hover:bg-border" aria-label="Settings">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </a>
-      <LanguageToggle client:only="react" />
-      <ThemeToggle client:only="react" />
+      <LanguageToggle client:load />
+      <ThemeToggle client:load />
     </nav>
   </div>
 
@@ -70,7 +70,7 @@ const features = [
       </div>
       <div class="pt-2 border-t border-border">
         <p class="mb-2 text-xs font-medium text-text-muted uppercase tracking-wider">Your Mode</p>
-        <ModeCarousel compact client:only="react" />
+        <ModeCarousel compact client:load />
       </div>
       <div class="pt-2 border-t border-border flex items-center gap-2">
         <a href="/dashboard" class="inline-flex min-h-11 rounded-full bg-surface-alt px-4 py-2.5 text-sm text-text-secondary transition-colors hover:bg-border">

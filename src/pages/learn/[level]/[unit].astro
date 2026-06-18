@@ -43,7 +43,7 @@ try {
         </a>
       </div>
     ) : (
-      <LearningUnit unit={unitData} client:only="react" />
+      <LearningUnit unit={unitData} client:load />
     )}
   </section>
 </BaseLayout>

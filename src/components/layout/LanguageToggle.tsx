@@ -1,5 +1,13 @@
-import { useStore } from "@nanostores/react";
+import { useState, useEffect } from "react";
 import { lang, toggleLang } from "../../stores/lang";
+
+function useStore<T>(store: { get: () => T; subscribe: (cb: (val: T) => void) => () => void }): T {
+  const [value, setValue] = useState(store.get());
+  useEffect(() => {
+    return store.subscribe((v) => setValue(v));
+  }, [store]);
+  return value;
+}
 
 export default function LanguageToggle() {
   const currentLang = useStore(lang);
